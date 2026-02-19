@@ -50,4 +50,12 @@
   .card-modern {
     @apply bg-white border border-divider rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
   }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

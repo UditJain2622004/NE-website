@@ -1,32 +1,71 @@
 import { Link } from 'react-router-dom';
-import { Search, Calendar, Siren, ArrowRight, Play, CheckCircle } from 'lucide-react';
+import { Search, Calendar, Siren, ArrowRight, Play, CheckCircle, Users } from 'lucide-react';
 
 const HeroSection = () => {
   return (
-    <section className="relative pt-32 lg:pt-48 pb-16 lg:pb-0 overflow-hidden bg-white">
-      {/* Background patterns */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-blue-50/50 -skew-x-12 transform translate-x-1/4 -z-10"></div>
+    <section className="relative pt-20 lg:pt-48 pb-6 lg:pb-0 overflow-hidden bg-white">
+      {/* Background patterns - desktop only */}
+      <div className="hidden lg:block absolute top-0 right-0 w-1/2 h-full bg-blue-50/50 -skew-x-12 transform translate-x-1/4 -z-10"></div>
       
       <div className="container-custom relative">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        {/* === MOBILE HERO (visible < lg) === */}
+        <div className="lg:hidden flex flex-col gap-5 pt-2">
+          {/* Hero Card with Background Image */}
+          <div className="relative rounded-3xl overflow-hidden min-h-[340px] flex flex-col justify-end">
+            <img 
+              src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800&h=600"
+              alt="Hospital"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-primary/90 via-primary/60 to-primary/30"></div>
+            
+            <div className="relative z-10 p-6 pb-5">
+              <h1 className="text-2xl font-bold text-white leading-tight mb-2 font-display">
+                Your Health, Our<br />Priority
+              </h1>
+              <p className="text-white/80 text-sm mb-5 leading-relaxed">
+                Expert medical care with compassionate professionals available 24/7
+              </p>
+              
+              <div className="flex gap-3 mb-5">
+                <Link to="/#doctors" className="flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 text-white px-5 py-2.5 rounded-xl font-bold text-sm">
+                  <Users size={18} />
+                  Find Doctor
+                </Link>
+                <Link to="/#book" className="flex items-center gap-2 bg-secondary text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg">
+                  <Calendar size={18} />
+                  Book Now
+                </Link>
+              </div>
+
+              <div className="relative">
+                <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input 
+                  type="text" 
+                  placeholder="Search specialists, department" 
+                  className="w-full bg-white rounded-xl py-3 pl-11 pr-4 text-sm text-gray-600 placeholder:text-gray-400 outline-none shadow-lg"
+                />
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* === DESKTOP HERO (visible >= lg) === */}
+        <div className="hidden lg:grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Text Content */}
           <div className="lg:col-span-6 z-10">
-            <div className="inline-flex items-center gap-2 bg-primary text-white px-4 py-1.5 rounded-full mb-8 font-bold text-xs tracking-wider uppercase shadow-sm">
-              <span className="w-2 h-2 bg-secondary rounded-full"></span>
-              Top Rated Hospital 2024
-            </div>
-            
-            <h1 className="text-3xl lg:text-7xl font-bold text-primary leading-[1.1] lg:leading-[1.05] mb-6 lg:mb-8 font-display">
+            <h1 className="text-7xl font-bold text-primary leading-[1.05] mb-8 font-display">
               Compassionate Care, <br />
               <span className="text-secondary">Advanced Medicine.</span>
             </h1>
             
-            <p className="text-lg lg:text-xl text-gray-600 mb-10 max-w-xl leading-relaxed font-sans">
+            <p className="text-xl text-gray-600 mb-10 max-w-xl leading-relaxed font-sans">
               Experience world-class healthcare with a personal touch. Our dedicated team of specialists is committed to your well-being, offering cutting-edge treatments in a comfortable environment.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-5 mb-16">
+            <div className="flex flex-row gap-5 mb-16">
               <Link to="/#doctors" className="btn-primary flex items-center gap-3 py-4 px-10 text-lg">
                 Find a Doctor <ArrowRight size={20} />
               </Link>
@@ -52,20 +91,20 @@ const HeroSection = () => {
           </div>
 
           {/* Image Section */}
-          <div className="lg:col-span-6 relative lg:h-[600px] flex items-center justify-center lg:justify-end">
-            <div className="relative w-full max-w-lg lg:max-w-none lg:w-[110%] lg:-mr-[10%] bg-white rounded-[2.5rem] p-4 lg:p-6 shadow-2xl border-8 border-white/50 overflow-hidden group">
+          <div className="lg:col-span-6 relative lg:h-[600px] flex items-center justify-end">
+            <div className="relative w-full lg:w-[110%] lg:-mr-[10%] bg-white rounded-[2.5rem] p-6 shadow-2xl border-8 border-white/50 overflow-hidden group">
               <img 
                 src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=1000&h=800"
                 alt="Friendly Doctor"
-                className="w-full h-full object-cover rounded-[2rem] transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover rounded-4xl transition-transform duration-700 group-hover:scale-105"
               />
               
               {/* Floating Doctor Info Card */}
-              <div className="absolute bottom-6 left-6 right-6 lg:left-12 lg:right-12 bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-white flex items-center gap-4 animate-in fade-in slide-in-from-bottom-5 duration-700">
-                <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-secondary shadow-md flex-shrink-0">
+              <div className="absolute bottom-6 left-12 right-12 bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-white flex items-center gap-4 animate-in fade-in slide-in-from-bottom-5 duration-700">
+                <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-secondary shadow-md shrink-0">
                   <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=200&h=200" alt="Dr. Sarah Mitchell" />
                 </div>
-                <div className="flex-grow">
+                <div className="grow">
                   <h4 className="font-bold text-primary text-lg leading-tight uppercase tracking-tight">Dr. Sarah Mitchell</h4>
                   <p className="text-secondary font-bold text-xs uppercase tracking-widest mb-2">Head of Cardiology</p>
                   <p className="text-gray-600 text-[10px] leading-tight opacity-80 max-w-xs italic">
@@ -84,8 +123,8 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Quick Action Bar */}
-        <div className="mt-20 lg:mt-32 grid grid-cols-1 md:grid-cols-3 gap-0 hidden lg:grid rounded-t-2xl overflow-hidden shadow-2xl border border-divider">
+        {/* Quick Action Bar - desktop only */}
+        <div className="mt-32 grid-cols-1 md:grid-cols-3 gap-0 hidden lg:grid rounded-t-2xl overflow-hidden shadow-2xl border border-divider">
           <QuickAction 
             icon={Search} 
             title="Find a Doctor" 

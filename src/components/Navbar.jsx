@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Phone, Calendar, Siren, Search, User } from 'lucide-react';
+import { Menu, X, Phone, Calendar, Siren, User, Bell } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,19 +27,19 @@ const Navbar = () => {
   ];
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-lg' : 'bg-white'}`}>
-      {/* Top Strip */}
-      <div className={`bg-primary text-white py-2 px-6 lg:px-24 transition-all duration-300 ${isScrolled ? 'hidden lg:flex' : 'flex'} justify-between items-center text-xs lg:text-sm font-medium`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white ${isScrolled ? 'shadow-lg' : ''}`}>
+      {/* Top Strip - desktop only */}
+      <div className={`bg-primary text-white py-2 px-6 lg:px-24 transition-all duration-300 hidden lg:flex justify-between items-center text-sm font-medium`}>
         <div className="flex items-center gap-6">
           <a href="tel:911" className="flex items-center gap-1.5 hover:text-secondary whitespace-nowrap">
             <Siren size={14} className="text-secondary" /> Emergency: <span className="font-bold">911</span>
           </a>
-          <a href="tel:+1234567890" className="hidden sm:flex items-center gap-1.5 hover:text-secondary whitespace-nowrap">
+          <a href="tel:+1234567890" className="flex items-center gap-1.5 hover:text-secondary whitespace-nowrap">
             <Phone size={14} className="text-secondary" /> +1 (555) 123-4567
           </a>
         </div>
         <div className="flex items-center gap-6">
-          <div className="hidden md:flex items-center gap-4">
+          <div className="flex items-center gap-4">
             <Link to="/#portal" className="hover:text-secondary">Patient Portal</Link>
             <div className="w-px h-3 bg-white/20"></div>
             <Link to="/#careers" className="hover:text-secondary">Careers</Link>
@@ -57,20 +57,42 @@ const Navbar = () => {
         </div>
       </div>
 
-      <nav className="container-custom flex justify-between items-center py-3 lg:py-5">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 lg:gap-3">
-          <div className="w-10 h-10 lg:w-12 lg:h-12 bg-secondary flex items-center justify-center rounded-lg shadow-inner flex-shrink-0">
-            <HeartPulseIcon className="w-6 h-6 lg:w-8 lg:h-8 text-white" />
+      {/* Mobile Nav Bar */}
+      <nav className="lg:hidden flex justify-between items-center px-5 py-3">
+        <Link to="/" className="flex items-center gap-2">
+          <div className="w-9 h-9 bg-secondary flex items-center justify-center rounded-lg shrink-0">
+            <HeartPulseIcon className="w-5 h-5 text-white" />
+          </div>
+          <span className="text-primary font-bold text-lg tracking-tighter uppercase">CareConnect</span>
+        </Link>
+        <div className="flex items-center gap-3">
+          <button className="relative p-2 text-gray-400">
+            <Bell size={22} />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-secondary rounded-full"></span>
+          </button>
+          <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-gray-200">
+            <img 
+              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100&h=100" 
+              alt="Profile" 
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </nav>
+
+      {/* Desktop Nav Bar */}
+      <nav className="hidden lg:flex container-custom justify-between items-center py-5">
+        <Link to="/" className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-secondary flex items-center justify-center rounded-lg shadow-inner shrink-0">
+            <HeartPulseIcon className="w-8 h-8 text-white" />
           </div>
           <div className="leading-none">
-            <span className="text-primary font-bold text-xl lg:text-2xl tracking-tighter block uppercase">CareConnect</span>
-            <span className="text-secondary text-[8px] lg:text-[10px] font-bold tracking-[0.3em] uppercase opacity-80">Health System</span>
+            <span className="text-primary font-bold text-2xl tracking-tighter block uppercase">CareConnect</span>
+            <span className="text-secondary text-[10px] font-bold tracking-[0.3em] uppercase opacity-80">Health System</span>
           </div>
         </Link>
 
-        {/* Desktop Nav Links */}
-        <div className="hidden lg:flex items-center gap-8">
+        <div className="flex items-center gap-8">
           <ul className="flex items-center gap-6">
             {navLinks.map((link) => (
               <li key={link.name} className="relative group">
@@ -95,37 +117,16 @@ const Navbar = () => {
           </ul>
 
           <div className="flex items-center gap-4">
-            <div className="relative group">
-              <input 
-                type="text" 
-                placeholder="Search..." 
-                className="w-32 focus:w-48 transition-all duration-300 bg-gray-100 border-none rounded-full px-4 py-2 text-xs focus:ring-2 focus:ring-secondary outline-none"
-              />
-              <Search size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            </div>
             <Link to="/#book" className="bg-secondary text-white px-6 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 hover:bg-secondary/90 transition-all shadow-md active:scale-95">
               <Calendar size={18} /> Book Appointment
             </Link>
           </div>
         </div>
-
-        {/* Mobile Toggle */}
-        <div className="flex lg:hidden items-center gap-4">
-          <Link to="/#book" className="bg-secondary text-white p-3 rounded-full shadow-md">
-            <Calendar size={20} />
-          </Link>
-          <button 
-            className="p-2 text-primary"
-            onClick={() => setIsOpen(true)}
-          >
-            <Menu size={32} />
-          </button>
-        </div>
       </nav>
 
       {/* Mobile Drawer */}
       <div 
-        className={`fixed inset-0 bg-primary/20 backdrop-blur-sm z-[60] transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'} lg:hidden`}
+        className={`fixed inset-0 bg-primary/20 backdrop-blur-sm z-60 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'} lg:hidden`}
         onClick={() => setIsOpen(false)}
       >
         <div 

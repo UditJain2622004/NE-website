@@ -1,99 +1,154 @@
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, HeartPulse, ChevronRight } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, ChevronRight } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0a1e3b] text-white pt-24 pb-12 overflow-hidden relative">
+    <footer className="bg-[#0a1e3b] text-white overflow-hidden relative">
       <div className="container-custom relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
-          
-          {/* Brand Column */}
-          <div className="space-y-8">
-            <Link to="/" className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-secondary flex items-center justify-center rounded-lg shadow-inner">
-                <HeartPulseIcon className="w-8 h-8 text-white" />
+
+        {/* === MOBILE FOOTER === */}
+        <div className="lg:hidden py-10">
+          {/* Brand + socials */}
+          <div className="flex items-center justify-between mb-8">
+            <Link to="/" className="flex items-center gap-2.5">
+              <div className="w-9 h-9 bg-secondary flex items-center justify-center rounded-lg">
+                <HeartPulseIcon className="w-5 h-5 text-white" />
               </div>
-              <div className="leading-none">
-                <span className="text-white font-bold text-2xl tracking-tighter block uppercase">CareConnect</span>
-              </div>
+              <span className="text-white font-bold text-lg tracking-tighter uppercase">CareConnect</span>
             </Link>
-            <p className="text-gray-400 leading-relaxed font-medium text-sm">
-              Providing world-class healthcare with compassion and excellence. Your health is our priority.
-            </p>
-            <div className="flex gap-4">
-              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, i) => (
-                <a key={i} href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-secondary hover:border-secondary transition-all group">
-                  <Icon size={18} className="text-gray-400 group-hover:text-white transition-colors" />
+            <div className="flex gap-2.5">
+              {[Facebook, Instagram, Twitter].map((Icon, i) => (
+                <a key={i} href="#" className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+                  <Icon size={14} className="text-gray-400" />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-xl font-bold mb-8 text-white uppercase tracking-tight flex items-center gap-3 font-display">
-              <span className="w-1 h-6 bg-secondary rounded-full"></span>
-              Quick Links
-            </h3>
-            <ul className="space-y-4">
-              {['About Us', 'Our Doctors', 'Departments', 'Book Appointment', 'Contact Us'].map((link) => (
-                <li key={link}>
-                  <Link to="/" className="text-gray-400 hover:text-secondary group flex items-center gap-2 transition-all font-semibold text-sm">
-                    <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                    {link}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {/* Quick contact row */}
+          <div className="grid grid-cols-2 gap-3 mb-8">
+            <a href="tel:+15551234567" className="flex items-center gap-2.5 bg-white/5 rounded-xl px-3.5 py-3">
+              <Phone size={15} className="text-secondary shrink-0" />
+              <span className="text-xs text-gray-300 font-medium">+1 (555) 123-4567</span>
+            </a>
+            <a href="mailto:info@careconnect.com" className="flex items-center gap-2.5 bg-white/5 rounded-xl px-3.5 py-3">
+              <Mail size={15} className="text-secondary shrink-0" />
+              <span className="text-xs text-gray-300 font-medium truncate">info@careconnect.com</span>
+            </a>
           </div>
 
-          {/* Departments */}
-          <div>
-            <h3 className="text-xl font-bold mb-8 text-white uppercase tracking-tight flex items-center gap-3 font-display">
-              <span className="w-1 h-6 bg-secondary rounded-full"></span>
-              Departments
-            </h3>
-            <ul className="space-y-4">
-              {['Cardiology', 'Neurology', 'Orthopedics', 'Pediatrics', 'Surgery'].map((dept) => (
-                <li key={dept}>
-                  <Link to="/" className="text-gray-400 hover:text-secondary group flex items-center gap-2 transition-all font-semibold text-sm">
-                    <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                    {dept}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {/* Links in two columns */}
+          <div className="grid grid-cols-2 gap-x-6 gap-y-2.5 mb-8">
+            {['About Us', 'Our Doctors', 'Departments', 'Book Appointment', 'Contact Us', 'Cardiology', 'Neurology', 'Pediatrics'].map((link) => (
+              <Link key={link} to="/" className="text-gray-400 text-xs font-medium py-1">
+                {link}
+              </Link>
+            ))}
           </div>
 
-          {/* Contact Us */}
-          <div>
-            <h3 className="text-xl font-bold mb-8 text-white uppercase tracking-tight flex items-center gap-3 font-display">
-              <span className="w-1 h-6 bg-secondary rounded-full"></span>
-              Contact Us
-            </h3>
-            <div className="space-y-6">
-              <ContactItem icon={MapPin} text="123 Medical Center Drive, Health City, HC 90210" />
-              <ContactItem icon={Phone} text="+1 (555) 123-4567" isLink link="tel:+15551234567" />
-              <ContactItem icon={Mail} text="info@careconnect.com" isLink link="mailto:info@careconnect.com" />
-              <div className="flex items-center gap-4 text-gray-400">
-                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">
-                  <ClockIcon className="w-5 h-5 text-secondary" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-white leading-none mb-1">Mon - Fri</p>
-                  <p className="text-xs font-medium">8:00 AM - 8:00 PM</p>
-                </div>
-              </div>
+          {/* Bottom bar */}
+          <div className="pt-6 border-t border-white/10 flex flex-col gap-3 items-center text-center">
+            <p className="text-gray-500 text-[10px] font-medium">© 2024 CareConnect Health System. All rights reserved.</p>
+            <div className="flex gap-4 text-gray-500 text-[10px] font-medium">
+              <Link to="/#privacy">Privacy</Link>
+              <Link to="/#terms">Terms</Link>
+              <Link to="/#sitemap">Sitemap</Link>
             </div>
           </div>
         </div>
 
-        <div className="mt-20 pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8 text-gray-400 text-xs font-bold uppercase tracking-widest">
-          <p>© 2024 CareConnect Health System. All rights reserved.</p>
-          <div className="flex gap-8">
-            <Link to="/#privacy" className="hover:text-white">Privacy Policy</Link>
-            <Link to="/#terms" className="hover:text-white">Terms of Service</Link>
-            <Link to="/#sitemap" className="hover:text-white">Sitemap</Link>
+        {/* === DESKTOP FOOTER === */}
+        <div className="hidden lg:block pt-24 pb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+            
+            {/* Brand Column */}
+            <div className="space-y-8">
+              <Link to="/" className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-secondary flex items-center justify-center rounded-lg shadow-inner">
+                  <HeartPulseIcon className="w-8 h-8 text-white" />
+                </div>
+                <div className="leading-none">
+                  <span className="text-white font-bold text-2xl tracking-tighter block uppercase">CareConnect</span>
+                </div>
+              </Link>
+              <p className="text-gray-400 leading-relaxed font-medium text-sm">
+                Providing world-class healthcare with compassion and excellence. Your health is our priority.
+              </p>
+              <div className="flex gap-4">
+                {[Facebook, Twitter, Instagram, Linkedin].map((Icon, i) => (
+                  <a key={i} href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-secondary hover:border-secondary transition-all group">
+                    <Icon size={18} className="text-gray-400 group-hover:text-white transition-colors" />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h3 className="text-xl font-bold mb-8 text-white uppercase tracking-tight flex items-center gap-3 font-display">
+                <span className="w-1 h-6 bg-secondary rounded-full"></span>
+                Quick Links
+              </h3>
+              <ul className="space-y-4">
+                {['About Us', 'Our Doctors', 'Departments', 'Book Appointment', 'Contact Us'].map((link) => (
+                  <li key={link}>
+                    <Link to="/" className="text-gray-400 hover:text-secondary group flex items-center gap-2 transition-all font-semibold text-sm">
+                      <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                      {link}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Departments */}
+            <div>
+              <h3 className="text-xl font-bold mb-8 text-white uppercase tracking-tight flex items-center gap-3 font-display">
+                <span className="w-1 h-6 bg-secondary rounded-full"></span>
+                Departments
+              </h3>
+              <ul className="space-y-4">
+                {['Cardiology', 'Neurology', 'Orthopedics', 'Pediatrics', 'Surgery'].map((dept) => (
+                  <li key={dept}>
+                    <Link to="/" className="text-gray-400 hover:text-secondary group flex items-center gap-2 transition-all font-semibold text-sm">
+                      <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                      {dept}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contact Us */}
+            <div>
+              <h3 className="text-xl font-bold mb-8 text-white uppercase tracking-tight flex items-center gap-3 font-display">
+                <span className="w-1 h-6 bg-secondary rounded-full"></span>
+                Contact Us
+              </h3>
+              <div className="space-y-6">
+                <ContactItem icon={MapPin} text="123 Medical Center Drive, Health City, HC 90210" />
+                <ContactItem icon={Phone} text="+1 (555) 123-4567" isLink link="tel:+15551234567" />
+                <ContactItem icon={Mail} text="info@careconnect.com" isLink link="mailto:info@careconnect.com" />
+                <div className="flex items-center gap-4 text-gray-400">
+                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">
+                    <ClockIcon className="w-5 h-5 text-secondary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-white leading-none mb-1">Mon - Fri</p>
+                    <p className="text-xs font-medium">8:00 AM - 8:00 PM</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-20 pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8 text-gray-400 text-xs font-bold uppercase tracking-widest">
+            <p>© 2024 CareConnect Health System. All rights reserved.</p>
+            <div className="flex gap-8">
+              <Link to="/#privacy" className="hover:text-white">Privacy Policy</Link>
+              <Link to="/#terms" className="hover:text-white">Terms of Service</Link>
+              <Link to="/#sitemap" className="hover:text-white">Sitemap</Link>
+            </div>
           </div>
         </div>
       </div>
@@ -117,7 +172,6 @@ const ContactItem = ({ icon: Icon, text, isLink, link }) => (
   </div>
 );
 
-// Helper Icons
 const HeartPulseIcon = ({ className }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}>
     <path d="M22 12h-4l-3 9L9 3l-3 9H2" />

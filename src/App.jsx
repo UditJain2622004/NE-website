@@ -13,7 +13,7 @@ function App() {
     <Router>
       <div className="min-h-screen bg-hospital-bg flex flex-col">
         <Navbar />
-        <main className="flex-grow">
+        <main className="grow pb-20 lg:pb-0">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/doctors/:slug" element={<DoctorDetailsPage />} />

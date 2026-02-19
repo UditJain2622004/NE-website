@@ -7,7 +7,8 @@ const FeaturedDoctorsSection = () => {
   return (
     <section id="doctors" className="section-padding bg-hospital-bg pt-0">
       <div className="container-custom">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+        {/* Desktop header */}
+        <div className="hidden md:flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
           <div className="max-w-2xl">
             <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Our Experts</span>
             <h2 className="text-4xl lg:text-6xl font-bold text-primary leading-tight font-display mb-6">
@@ -22,7 +23,12 @@ const FeaturedDoctorsSection = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Mobile header */}
+        <div className="md:hidden mb-6">
+          <h2 className="text-2xl font-bold text-primary font-display italic">Top Doctors</h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
           {doctors.map((doctor) => (
             <DoctorCard key={doctor.id} doctor={doctor} />
           ))}
