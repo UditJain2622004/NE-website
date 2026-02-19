@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const FeaturedDoctorsSection = () => {
   return (
-    <section id="doctors" className="section-padding bg-hospital-bg pt-0">
+    <section id="doctors" className="section-padding bg-hospital-bg">
       <div className="container-custom">
         {/* Desktop header */}
         <div className="hidden md:flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
@@ -25,7 +25,7 @@ const FeaturedDoctorsSection = () => {
 
         {/* Mobile header */}
         <div className="md:hidden mb-6">
-          <h2 className="text-2xl font-bold text-primary font-display italic">Top Doctors</h2>
+          <h2 className="text-2xl font-bold text-primary font-display">Our Doctors</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">

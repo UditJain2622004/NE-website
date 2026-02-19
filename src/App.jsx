@@ -22,7 +22,7 @@ function App() {
         </main>
         <Footer />
         <StickyBottomBar />
-        <FloatingCallButton />
+        {/* <FloatingCallButton /> */}
       </div>
     </Router>
   );

@@ -15,9 +15,12 @@ const DepartmentCard = ({ department }) => {
   const Icon = icons[department.icon] || Activity;
 
   return (
-    <div className="card-modern group h-full flex flex-col">
+    <Link 
+      to={`/departments/${department.slug}`}
+      className="card-modern group h-full flex flex-col cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 block"
+    >
       {/* Image Container */}
-      <div className="relative h-56 overflow-hidden">
+      <div className="relative h-40 md:h-48 overflow-hidden">
         <img 
           src={department.image} 
           alt={department.name}
@@ -32,26 +35,28 @@ const DepartmentCard = ({ department }) => {
       </div>
 
       {/* Content Section */}
-      <div className="p-8 pt-10 flex flex-col flex-grow">
-        <h3 className="text-2xl font-bold text-primary mb-3 uppercase tracking-tight font-display">{department.name}</h3>
+      <div className="px-6 py-2 pt-2 flex flex-col flex-grow">
+        <h3 className="text-2xl font-bold text-primary mb-1 uppercase tracking-tight font-display">{department.name}</h3>
         
-        <p className="text-gray-600 mb-8 line-clamp-3 leading-relaxed text-sm flex-grow">
+        <p className="text-gray-600 mb-3 line-clamp-3 leading-relaxed text-sm flex-grow">
           {department.shortDescription || department.fullDescription.substring(0, 120) + "..."}
         </p>
 
-        <div className="flex items-center justify-between border-t border-divider pt-6 mt-auto">
-          <Link 
-            to={`/departments/${department.slug}`} 
-            className="text-primary font-bold text-sm inline-flex items-center gap-2 hover:text-secondary transition-colors uppercase tracking-widest"
+        <div className="flex items-center justify-between border-t border-divider pt-3 mt-auto">
+          <button 
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              // Add booking logic here if needed
+              window.location.href = '#booking';
+            }}
+            className="w-full bg-gray-100 text-primary px-4 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-secondary hover:text-white transition-all transform active:scale-95"
           >
-            View Details
-          </Link>
-          <button className="bg-gray-100 text-primary px-4 py-2 rounded-md font-bold text-[10px] uppercase tracking-widest hover:bg-secondary hover:text-white transition-all">
             Book Visit
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

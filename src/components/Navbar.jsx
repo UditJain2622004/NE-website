@@ -58,12 +58,9 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Nav Bar */}
-      <nav className="lg:hidden flex justify-between items-center px-5 py-3">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 bg-secondary flex items-center justify-center rounded-lg shrink-0">
-            <HeartPulseIcon className="w-5 h-5 text-white" />
-          </div>
-          <span className="text-primary font-bold text-lg tracking-tighter uppercase">CareConnect</span>
+      <nav className="lg:hidden flex justify-between items-center px-5 py-3 border-b border-gray-200">
+        <Link to="/" className="flex items-center">
+          <img src="/logo2.png" alt="Logo" className="h-10 w-auto" />
         </Link>
         <div className="flex items-center gap-3">
           <button className="relative p-2 text-gray-400">
@@ -81,15 +78,9 @@ const Navbar = () => {
       </nav>
 
       {/* Desktop Nav Bar */}
-      <nav className="hidden lg:flex container-custom justify-between items-center py-5">
-        <Link to="/" className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-secondary flex items-center justify-center rounded-lg shadow-inner shrink-0">
-            <HeartPulseIcon className="w-8 h-8 text-white" />
-          </div>
-          <div className="leading-none">
-            <span className="text-primary font-bold text-2xl tracking-tighter block uppercase">CareConnect</span>
-            <span className="text-secondary text-[10px] font-bold tracking-[0.3em] uppercase opacity-80">Health System</span>
-          </div>
+      <nav className="hidden lg:flex container-custom justify-between items-center py-2">
+        <Link to="/" className="flex items-center">
+          <img src="/logo2.png" alt="Logo" className="h-14 w-auto object-contain" />
         </Link>
 
         <div className="flex items-center gap-8">
@@ -134,11 +125,8 @@ const Navbar = () => {
           onClick={e => e.stopPropagation()}
         >
           <div className="flex justify-between items-center p-6 border-b border-divider">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-secondary flex items-center justify-center rounded-md">
-                <HeartPulseIcon className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-primary font-bold text-xl uppercase tracking-tighter leading-none">CareConnect</span>
+            <div className="flex items-center">
+              <img src="/logo2.png" alt="Logo" className="h-10 w-auto object-contain" />
             </div>
             <button onClick={() => setIsOpen(false)} className="p-2 text-gray-400 hover:text-primary transition-colors">
               <X size={28} />
@@ -193,11 +181,5 @@ const Navbar = () => {
   );
 };
 
-// Helper SVG Icon
-const HeartPulseIcon = ({ className }) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-  </svg>
-);
 
 export default Navbar;

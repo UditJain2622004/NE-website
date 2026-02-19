@@ -3,7 +3,7 @@ import { Quote, Star } from 'lucide-react';
 
 const TestimonialsSection = () => {
   return (
-    <section className="section-padding bg-hospital-bg">
+    <section className="section-padding bg-primary/5">
       <div className="container-custom">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-secondary font-bold uppercase tracking-widest text-sm mb-3 block">Testimonials</span>

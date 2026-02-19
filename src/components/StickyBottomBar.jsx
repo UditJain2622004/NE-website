@@ -1,4 +1,4 @@
-import { Home, Calendar, Plus, Users, MessageCircle } from 'lucide-react';
+import { Home, Calendar, Users, Phone, Bell } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const scrollToHash = (hash) => {
@@ -12,7 +12,6 @@ const scrollToHash = (hash) => {
 const StickyBottomBar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isHome = location.pathname === '/';
 
   const handleNav = (to) => {
     const [path, hash] = to.split('#');
@@ -32,32 +31,46 @@ const StickyBottomBar = () => {
   };
 
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.06)]">
-      <div className="flex items-end justify-around px-4 pt-2 pb-3 relative">
-        <NavItem icon={Home} label="Home" to="/" active={isHome} onNav={handleNav} />
-        <NavItem icon={Calendar} label="Book" to="/#book" onNav={handleNav} />
-        
-        {/* Center floating action button */}
-        <div className="flex flex-col items-center -mt-5">
-          <button 
-            onClick={() => handleNav('/#book')}
-            className="w-14 h-14 bg-secondary text-white rounded-full flex items-center justify-center shadow-lg shadow-secondary/30 active:scale-95 transition-transform"
-          >
-            <Plus size={28} strokeWidth={2.5} />
-          </button>
-        </div>
+    <div className="fixed bottom-1 left-1/2 -translate-x-1/2 z-50 w-[95%] lg:w-[50%] max-w-2xl">
+      <div className="bg-white/70 backdrop-blur-3xl rounded-2xl shadow-[0_8px_32px_rgba(28,78,149,0.18)] border border-primary/10 px-2 py-2 flex items-center justify-between gap-3">
+        {/* Doctors CTA */}
+        <button 
+          onClick={() => handleNav('/#doctors')}
+          className="flex flex-col items-center justify-center gap-1 bg-primary/80 text-white rounded-xl shadow-lg shadow-primary/20 active:scale-95 transition-all px-2 py-3 flex-1 cursor-pointer"
+        >
+          <Users size={22} strokeWidth={2.5} />
+          <span className="text-[10px] lg:text-xs font-bold uppercase tracking-wider leading-none">Find Doctors</span>
+        </button>
 
-        <NavItem icon={Users} label="Doctors" to="/#doctors" onNav={handleNav} />
-        <NavItem icon={MessageCircle} label="Chat" to="/#chat" onNav={handleNav} />
+        {/* Book CTA - Highlighted */}
+        <button 
+          onClick={() => handleNav('/#book')}
+          className="flex flex-col items-center justify-center gap-1 bg-secondary/80 text-white rounded-xl shadow-lg shadow-secondary/20 active:scale-95 transition-all px-2 py-3 flex-1 cursor-pointer"
+        >
+          <Calendar size={22} strokeWidth={2.5} />
+          <span className="text-[10px] lg:text-xs font-bold uppercase tracking-wider leading-none whitespace-nowrap">Book Appointment</span>
+        </button>
+
+        {/* Emergency CTA */}
+        <button 
+          onClick={() => window.location.href = 'tel:911'}
+          className="flex flex-col items-center justify-center gap-1 text-red-600 border-1 border-red-600 rounded-xl shadow-lg shadow-emergency/20 active:scale-95 transition-all px-2 py-3 flex-1 cursor-pointer"
+        >
+          <Phone size={22} strokeWidth={2.5} />
+          <span className="text-[10px] lg:text-xs font-bold uppercase tracking-wider leading-none whitespace-nowrap">Emergency</span>
+        </button>
       </div>
     </div>
   );
 };
 
-const NavItem = ({ icon: Icon, label, to, active, onNav }) => (
-  <button onClick={() => onNav(to)} className="flex flex-col items-center gap-1 min-w-[48px] bg-transparent border-none cursor-pointer">
-    <Icon size={22} className={active ? 'text-secondary' : 'text-gray-400'} />
-    <span className={`text-[10px] font-semibold ${active ? 'text-secondary' : 'text-gray-400'}`}>{label}</span>
+const CTAButton = ({ icon: Icon, label, to, active, onNav }) => (
+  <button 
+    onClick={() => onNav(to)} 
+    className={`flex flex-col items-center justify-center gap-1 min-w-[56px] py-1 border-none cursor-pointer transition-colors ${active ? 'text-primary' : 'text-gray-400'}`}
+  >
+    <Icon size={20} strokeWidth={active ? 2.5 : 2} />
+    <span className={`text-[10px] font-bold uppercase tracking-wider leading-none`}>{label}</span>
   </button>
 );
 

@@ -3,7 +3,7 @@ import { generalFaqs } from '../../data/faqs';
 
 const FAQSection = () => {
   return (
-    <section id="faq" className="section-padding bg-white pt-0">
+    <section id="faq" className="section-padding bg-white">
       <div className="container-custom">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Common Questions</span>
