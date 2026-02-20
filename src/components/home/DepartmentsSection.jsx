@@ -29,7 +29,7 @@ const DepartmentsSection = () => {
         </div>
 
         <div className="mt-2 lg:mt-4 text-center px-5 lg:px-0">
-          <Link to="/#all-departments" className="btn-outline w-full lg:w-auto inline-flex items-center justify-center gap-3 px-2 lg:px-12 py-4 rounded-xl">
+          <Link to="/departments" className="btn-outline w-full lg:w-auto inline-flex items-center justify-center gap-3 px-2 lg:px-12 py-4 rounded-xl">
             Explore All Departments <ArrowRight size={20} />
           </Link>
         </div>

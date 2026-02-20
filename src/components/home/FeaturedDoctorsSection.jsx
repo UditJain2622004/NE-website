@@ -18,7 +18,7 @@ const FeaturedDoctorsSection = () => {
               Qualified and experienced doctors ready to serve you with the best medical care.
             </p>
           </div>
-          <Link to="/#all-doctors" className="text-primary font-bold uppercase tracking-widest text-xs inline-flex items-center gap-2 hover:text-secondary transition-colors group pb-2 border-b-2 border-primary/10 hover:border-secondary">
+          <Link to="/doctors" className="text-primary font-bold uppercase tracking-widest text-xs inline-flex items-center gap-2 hover:text-secondary transition-colors group pb-2 border-b-2 border-primary/10 hover:border-secondary">
             See All Doctors <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>

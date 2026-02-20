@@ -16,14 +16,23 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
+    { name: 'About Us', path: '/about' },
     { 
       name: 'Departments', 
-      path: '/#departments',
-      dropdown: ['Cardiology', 'Neurology', 'Pediatrics', 'Surgery']
+      path: '/departments',
+      dropdown: {'Cardiology':"/departments/cardiology", 'Neurology':"/departments/neurology", 'Pediatrics':"/departments/pediatrics"}
     },
-    { name: 'Find a Doctor', path: '/#doctors' },
-    { name: 'Patients & Visitors', path: '/#patients' },
-    { name: 'Contact', path: '/#contact' },
+    { name: 'Find a Doctor', path: '/doctors' },
+    { 
+      name: 'Contact', 
+      path: '/contact', 
+      dropdownType: 'contact',
+      dropdown: [
+        { label: 'Book an Appointment:', value: '080 4969 4969', path: 'tel:08049694969' },
+        { label: 'Emergency Number:', value: '080 4962 4962', path: 'tel:08049624962', isRed: true },
+        { label: 'Toll free Number:', value: '1800 202 4969', path: 'tel:18002024969' }
+      ]
+    },
   ];
 
   return (
@@ -39,11 +48,11 @@ const Navbar = () => {
           </a>
         </div>
         <div className="flex items-center gap-6">
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <Link to="/#portal" className="hover:text-secondary">Patient Portal</Link>
             <div className="w-px h-3 bg-white/20"></div>
             <Link to="/#careers" className="hover:text-secondary">Careers</Link>
-          </div>
+          </div> */}
           <div className="flex items-center gap-3">
             <a href="#" className="hover:text-secondary opacity-80 hover:opacity-100 transition-opacity">
               <span className="sr-only">Facebook</span>
@@ -95,12 +104,29 @@ const Navbar = () => {
                   {link.dropdown && <svg className="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>}
                 </Link>
                 {link.dropdown && (
-                  <div className="absolute top-full left-0 w-48 bg-white shadow-xl rounded-lg py-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 border border-divider">
-                    {link.dropdown.map(item => (
-                      <Link key={item} to={`/departments/${item.toLowerCase()}`} className="block px-6 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors">
-                        {item}
-                      </Link>
-                    ))}
+                  <div className={`absolute top-full left-0 ${link.dropdownType === 'contact' ? 'w-64' : 'w-48'} bg-white shadow-xl rounded-lg py-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 border border-divider`}>
+                    {link.dropdownType === 'contact' ? (
+                      link.dropdown.map((item, index) => (
+                        <div key={index}>
+                          <a 
+                            href={item.path} 
+                            className="block px-6 py-4 hover:bg-gray-50 transition-colors"
+                          >
+                            <p className="text-sm text-gray-800 mb-1">{item.label}</p>
+                            <p className={`text-lg font-bold ${item.isRed ? 'text-emergency' : 'text-primary'}`}>
+                              {item.value}
+                            </p>
+                          </a>
+                          {index < link.dropdown.length - 1 && <div className="mx-6 border-b border-divider"></div>}
+                        </div>
+                      ))
+                    ) : (
+                      Object.entries(link.dropdown).map(([item, path]) => (
+                        <Link key={item} to={path} className="block px-6 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors">
+                          {item}
+                        </Link>
+                      ))
+                    )}
                   </div>
                 )}
               </li>

@@ -3,7 +3,7 @@ import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, ChevronRig
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0a1e3b] text-white overflow-hidden relative">
+    <footer className="bg-[#0a1e3b] text-white overflow-hidden relative pb-15">
       <div className="container-custom relative z-10">
 
         {/* === MOBILE FOOTER === */}
@@ -39,9 +39,18 @@ const Footer = () => {
 
           {/* Links in two columns */}
           <div className="grid grid-cols-2 gap-x-6 gap-y-2.5 mb-8">
-            {['About Us', 'Our Doctors', 'Departments', 'Book Appointment', 'Contact Us', 'Cardiology', 'Neurology', 'Pediatrics'].map((link) => (
-              <Link key={link} to="/" className="text-gray-400 text-xs font-medium py-1">
-                {link}
+            {[
+              { name: 'About Us', path: '/about' },
+              { name: 'Our Doctors', path: '/doctors' },
+              { name: 'Departments', path: '/departments' },
+              { name: 'Book Appointment', path: '/#book' },
+              { name: 'Contact Us', path: '/contact' },
+              { name: 'Cardiology', path: '/departments/cardiology' },
+              { name: 'Neurology', path: '/departments/neurology' },
+              { name: 'Pediatrics', path: '/departments/pediatrics' }
+            ].map((link) => (
+              <Link key={link.name} to={link.path} className="text-gray-400 text-xs font-medium py-1">
+                {link.name}
               </Link>
             ))}
           </div>
@@ -52,7 +61,6 @@ const Footer = () => {
             <div className="flex gap-4 text-gray-500 text-[10px] font-medium">
               <Link to="/#privacy">Privacy</Link>
               <Link to="/#terms">Terms</Link>
-              <Link to="/#sitemap">Sitemap</Link>
             </div>
           </div>
         </div>
@@ -90,11 +98,17 @@ const Footer = () => {
                 Quick Links
               </h3>
               <ul className="space-y-4">
-                {['About Us', 'Our Doctors', 'Departments', 'Book Appointment', 'Contact Us'].map((link) => (
-                  <li key={link}>
-                    <Link to="/" className="text-gray-400 hover:text-secondary group flex items-center gap-2 transition-all font-semibold text-sm">
+                {[
+                  { name: 'About Us', path: '/about' },
+                  { name: 'Our Doctors', path: '/doctors' },
+                  { name: 'Departments', path: '/departments' },
+                  { name: 'Book Appointment', path: '/#book' },
+                  { name: 'Contact Us', path: '/contact' }
+                ].map((link) => (
+                  <li key={link.name}>
+                    <Link to={link.path} className="text-gray-400 hover:text-secondary group flex items-center gap-2 transition-all font-semibold text-sm">
                       <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                      {link}
+                      {link.name}
                     </Link>
                   </li>
                 ))}
@@ -107,12 +121,16 @@ const Footer = () => {
                 <span className="w-1 h-6 bg-secondary rounded-full"></span>
                 Departments
               </h3>
-              <ul className="space-y-4">
-                {['Cardiology', 'Neurology', 'Orthopedics', 'Pediatrics', 'Surgery'].map((dept) => (
-                  <li key={dept}>
-                    <Link to="/" className="text-gray-400 hover:text-secondary group flex items-center gap-2 transition-all font-semibold text-sm">
+               <ul className="space-y-4">
+                {[
+                  { name: 'Cardiology', path: '/departments/cardiology' },
+                  { name: 'Neurology', path: '/departments/neurology' },
+                  { name: 'Pediatrics', path: '/departments/pediatrics' }
+                ].map((dept) => (
+                  <li key={dept.name}>
+                    <Link to={dept.path} className="text-gray-400 hover:text-secondary group flex items-center gap-2 transition-all font-semibold text-sm">
                       <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                      {dept}
+                      {dept.name}
                     </Link>
                   </li>
                 ))}
@@ -147,7 +165,6 @@ const Footer = () => {
             <div className="flex gap-8">
               <Link to="/#privacy" className="hover:text-white">Privacy Policy</Link>
               <Link to="/#terms" className="hover:text-white">Terms of Service</Link>
-              <Link to="/#sitemap" className="hover:text-white">Sitemap</Link>
             </div>
           </div>
         </div>
