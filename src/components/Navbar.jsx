@@ -1,6 +1,62 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Phone, Calendar, Siren, User, Bell } from 'lucide-react';
+import { Menu, X, Phone, Calendar, Siren, User, Bell, ChevronDown } from 'lucide-react';
+
+const MobileNavLink = ({ link, setIsOpen }) => {
+  const [isItemOpen, setIsItemOpen] = useState(false);
+  const hasDropdown = !!link.dropdown;
+
+  return (
+    <div className="flex flex-col">
+      <div className="flex justify-between items-center py-4 border-b border-divider">
+        <Link
+          to={link.path}
+          onClick={() => setIsOpen(false)}
+          className="text-lg font-bold text-primary grow"
+        >
+          {link.name}
+        </Link>
+        {/* {hasDropdown && (
+          <button 
+            onClick={() => setIsItemOpen(!isItemOpen)}
+            className="p-2 text-gray-400"
+          >
+            <ChevronDown size={20} className={`transition-transform duration-300 ${isItemOpen ? 'rotate-180' : ''}`} />
+          </button>
+        )} */}
+      </div>
+
+      {/* {hasDropdown && isItemOpen && (
+        <div className="bg-gray-50/50 px-4 py-2 mt-2 rounded-xl flex flex-col gap-1 animate-in slide-in-from-top-2 duration-300">
+          {link.dropdownType === 'contact' ? (
+            link.dropdown.map((item, idx) => (
+              <a 
+                key={idx}
+                href={item.path}
+                onClick={() => setIsOpen(false)}
+                className="flex flex-col py-3 border-b border-divider/50 last:border-0"
+              >
+                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{item.label}</span>
+                <span className={`text-base font-bold ${item.isRed ? 'text-emergency' : 'text-primary'}`}>{item.value}</span>
+              </a>
+            ))
+          ) : (
+            Object.entries(link.dropdown).map(([name, path]) => (
+              <Link
+                key={name}
+                to={path}
+                onClick={() => setIsOpen(false)}
+                className="py-3 text-sm font-semibold text-gray-600 hover:text-secondary transition-colors"
+              >
+                {name}
+              </Link>
+            ))
+          )}
+        </div>
+      )} */}
+    </div>
+  );
+};
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,22 +123,20 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Nav Bar */}
-      <nav className="lg:hidden flex justify-between items-center px-5 py-3 border-b border-gray-200">
+      <nav className="lg:hidden flex justify-between items-center px-5 py-3 border-b border-gray-200 bg-white">
         <Link to="/" className="flex items-center">
-          <img src="/logo2.png" alt="Logo" className="h-10 w-auto" />
+          <img src="/logo2.png" alt="Logo" className="h-10 w-auto object-contain" />
         </Link>
-        <div className="flex items-center gap-3">
-          <button className="relative p-2 text-gray-400">
-            <Bell size={22} />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-secondary rounded-full"></span>
+        <div className="flex items-center gap-2">
+          <a href="tel:08049624962" className="w-10 h-10 bg-emergency/10 text-emergency rounded-full flex items-center justify-center animate-pulse shadow-sm">
+            <Siren size={20} />
+          </a>
+          <button 
+            onClick={() => setIsOpen(true)} 
+            className="w-10 h-10 flex items-center justify-center text-primary rounded-full hover:bg-gray-100 transition-colors"
+          >
+            <Menu size={26} />
           </button>
-          <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-gray-200">
-            <img 
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100&h=100" 
-              alt="Profile" 
-              className="w-full h-full object-cover"
-            />
-          </div>
         </div>
       </nav>
 
@@ -161,16 +215,7 @@ const Navbar = () => {
           
           <div className="flex flex-col p-6 gap-2 overflow-y-auto">
             {navLinks.map((link) => (
-              <div key={link.name}>
-                <Link
-                  to={link.path}
-                  onClick={() => setIsOpen(false)}
-                  className="flex justify-between items-center py-4 text-lg font-bold text-primary border-b border-divider group"
-                >
-                  {link.name}
-                  <svg className="w-5 h-5 text-gray-300 group-hover:text-secondary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                </Link>
-              </div>
+              <MobileNavLink key={link.name} link={link} setIsOpen={setIsOpen} />
             ))}
             
             <div className="mt-8 space-y-4">
@@ -181,25 +226,10 @@ const Navbar = () => {
               >
                 <Calendar size={22} /> Book Appointment
               </Link>
-              <Link 
-                to="/#emergency" 
-                onClick={() => setIsOpen(false)}
-                className="bg-emergency text-white w-full py-4 rounded-xl font-bold flex justify-center items-center gap-3 text-lg shadow-lg uppercase tracking-widest"
-              >
-                <Siren size={22} /> Emergency Hub
-              </Link>
+              
             </div>
 
-            <div className="mt-12 pt-8 border-t border-divider space-y-6">
-              <div className="flex items-center gap-4 text-gray-500">
-                <Phone size={20} className="text-secondary" />
-                <span className="font-bold">+1 (555) 123-4567</span>
-              </div>
-              <div className="flex items-center gap-4 text-gray-500">
-                <User size={20} className="text-secondary" />
-                <span className="font-bold">Patient Portal Login</span>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>

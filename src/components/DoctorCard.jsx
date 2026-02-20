@@ -23,11 +23,11 @@ const DoctorCard = ({ doctor }) => {
         <div className="p-6 flex flex-col flex-grow">
           <div className="mb-4">
             <h3 className="text-xl font-bold text-primary mb-1 uppercase tracking-tight font-display">{doctor.name}</h3>
-            <p className="text-xs text-secondary font-bold uppercase tracking-widest mb-3">
+            <p className="text-xs text-secondary tracking-widest mb-3">
               {doctor.qualifications} — {doctor.speciality}
             </p>
             
-            <div className="flex items-center gap-2 mb-4">
+            {/* <div className="flex items-center gap-2 mb-4">
               <div className="flex text-yellow-400">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} size={14} fill="currentColor" />
@@ -36,21 +36,21 @@ const DoctorCard = ({ doctor }) => {
               <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                 ({reviewCount} Reviews)
               </span>
-            </div>
+            </div> */}
           </div>
 
-          <div className="mt-auto pt-6 border-t border-divider grid grid-cols-2 gap-3">
-            <Link 
+          <div className="mt-auto pt-6 border-t border-divider">
+            {/* <Link 
               to={`/doctors/${doctor.slug}`} 
               className="btn-outline py-2.5 px-0 text-xs flex items-center justify-center gap-2 border-divider text-primary hover:border-primary hover:bg-primary/5 rounded-md transition-all font-bold uppercase tracking-widest"
             >
               Profile
-            </Link>
+            </Link> */}
             <Link 
               to="#book" 
-              className="btn-primary py-2.5 px-0 text-xs flex items-center justify-center gap-2 rounded-md shadow-sm font-bold uppercase tracking-widest"
+              className="btn-primary py-2.5 px-0 text-xs flex items-center justify-center gap-2 rounded-md shadow-sm font-bold tracking-widest"
             >
-              Book
+              Book an Appointment
             </Link>
           </div>
         </div>
