@@ -3,7 +3,7 @@ export const doctors = [
     id: 1,
     name: "Dr. Abhijith Reddy A",
     slug: "abhijith-reddy",
-    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400&h=400",
+    image: "/dr.abhi.jpeg",
     speciality: "Managing Director & Clinical Consultant",
     designation: "Managing Director & Clinical Consultant",
     department: "Medicine",
