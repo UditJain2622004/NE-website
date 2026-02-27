@@ -8,6 +8,7 @@ import AboutUsPage from './pages/AboutUsPage';
 import ContactUsPage from './pages/ContactUsPage';
 import DoctorDetailsPage from './pages/DoctorDetailsPage';
 import DepartmentDetailsPage from './pages/DepartmentDetailsPage';
+import ScrollToTop from './components/ScrollToTop';
 import StickyBottomBar from './components/StickyBottomBar';
 import FloatingCallButton from './components/FloatingCallButton';
 import './App.css';
@@ -15,6 +16,7 @@ import './App.css';
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="min-h-screen bg-hospital-bg flex flex-col">
         <Navbar />
         <main className="grow pb-20 lg:pb-0">

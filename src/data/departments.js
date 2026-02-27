@@ -6,7 +6,7 @@ export const departments = [
     icon: "ActivityIcon",
     shortDescription: "Comprehensive general medicine services for diagnosis and treatment of a wide range of health conditions.",
     fullDescription: "Our Medicine department provides expert diagnosis, treatment, and management of a broad spectrum of adult diseases. From routine checkups to complex medical conditions, our experienced physicians deliver personalized care using the latest evidence-based practices.",
-    image: "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?auto=format&fit=crop&q=80&w=800&h=400",
+    image: "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?auto=format&fit=crop&q=90&w=1200&h=900",
     conditions: ["Diabetes", "Hypertension", "Respiratory Infections", "Fever & Infections", "Thyroid Disorders", "Gastrointestinal Issues"],
     procedures: ["General Health Checkups", "Blood Pressure Monitoring", "Blood Tests & Diagnostics", "ECG", "Medication Management"],
     faqs: [
@@ -27,7 +27,7 @@ export const departments = [
     icon: "MicroscopeIcon",
     shortDescription: "Advanced diagnostic imaging services with state-of-the-art technology for accurate diagnosis.",
     fullDescription: "Our Radiology department offers a full range of diagnostic imaging services using cutting-edge technology. From X-rays and ultrasounds to CT scans and MRIs, our skilled radiologists provide accurate and timely reports to support effective treatment planning.",
-    image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800&h=400",
+    image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=90&w=1200&h=900",
     conditions: ["Fractures & Bone Injuries", "Tumors & Growths", "Internal Organ Abnormalities", "Vascular Conditions"],
     procedures: ["X-Ray", "Ultrasound", "CT Scan", "MRI", "Doppler Studies", "Fluoroscopy"],
     faqs: [
@@ -48,7 +48,7 @@ export const departments = [
     icon: "UserGroupIcon",
     shortDescription: "Compassionate and specialized healthcare for infants, children, and adolescents.",
     fullDescription: "Our Paediatrics department is dedicated to the physical, emotional, and developmental health of children from birth through adolescence. We provide a child-friendly environment with specialized neonatal care, vaccinations, growth monitoring, and treatment for childhood illnesses.",
-    image: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=800&h=400",
+    image: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=90&w=1200&h=900",
     conditions: ["Childhood Infections", "Asthma", "Developmental Delays", "Nutritional Disorders", "Neonatal Conditions", "Allergies"],
     procedures: ["Vaccinations", "Well-child Checkups", "Growth Monitoring", "Hearing & Vision Screening", "Neonatal Intensive Care"],
     faqs: [
@@ -69,7 +69,7 @@ export const departments = [
     icon: "HeartIcon",
     shortDescription: "Expert care for hormonal and metabolic disorders including diabetes and thyroid conditions.",
     fullDescription: "Our Endocrinology department specializes in the diagnosis and management of hormonal imbalances and metabolic disorders. From diabetes management and thyroid conditions to adrenal and pituitary disorders, our specialists provide comprehensive, personalized treatment plans.",
-    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=800&h=400",
+    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=90&w=1200&h=900",
     conditions: ["Diabetes (Type 1 & Type 2)", "Thyroid Disorders", "PCOS", "Adrenal Disorders", "Pituitary Disorders", "Obesity & Metabolic Syndrome"],
     procedures: ["Thyroid Function Tests", "HbA1c Monitoring", "Hormone Level Testing", "Insulin Therapy Management", "Bone Density Scan"],
     faqs: [

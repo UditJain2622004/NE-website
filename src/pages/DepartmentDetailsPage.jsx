@@ -23,41 +23,43 @@ const DepartmentDetailsPage = () => {
   }
 
   return (
-    <div className="pt-24 lg:pt-32">
+    <div className="pt-16 lg:pt-20">
       {/* Hero Section */}
-      <section className="bg-hospital-bg py-16 lg:py-24 border-b border-divider">
-        <div className="container-custom">
-          <Link to="/#departments" className="inline-flex items-center gap-2 text-primary font-semibold hover:translate-x-1 transition-transform mb-8">
+      <section className="bg-hospital-bg pt-4 pb-8 sm:pt-6 sm:pb-12 lg:py-24 border-b border-divider">
+        <div className="container-custom px-4 sm:px-6 lg:px-0">
+          <Link to="/departments" className="inline-flex items-center gap-2 text-primary font-semibold hover:translate-x-1 transition-transform mb-4 sm:mb-8">
             <ChevronLeft size={20} /> Back to All Departments
           </Link>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1.2fr)] gap-6 sm:gap-8 lg:gap-12 xl:gap-16 items-center">
+            <div className="order-2 lg:order-1 lg:pr-6 xl:pr-8">
               <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Department Excellence</span>
-              <h1 className="text-4xl lg:text-7xl font-bold text-primary mb-8 leading-[1.05] font-display">
+              <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-primary mb-6 sm:mb-8 leading-[1.05] font-display">
                 {department.name} <br />
                 <span className="text-secondary">Specialized Care</span>
               </h1>
-              <p className="text-lg lg:text-xl text-gray-600 mb-12 leading-relaxed opacity-90 max-w-xl">
+              <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-8 sm:mb-12 leading-relaxed opacity-90 w-full max-w-xl">
                 {department.fullDescription}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button className="btn-primary px-10 py-5 text-lg font-bold flex items-center justify-center gap-3">
-                  <Calendar size={22} /> Request Consultation
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <button className="btn-primary px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2">
+                  <Calendar size={18} className="shrink-0" /> Request Consultation
                 </button>
-                <a href="tel:+1234567890" className="btn-outline px-10 py-5 text-lg font-bold flex items-center justify-center gap-3">
-                  <Phone size={22} /> Department Helpline
+                <a href="tel:+1234567890" className="btn-outline px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2">
+                  <Phone size={18} className="shrink-0" /> Department Helpline
                 </a>
               </div>
             </div>
             
-            <div className="relative">
-              <div className="absolute inset-0 bg-primary/5 rounded-sm -rotate-3 transform -z-10 scale-105"></div>
-              <img 
-                src={department.image} 
-                alt={department.name} 
-                className="w-full h-auto rounded-sm shadow-xl"
-              />
+            <div className="order-1 lg:order-2 relative min-w-0 -mx-4 sm:mx-0">
+              <div className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-white/80 shadow-2xl shadow-primary/10 ring-1 ring-black/5">
+                <img 
+                  src={department.image} 
+                  alt={department.name} 
+                  className="w-full aspect-4/3 object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-primary/5 via-transparent to-transparent pointer-events-none" />
+              </div>
             </div>
           </div>
         </div>
