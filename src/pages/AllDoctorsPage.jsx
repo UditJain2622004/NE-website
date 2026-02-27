@@ -1,25 +1,25 @@
 import { doctors } from '../data/doctors';
 import DoctorCard from '../components/DoctorCard';
-import { Activity, UserRound, ChevronDown, Search, X } from 'lucide-react';
+import { Building2, UserRound, ChevronDown, Search, X } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 
 const AllDoctorsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSpeciality, setSelectedSpeciality] = useState('');
+  const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedDoctor, setSelectedDoctor] = useState('');
-  const [isSpecOpen, setIsSpecOpen] = useState(false);
+  const [isDeptOpen, setIsDeptOpen] = useState(false);
   const [isDocOpen, setIsDocOpen] = useState(false);
-  const [specSearch, setSpecSearch] = useState('');
+  const [deptSearch, setDeptSearch] = useState('');
   const [docSearch, setDocSearch] = useState('');
 
-  const specRef = useRef(null);
+  const deptRef = useRef(null);
   const docRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (specRef.current && !specRef.current.contains(event.target)) {
-        setIsSpecOpen(false);
-        setSpecSearch('');
+      if (deptRef.current && !deptRef.current.contains(event.target)) {
+        setIsDeptOpen(false);
+        setDeptSearch('');
       }
       if (docRef.current && !docRef.current.contains(event.target)) {
         setIsDocOpen(false);
@@ -30,12 +30,12 @@ const AllDoctorsPage = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const specialities = [...new Set(doctors.map(d => d.speciality))].filter(s => 
-    s.toLowerCase().includes(specSearch.toLowerCase())
+  const departments = [...new Set(doctors.map(d => d.department))].filter(d => 
+    d.toLowerCase().includes(deptSearch.toLowerCase())
   );
   
   const filteredDoctorNames = doctors
-    .filter(d => !selectedSpeciality || d.speciality === selectedSpeciality)
+    .filter(d => !selectedDepartment || d.department === selectedDepartment)
     .filter(d => d.name.toLowerCase().includes(docSearch.toLowerCase()))
     .map(d => d.name);
 
@@ -43,14 +43,14 @@ const AllDoctorsPage = () => {
     const matchesSearch = doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          doctor.speciality.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          doctor.department.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesSpec = !selectedSpeciality || doctor.speciality === selectedSpeciality;
+    const matchesDept = !selectedDepartment || doctor.department === selectedDepartment;
     const matchesDoc = !selectedDoctor || doctor.name === selectedDoctor;
     
-    return matchesSearch && matchesSpec && matchesDoc;
+    return matchesSearch && matchesDept && matchesDoc;
   });
 
   const clearFilters = () => {
-    setSelectedSpeciality('');
+    setSelectedDepartment('');
     setSelectedDoctor('');
     setSearchTerm('');
   };
@@ -71,36 +71,34 @@ const AllDoctorsPage = () => {
           <div className="max-w-5xl mx-auto bg-white border border-blue-100 rounded-3xl shadow-xl shadow-blue-900/5 p-4 lg:p-6 mt-5 mb-8 relative z-30">
             <div className="flex flex-row items-center gap-3 lg:gap-0">
               
-              {/* Speciality Dropdown */}
-              <div className="flex-1 min-w-0 relative" ref={specRef}>
+              {/* Department Dropdown */}
+              <div className="flex-1 min-w-0 relative" ref={deptRef}>
                 <button 
-                  onClick={() => { setIsSpecOpen(!isSpecOpen); setIsDocOpen(false); }}
+                  onClick={() => { setIsDeptOpen(!isDeptOpen); setIsDocOpen(false); }}
                   className="w-full flex items-center gap-2 lg:gap-4 px-2 lg:px-4 py-2 hover:bg-gray-50 transition-colors rounded-2xl group"
                 >
                   <div className="hidden lg:flex w-12 h-12 rounded-full bg-blue-50 text-secondary items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all duration-300">
-                    <Activity size={24} />
+                    <Building2 size={24} />
                   </div>
                   <div className="text-left flex-1 min-w-0">
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Speciality</p>
-                    <p className="text-gray-700 font-bold  text-sm lg:text-base">
-                      {selectedSpeciality || 'Select a Speciality'}
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Department</p>
+                    <p className="text-gray-700 font-bold text-sm lg:text-base">
+                      {selectedDepartment || 'Select a Department'}
                     </p>
                   </div>
-                  <ChevronDown size={18} className={`text-black-300 transition-transform duration-300 shrink-0 ${isSpecOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={18} className={`text-black-300 transition-transform duration-300 shrink-0 ${isDeptOpen ? 'rotate-180' : ''}`} />
                 </button>
 
-                {isSpecOpen && (
+                {isDeptOpen && (
                   <div className="absolute top-full left-0 right-0 mt-4 bg-white border border-divider rounded-2xl shadow-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                    {/* Search inside dropdown */}
                     <div className="p-3 bg-gray-50 border-b border-divider">
                       <div className="relative">
                         <input 
                           type="text"
                           placeholder="Search..."
                           className="w-full bg-white border border-divider rounded-xl py-2 px-4 pl-9 text-xs focus:outline-none focus:ring-2 focus:ring-secondary/20"
-                          value={specSearch}
-                          onChange={(e) => setSpecSearch(e.target.value)}
-                          
+                          value={deptSearch}
+                          onChange={(e) => setDeptSearch(e.target.value)}
                         />
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
                       </div>
@@ -109,17 +107,17 @@ const AllDoctorsPage = () => {
                     <div className="max-h-64 overflow-y-auto py-2">
                       <div 
                         className="px-6 py-3 hover:bg-blue-50 cursor-pointer text-sm font-bold text-primary"
-                        onClick={() => { setSelectedSpeciality(''); setIsSpecOpen(false); setSpecSearch(''); }}
+                        onClick={() => { setSelectedDepartment(''); setIsDeptOpen(false); setDeptSearch(''); }}
                       >
-                        All Specialities
+                        All Departments
                       </div>
-                      {specialities.map(spec => (
+                      {departments.map(dept => (
                         <div 
-                          key={spec}
-                          className={`px-6 py-3 hover:bg-blue-50 cursor-pointer text-sm font-medium transition-colors ${selectedSpeciality === spec ? 'bg-blue-50 text-secondary font-bold' : 'text-gray-600'}`}
-                          onClick={() => { setSelectedSpeciality(spec); setIsSpecOpen(false); setSpecSearch(''); }}
+                          key={dept}
+                          className={`px-6 py-3 hover:bg-blue-50 cursor-pointer text-sm font-medium transition-colors ${selectedDepartment === dept ? 'bg-blue-50 text-secondary font-bold' : 'text-gray-600'}`}
+                          onClick={() => { setSelectedDepartment(dept); setIsDeptOpen(false); setDeptSearch(''); }}
                         >
-                          {spec}
+                          {dept}
                         </div>
                       ))}
                     </div>
@@ -133,7 +131,7 @@ const AllDoctorsPage = () => {
               {/* Doctor Dropdown */}
               <div className="flex-1 min-w-0 relative" ref={docRef}>
                 <button 
-                  onClick={() => { setIsDocOpen(!isDocOpen); setIsSpecOpen(false); }}
+                  onClick={() => { setIsDocOpen(!isDocOpen); setIsDeptOpen(false); }}
                   className="w-full flex items-center gap-2 lg:gap-4 px-2 lg:px-4 py-2 hover:bg-gray-50 transition-colors rounded-2xl group"
                 >
                   <div className="hidden lg:flex w-12 h-12 rounded-full bg-blue-50 text-secondary items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all duration-300">
@@ -188,7 +186,7 @@ const AllDoctorsPage = () => {
 
               {/* Action Buttons */}
               <div className="flex items-center gap-3 ml-0 lg:ml-8">
-                {(selectedSpeciality || selectedDoctor || searchTerm) && (
+                {(selectedDepartment || selectedDoctor || searchTerm) && (
                   <button 
                     onClick={clearFilters}
                     className="p-4 text-gray-400 hover:text-red-500 transition-colors"

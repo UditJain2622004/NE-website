@@ -42,7 +42,7 @@ const DoctorDetailsPage = () => {
               <h1 className="text-2xl font-bold text-primary mb-5 leading-tight">{doctor.name}</h1>
               <div className=''>
 
-              <span className="text-secondary font-bold mb-5 tracking-[0.2em] text-sm mb-1 block"><span className="text-primary"></span> {doctor.speciality}</span>
+              <span className="text-secondary font-bold mb-5 tracking-[0.2em] text-sm mb-1 block"><span className="text-primary"></span> {doctor.designation}</span>
               <span className="text-secondary font-bold  mb-5 tracking-[0.2em] text-sm mb-1 block"><span className="text-primary">Department -</span> {doctor.department}</span>
               </div>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
@@ -106,7 +106,7 @@ const DoctorDetailsPage = () => {
             <div className="hidden lg:block border-b border-divider pb-8">
               <h1 className="text-5xl font-bold text-primary mb-4 leading-tight">{doctor.name}</h1>
               <div className=''>
-                <span className="text-secondary font-bold mb-5 tracking-[0.2em] text-sm mb-1 block"><span className="text-primary"></span> {doctor.speciality}</span>
+                <span className="text-secondary font-bold mb-5 tracking-[0.2em] text-sm mb-1 block"><span className="text-primary"></span> {doctor.designation}</span>
                 <span className="text-secondary font-bold  mb-5 tracking-[0.2em] text-sm mb-1 block"><span className="text-primary">Department -</span> {doctor.department}</span>
               </div>
               <div className="flex flex-wrap items-center gap-4 mb-8">
@@ -159,7 +159,7 @@ const DoctorDetailsPage = () => {
       
       <CTABanner 
         title={`Looking for Consultation with ${doctor.name}?`}
-        subtitle={`Book your slot now and get expert medical advice from one of our top specialists in ${doctor.speciality.toLowerCase()}.`}
+        subtitle={`Book your slot now.`}
       />
     </div>
   );

@@ -2,8 +2,7 @@ import { Link } from 'react-router-dom';
 import { Star, ChevronRight, Building2, Stethoscope } from 'lucide-react';
 
 const DoctorCard = ({ doctor }) => {
-  const reviewCount = Math.floor(Math.random() * 100 + 50);
-  const rating = (Math.random() * 0.5 + 4.5).toFixed(1);
+
 
   return (
     <Link to={`/doctors/${doctor.slug}`} className="block">
@@ -28,7 +27,7 @@ const DoctorCard = ({ doctor }) => {
               {doctor.qualifications}
             </p>
             <p className="text-xs text-primary tracking-widest text-center">
-              {doctor.speciality}
+              {doctor.designation}
             </p>
             
             {/* <div className="flex items-center gap-2 mb-4">
@@ -74,7 +73,7 @@ const DoctorCard = ({ doctor }) => {
           <h3 className="text-sm font-bold text-primary font-display truncate">{doctor.name}</h3>
           <p className="flex items-center gap-1 text-xs text-gray-500 mb-1 truncate">
             <Building2 size={13} className="text-secondary shrink-0" />
-            <span className="truncate">{doctor.speciality}</span>
+            <span className="truncate">{doctor.designation}</span>
           </p>
           <p className="flex items-center gap-1 text-xs text-gray-500 mb-1 truncate">
             <Stethoscope size={13} className="text-secondary shrink-0" />

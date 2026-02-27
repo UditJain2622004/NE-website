@@ -1,4 +1,4 @@
-import { Calendar, Users, Phone } from 'lucide-react';
+import { Calendar, Users, Phone, Stethoscope } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const scrollToHash = (hash) => {
@@ -39,7 +39,7 @@ const StickyBottomBar = () => {
             onClick={() => handleNav('/#doctors')}
             className="flex flex-col items-center justify-center gap-1 bg-primary/80 text-white rounded-xl shadow-lg shadow-primary/20 active:scale-95 transition-all px-2 py-3 flex-1 cursor-pointer"
           >
-            <Users size={22} strokeWidth={2.5} />
+            <Stethoscope size={22} strokeWidth={2.5} />
             <span className="text-[10px] font-bold uppercase tracking-wider leading-none">Find Doctors</span>
           </button>
           <button 
@@ -78,7 +78,7 @@ const StickyBottomBar = () => {
             className="group/btn absolute right-0 top-0 flex items-center gap-3 h-14 w-14 rounded-full p-1.5 bg-violet-200 hover:bg-violet-300 transition-all duration-300 hover:w-[180px] overflow-hidden cursor-pointer"
           >
             <div className="shrink-0 w-11 h-11 rounded-full bg-violet-600 flex items-center justify-center text-white">
-              <Users size={22} strokeWidth={2.5} />
+              <Stethoscope size={22} strokeWidth={2.5} />
             </div>
             <span className="whitespace-nowrap text-sm font-semibold text-violet-700 opacity-0 max-w-0 group-hover/btn:opacity-100 group-hover/btn:max-w-[140px] transition-all duration-300">Find Doctors</span>
           </button>

@@ -13,7 +13,7 @@ const CTABanner = ({
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/10 rounded-full -ml-32 -mb-32 blur-3xl"></div>
       
       <div className="container-custom relative z-10 text-center">
-        <h2 className="text-3xl lg:text-4xl font-black mb-4 text-white uppercase tracking-tight">
+        <h2 className="text-3xl lg:text-4xl font-black mb-4 text-white  tracking-tight">
           {title}
         </h2>
         <p className="text-blue-100 text-lg lg:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
