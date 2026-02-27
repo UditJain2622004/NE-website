@@ -14,7 +14,7 @@ const Footer = () => {
               <div className="w-9 h-9 bg-secondary flex items-center justify-center rounded-lg">
                 <HeartPulseIcon className="w-5 h-5 text-white" />
               </div>
-              <span className="text-white font-bold text-lg tracking-tighter uppercase">CareConnect</span>
+              <span className="text-white font-bold text-lg tracking-tighter uppercase">NexusEnliven</span>
             </Link>
             <div className="flex gap-2.5">
               {[Facebook, Instagram, Twitter].map((Icon, i) => (
@@ -31,9 +31,9 @@ const Footer = () => {
               <Phone size={15} className="text-secondary shrink-0" />
               <span className="text-xs text-gray-300 font-medium">+1 (555) 123-4567</span>
             </a>
-            <a href="mailto:info@careconnect.com" className="flex items-center gap-2.5 bg-white/5 rounded-xl px-3.5 py-3">
+            <a href="mailto:info@nexusenliven.com" className="flex items-center gap-2.5 bg-white/5 rounded-xl px-3.5 py-3">
               <Mail size={15} className="text-secondary shrink-0" />
-              <span className="text-xs text-gray-300 font-medium truncate">info@careconnect.com</span>
+              <span className="text-xs text-gray-300 font-medium truncate">info@nexusenliven.com</span>
             </a>
           </div>
 
@@ -58,7 +58,7 @@ const Footer = () => {
 
           {/* Bottom bar */}
           <div className="pt-6 border-t border-white/10 flex flex-col gap-3 items-center text-center">
-            <p className="text-gray-500 text-[10px] font-medium">© 2024 CareConnect Health System. All rights reserved.</p>
+            <p className="text-gray-500 text-[10px] font-medium">© 2024 NexusEnliven Health System. All rights reserved.</p>
             <div className="flex gap-4 text-gray-500 text-[10px] font-medium">
               <Link to="/#privacy">Privacy</Link>
               <Link to="/#terms">Terms</Link>
@@ -77,7 +77,7 @@ const Footer = () => {
                   <HeartPulseIcon className="w-8 h-8 text-white" />
                 </div>
                 <div className="leading-none">
-                  <span className="text-white font-bold text-2xl tracking-tighter block uppercase">CareConnect</span>
+                  <span className="text-white font-bold text-2xl tracking-tighter block uppercase">NexusEnliven</span>
                 </div>
               </Link>
               <p className="text-gray-400 leading-relaxed font-medium text-sm">
@@ -148,7 +148,7 @@ const Footer = () => {
               <div className="space-y-6">
                 <ContactItem icon={MapPin} text="123 Medical Center Drive, Health City, HC 90210" />
                 <ContactItem icon={Phone} text="+1 (555) 123-4567" isLink link="tel:+15551234567" />
-                <ContactItem icon={Mail} text="info@careconnect.com" isLink link="mailto:info@careconnect.com" />
+                <ContactItem icon={Mail} text="info@nexusenliven.com" isLink link="mailto:info@nexusenliven.com" />
                 <div className="flex items-center gap-4 text-gray-400">
                   <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">
                     <ClockIcon className="w-5 h-5 text-secondary" />
@@ -163,7 +163,7 @@ const Footer = () => {
           </div>
 
           <div className="mt-20 pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8 text-gray-400 text-xs font-bold uppercase tracking-widest">
-            <p>© 2024 CareConnect Health System. All rights reserved.</p>
+            <p>© 2024 NexusEnliven Health System. All rights reserved.</p>
             <div className="flex gap-8">
               <Link to="/#privacy" className="hover:text-white">Privacy Policy</Link>
               <Link to="/#terms" className="hover:text-white">Terms of Service</Link>

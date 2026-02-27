@@ -30,7 +30,7 @@ const HeroSection = () => {
             </p>
             <div className="flex items-center gap-4 border-divider pt-4">
               <div>
-                <p className="text-2xl font-bold text-primary font-display tracking-tight">15k+</p>
+                <p className="text-2xl font-bold text-primary font-display tracking-tight">5k+</p>
                 <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Happy Patients</p>
               </div>
               <div>
@@ -79,7 +79,7 @@ const HeroSection = () => {
 
             <div className="flex items-center gap-12 border-divider pt-0">
               <div>
-                <p className="text-4xl font-bold text-primary font-display tracking-tight">15k+</p>
+                <p className="text-4xl font-bold text-primary font-display tracking-tight">5k+</p>
                 <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Happy Patients</p>
               </div>
               <div>

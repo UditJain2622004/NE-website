@@ -96,8 +96,8 @@ const Navbar = () => {
       {/* Top Strip - desktop only */}
       <div className={`bg-primary text-white py-2 px-6 lg:px-24 transition-all duration-300 hidden lg:flex justify-between items-center text-sm font-medium`}>
         <div className="flex items-center gap-6">
-          <a href="tel:911" className="flex items-center gap-1.5 hover:text-secondary whitespace-nowrap">
-            <Siren size={14} className="text-secondary" /> Emergency: <span className="font-bold">911</span>
+          <a href="tel:112" className="flex items-center gap-1.5 hover:text-secondary whitespace-nowrap">
+            <Siren size={14} className="text-secondary" /> Emergency: <span className="font-bold">112</span>
           </a>
           <a href="tel:+1234567890" className="flex items-center gap-1.5 hover:text-secondary whitespace-nowrap">
             <Phone size={14} className="text-secondary" /> +1 (555) 123-4567

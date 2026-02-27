@@ -50,7 +50,7 @@ const StickyBottomBar = () => {
             <span className="text-[10px] font-bold uppercase tracking-wider leading-none whitespace-nowrap">Book Appointment</span>
           </button>
           <button 
-            onClick={() => window.location.href = 'tel:911'}
+            onClick={() => window.location.href = 'tel:112'}
             className="flex flex-col items-center justify-center gap-1 text-red-600 border border-red-600 rounded-xl shadow-lg shadow-emergency/20 active:scale-95 transition-all px-2 py-3 flex-1 cursor-pointer"
           >
             <Phone size={22} strokeWidth={2.5} />
@@ -85,7 +85,7 @@ const StickyBottomBar = () => {
         </div>
         <div className="relative h-14 w-14">
           <a 
-            href="tel:911"
+            href="tel:112"
             className="group/btn absolute right-0 top-0 flex items-center gap-3 h-14 w-14 rounded-full p-1.5 bg-red-200 hover:bg-red-300 transition-all duration-300 hover:w-[180px] overflow-hidden"
           >
             <div className="shrink-0 w-11 h-11 rounded-full bg-red-600 flex items-center justify-center text-white">
