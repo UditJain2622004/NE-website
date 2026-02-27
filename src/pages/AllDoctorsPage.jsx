@@ -59,31 +59,34 @@ const AllDoctorsPage = () => {
     <div className="pt-16 lg:pt-20 min-h-screen">
       <div className="bg-primary/5 py-4 lg:py-10">
         <div className="container-custom text-center">
-          <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Our Experts</span>
-          <h1 className="text-3xl lg:text-7xl font-bold text-primary mb-10 font-display">
+          {/* <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Our Experts</span> */}
+          <h1 className="text-3xl lg:text-6xl font-bold text-primary mt-10 font-display">
             Meet Our Doctors
           </h1>
+          <p className="text-gray-600 text-sm lg:text-lg mt-5">
+            Qualified and experienced doctors ready to serve you with the best medical care.
+          </p>
           
           {/* Main Filter Bar */}
-          <div className="max-w-5xl mx-auto bg-white border border-blue-100 rounded-3xl shadow-xl shadow-blue-900/5 p-4 lg:p-6 mb-8 relative z-30">
-            <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-0">
+          <div className="max-w-5xl mx-auto bg-white border border-blue-100 rounded-3xl shadow-xl shadow-blue-900/5 p-4 lg:p-6 mt-5 mb-8 relative z-30">
+            <div className="flex flex-row items-center gap-3 lg:gap-0">
               
               {/* Speciality Dropdown */}
-              <div className="w-full lg:flex-1 relative" ref={specRef}>
+              <div className="flex-1 min-w-0 relative" ref={specRef}>
                 <button 
                   onClick={() => { setIsSpecOpen(!isSpecOpen); setIsDocOpen(false); }}
-                  className="w-full flex items-center gap-4 px-4 py-2 hover:bg-gray-50 transition-colors rounded-2xl group"
+                  className="w-full flex items-center gap-2 lg:gap-4 px-2 lg:px-4 py-2 hover:bg-gray-50 transition-colors rounded-2xl group"
                 >
-                  <div className="w-12 h-12 rounded-full bg-blue-50 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all duration-300">
+                  <div className="hidden lg:flex w-12 h-12 rounded-full bg-blue-50 text-secondary items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all duration-300">
                     <Activity size={24} />
                   </div>
-                  <div className="text-left flex-1">
+                  <div className="text-left flex-1 min-w-0">
                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Speciality</p>
-                    <p className="text-gray-700 font-bold truncate">
+                    <p className="text-gray-700 font-bold  text-sm lg:text-base">
                       {selectedSpeciality || 'Select a Speciality'}
                     </p>
                   </div>
-                  <ChevronDown size={20} className={`text-gray-300 transition-transform duration-300 ${isSpecOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={18} className={`text-black-300 transition-transform duration-300 shrink-0 ${isSpecOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {isSpecOpen && (
@@ -97,7 +100,7 @@ const AllDoctorsPage = () => {
                           className="w-full bg-white border border-divider rounded-xl py-2 px-4 pl-9 text-xs focus:outline-none focus:ring-2 focus:ring-secondary/20"
                           value={specSearch}
                           onChange={(e) => setSpecSearch(e.target.value)}
-                          autoFocus
+                          
                         />
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
                       </div>
@@ -125,24 +128,24 @@ const AllDoctorsPage = () => {
               </div>
 
               {/* Vertical divider */}
-              <div className="hidden lg:block w-px h-12 bg-divider mx-8"></div>
+              <div className="w-px h-12 bg-divider mx-1 lg:mx-8 shrink-0"></div>
 
               {/* Doctor Dropdown */}
-              <div className="w-full lg:flex-1 relative" ref={docRef}>
+              <div className="flex-1 min-w-0 relative" ref={docRef}>
                 <button 
                   onClick={() => { setIsDocOpen(!isDocOpen); setIsSpecOpen(false); }}
-                  className="w-full flex items-center gap-4 px-4 py-2 hover:bg-gray-50 transition-colors rounded-2xl group"
+                  className="w-full flex items-center gap-2 lg:gap-4 px-2 lg:px-4 py-2 hover:bg-gray-50 transition-colors rounded-2xl group"
                 >
-                  <div className="w-12 h-12 rounded-full bg-blue-50 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all duration-300">
+                  <div className="hidden lg:flex w-12 h-12 rounded-full bg-blue-50 text-secondary items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all duration-300">
                     <UserRound size={24} />
                   </div>
-                  <div className="text-left flex-1">
+                  <div className="text-left flex-1 min-w-0">
                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Doctor</p>
-                    <p className="text-gray-700 font-bold truncate">
+                    <p className="text-gray-700 font-bold  text-sm lg:text-base">
                       {selectedDoctor || 'Select a Doctor'}
                     </p>
                   </div>
-                  <ChevronDown size={20} className={`text-gray-300 transition-transform duration-300 ${isDocOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={18} className={`text-black-300 transition-transform duration-300 shrink-0 ${isDocOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {isDocOpen && (
@@ -156,7 +159,7 @@ const AllDoctorsPage = () => {
                           className="w-full bg-white border border-divider rounded-xl py-2 px-4 pl-9 text-xs focus:outline-none focus:ring-2 focus:ring-secondary/20"
                           value={docSearch}
                           onChange={(e) => setDocSearch(e.target.value)}
-                          autoFocus
+                          
                         />
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
                       </div>
@@ -209,6 +212,8 @@ const AllDoctorsPage = () => {
           </div>
         </div>
       </div>
+
+
 
       <div className="container-custom py-16 lg:py-24">
         {filteredDoctors.length > 0 ? (

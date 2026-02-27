@@ -60,34 +60,40 @@ const StickyBottomBar = () => {
       </div>
 
       {/* Laptop: Vertical stack centered on right side - each expands on hover */}
-      <div className="hidden lg:flex fixed top-1/2 right-6 z-40 -translate-y-1/2 flex-col gap-4">
-        <button 
-          onClick={() => handleNav('/#book')}
-          className="group/btn flex items-center justify-center gap-3 h-14 w-14 rounded-full p-1.5 bg-primary/20 hover:bg-primary/30 transition-all duration-300 hover:w-[180px] overflow-hidden cursor-pointer"
-        >
-          <div className="shrink-0 w-11 h-11 rounded-full bg-primary flex items-center justify-center text-white">
-            <Calendar size={22} strokeWidth={2.5} />
-          </div>
-          <span className="whitespace-nowrap text-sm font-semibold text-primary opacity-0 max-w-0 group-hover/btn:opacity-100 group-hover/btn:max-w-[140px] transition-all duration-300">Book Appointment</span>
-        </button>
-        <button 
-          onClick={() => handleNav('/#doctors')}
-          className="group/btn flex items-center justify-center gap-3 h-14 w-14 rounded-full p-1.5 bg-violet-200 hover:bg-violet-300 transition-all duration-300 hover:w-[180px] overflow-hidden cursor-pointer"
-        >
-          <div className="shrink-0 w-11 h-11 rounded-full bg-violet-600 flex items-center justify-center text-white">
-            <Users size={22} strokeWidth={2.5} />
-          </div>
-          <span className="whitespace-nowrap text-sm font-semibold text-violet-700 opacity-0 max-w-0 group-hover/btn:opacity-100 group-hover/btn:max-w-[140px] transition-all duration-300">Find Doctors</span>
-        </button>
-        <a 
-          href="tel:911"
-          className="group/btn flex items-center justify-center gap-3 h-14 w-14 rounded-full p-1.5 bg-red-200 hover:bg-red-300 transition-all duration-300 hover:w-[180px] overflow-hidden"
-        >
-          <div className="shrink-0 w-11 h-11 rounded-full bg-red-600 flex items-center justify-center text-white">
-            <Phone size={22} strokeWidth={2.5} />
-          </div>
-          <span className="whitespace-nowrap text-sm font-semibold text-red-700 opacity-0 max-w-0 group-hover/btn:opacity-100 group-hover/btn:max-w-[140px] transition-all duration-300">Emergency</span>
-        </a>
+      <div className="hidden lg:flex fixed top-1/2 right-6 z-40 -translate-y-1/2 flex-col items-end gap-4">
+        <div className="relative h-14 w-14">
+          <button 
+            onClick={() => handleNav('/#book')}
+            className="group/btn absolute right-0 top-0 flex items-center gap-3 h-14 w-14 rounded-full p-1.5 bg-primary/20 hover:bg-primary/30 transition-all duration-300 hover:w-[200px] overflow-hidden cursor-pointer"
+          >
+            <div className="shrink-0 w-11 h-11 rounded-full bg-primary flex items-center justify-center text-white">
+              <Calendar size={22} strokeWidth={2.5} />
+            </div>
+            <span className="whitespace-nowrap text-sm font-semibold text-primary opacity-0 max-w-0 group-hover/btn:opacity-100 group-hover/btn:max-w-[140px] transition-all duration-300">Book Appointment</span>
+          </button>
+        </div>
+        <div className="relative h-14 w-14">
+          <button 
+            onClick={() => handleNav('/#doctors')}
+            className="group/btn absolute right-0 top-0 flex items-center gap-3 h-14 w-14 rounded-full p-1.5 bg-violet-200 hover:bg-violet-300 transition-all duration-300 hover:w-[180px] overflow-hidden cursor-pointer"
+          >
+            <div className="shrink-0 w-11 h-11 rounded-full bg-violet-600 flex items-center justify-center text-white">
+              <Users size={22} strokeWidth={2.5} />
+            </div>
+            <span className="whitespace-nowrap text-sm font-semibold text-violet-700 opacity-0 max-w-0 group-hover/btn:opacity-100 group-hover/btn:max-w-[140px] transition-all duration-300">Find Doctors</span>
+          </button>
+        </div>
+        <div className="relative h-14 w-14">
+          <a 
+            href="tel:911"
+            className="group/btn absolute right-0 top-0 flex items-center gap-3 h-14 w-14 rounded-full p-1.5 bg-red-200 hover:bg-red-300 transition-all duration-300 hover:w-[180px] overflow-hidden"
+          >
+            <div className="shrink-0 w-11 h-11 rounded-full bg-red-600 flex items-center justify-center text-white">
+              <Phone size={22} strokeWidth={2.5} />
+            </div>
+            <span className="whitespace-nowrap text-sm font-semibold text-red-700 opacity-0 max-w-0 group-hover/btn:opacity-100 group-hover/btn:max-w-[140px] transition-all duration-300">Emergency</span>
+          </a>
+        </div>
       </div>
     </>
   );

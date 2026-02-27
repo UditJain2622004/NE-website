@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Star, ChevronRight } from 'lucide-react';
+import { Star, ChevronRight, Building2, Stethoscope } from 'lucide-react';
 
 const DoctorCard = ({ doctor }) => {
   const reviewCount = Math.floor(Math.random() * 100 + 50);
@@ -21,10 +21,14 @@ const DoctorCard = ({ doctor }) => {
         </div>
 
         <div className="p-6 flex flex-col flex-grow">
-          <div className="mb-4">
-            <h3 className="text-xl font-bold text-primary mb-1 uppercase tracking-tight font-display">{doctor.name}</h3>
-            <p className="text-xs text-secondary tracking-widest mb-3">
-              {doctor.qualifications} — {doctor.speciality}
+          <div className="mb-4 text-center">
+            <h3 className="text-xl font-bold text-primary mb-1 uppercase tracking-tight font-display  leading-7 min-h-[3.5rem]">{doctor.name}</h3>
+            {/** center the text */}
+            <p className="text-xs text-secondary tracking-widest mb-1 text-center">
+              {doctor.qualifications}
+            </p>
+            <p className="text-xs text-primary tracking-widest text-center">
+              {doctor.speciality}
             </p>
             
             {/* <div className="flex items-center gap-2 mb-4">
@@ -39,7 +43,7 @@ const DoctorCard = ({ doctor }) => {
             </div> */}
           </div>
 
-          <div className="mt-auto pt-6 border-t border-divider">
+          <div className="mt-auto border-t border-divider">
             {/* <Link 
               to={`/doctors/${doctor.slug}`} 
               className="btn-outline py-2.5 px-0 text-xs flex items-center justify-center gap-2 border-divider text-primary hover:border-primary hover:bg-primary/5 rounded-md transition-all font-bold uppercase tracking-widest"
@@ -68,14 +72,19 @@ const DoctorCard = ({ doctor }) => {
 
         <div className="flex-1 min-w-0">
           <h3 className="text-sm font-bold text-primary font-display truncate">{doctor.name}</h3>
-          <p className="text-xs text-gray-500 mt-0.5 truncate">
-            {doctor.speciality} • {doctor.location || doctor.department}
+          <p className="flex items-center gap-1 text-xs text-gray-500 mb-1 truncate">
+            <Building2 size={13} className="text-secondary shrink-0" />
+            <span className="truncate">{doctor.speciality}</span>
           </p>
-          <div className="flex items-center gap-1.5 mt-1.5">
+          <p className="flex items-center gap-1 text-xs text-gray-500 mb-1 truncate">
+            <Stethoscope size={13} className="text-secondary shrink-0" />
+            <span className="truncate">{doctor.department}</span>
+          </p>
+          {/* <div className="flex items-center gap-1.5 mt-1.5">
             <Star size={13} className="text-yellow-400" fill="currentColor" />
             <span className="text-xs font-bold text-primary">{rating}</span>
             <span className="text-xs text-secondary">({reviewCount} Reviews)</span>
-          </div>
+          </div> */}
         </div>
 
         <div className="shrink-0 w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 group-hover:border-secondary group-hover:text-secondary transition-colors">

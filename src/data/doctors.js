@@ -1,23 +1,9 @@
 export const doctors = [
   {
     id: 1,
-    name: "Dr. Akshath Ramesh Acharya",
-    slug: "akshath-ramesh-acharya",
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400&h=500",
-    speciality: "General Practitioner",
-    department: "Medicine",
-    location: "NE Hospital",
-    experience: "10+ Years",
-    qualifications: "MBBS, MRCP(UK), FICCC, FICD, FECHO, FECMO, APGD(OHSM)",
-    about: "Dr. Akshath Ramesh Acharya is a highly qualified General Practitioner with extensive training in critical care, echocardiography, and ECMO. With international qualifications including MRCP(UK), he brings a wealth of clinical expertise in managing complex medical conditions.",
-    languages: ["English", "Kannada", "Hindi"],
-    availability: "Mon - Sat, 9:00 AM - 5:00 PM"
-  },
-  {
-    id: 2,
     name: "Dr. Abhijith Reddy A",
     slug: "abhijith-reddy",
-    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400&h=500",
+    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400&h=400",
     speciality: "Chairman & CEO",
     department: "Medicine",
     location: "NE Hospital",
@@ -28,10 +14,25 @@ export const doctors = [
     availability: "By Appointment"
   },
   {
+    id: 2,
+    name: "Dr. Akshath Ramesh Acharya",
+    slug: "akshath-ramesh-acharya",
+    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400&h=400",
+    speciality: "General Practitioner",
+    department: "Medicine",
+    location: "NE Hospital",
+    experience: "10+ Years",
+    qualifications: "MBBS, MRCP(UK), FICCC, FICD, FECHO, FECMO, APGD(OHSM)",
+    about: "Dr. Akshath Ramesh Acharya is a highly qualified General Practitioner with extensive training in critical care, echocardiography, and ECMO. With international qualifications including MRCP(UK), he brings a wealth of clinical expertise in managing complex medical conditions.",
+    languages: ["English", "Kannada", "Hindi"],
+    availability: "Mon - Sat, 9:00 AM - 5:00 PM"
+  },
+  
+  {
     id: 3,
     name: "Dr. Vijaya Narayana Holla",
     slug: "vijaya-narayana-holla",
-    image: "https://images.unsplash.com/photo-1559839734-2b71ca197ec2?auto=format&fit=crop&q=80&w=400&h=500",
+    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400&h=400",
     speciality: "Consultant Radiologist",
     department: "Radiology",
     location: "NE Hospital",
@@ -45,7 +46,7 @@ export const doctors = [
     id: 4,
     name: "Dr. Tara H",
     slug: "tara-h",
-    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=400&h=500",
+    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=400&h=400",
     speciality: "Consultant Paediatrician & Neonatologist",
     department: "Paediatrics",
     location: "NE Hospital",
