@@ -87,7 +87,7 @@ const DoctorDetailsPage = () => {
                     <p className="font-bold text-primary">{doctor.languages.join(', ')}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
+                {/* <div className="flex items-center gap-4">
                   <div className="w-10 h-10 bg-white text-secondary flex items-center justify-center rounded-sm">
                     <Star size={20} />
                   </div>
@@ -95,7 +95,7 @@ const DoctorDetailsPage = () => {
                     <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">Consultation Fee</p>
                     <p className="font-bold text-primary">{doctor.consultationFee}</p>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
