@@ -34,10 +34,6 @@ const HeroSection = () => {
                 <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Happy Patients</p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-primary font-display tracking-tight">350+</p>
-                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Expert Doctors</p>
-              </div>
-              <div>
                 <p className="text-2xl font-bold text-primary font-display tracking-tight">24/7</p>
                 <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Emergency Care</p>
               </div>
@@ -85,10 +81,6 @@ const HeroSection = () => {
               <div>
                 <p className="text-4xl font-bold text-primary font-display tracking-tight">15k+</p>
                 <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Happy Patients</p>
-              </div>
-              <div>
-                <p className="text-4xl font-bold text-primary font-display tracking-tight">350+</p>
-                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Expert Doctors</p>
               </div>
               <div>
                 <p className="text-4xl font-bold text-primary font-display tracking-tight">24/7</p>

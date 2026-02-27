@@ -49,6 +49,10 @@
 
   .card-modern {
     @apply bg-white border border-divider rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
 
   .scrollbar-hide {

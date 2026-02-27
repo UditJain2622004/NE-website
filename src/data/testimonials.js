@@ -6,7 +6,7 @@ export const testimonials = [
   },
   {
     name: "Jane Smith",
-    text: "Clean facilities, professional staff, and very short waiting times. I highly recommend the pediatrics department for children's care.",
+    text: "Clean facilities, professional staff, and very short waiting times. I highly recommend the paediatrics department for children's care.",
     rating: 5
   },
   {

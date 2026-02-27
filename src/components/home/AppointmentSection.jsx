@@ -34,17 +34,20 @@ const AppointmentSection = () => {
                 <InputGroup label="Department" icon={Grid}>
                   <select className="w-full bg-gray-50 border border-divider p-3.5 rounded-xl outline-none focus:ring-2 focus:ring-secondary transition-all font-bold text-sm text-primary">
                     <option>Select Department</option>
-                    <option>Cardiology</option>
-                    <option>Neurology</option>
-                    <option>Pediatrics</option>
+                    <option>Medicine</option>
+                    <option>Radiology</option>
+                    <option>Paediatrics</option>
+                    <option>Endocrinology</option>
                   </select>
                 </InputGroup>
                 
                 <InputGroup label="Doctor" icon={User}>
                   <select className="w-full bg-gray-50 border border-divider p-3.5 rounded-xl outline-none focus:ring-2 focus:ring-secondary transition-all font-bold text-sm text-primary">
                     <option>Select Doctor</option>
-                    <option>Dr. Sarah Johnson</option>
-                    <option>Dr. Michael Chen</option>
+                    <option>Dr. Akshath Ramesh Acharya</option>
+                    <option>Dr. Abhijith Reddy A</option>
+                    <option>Dr. Vijaya Narayana Holla</option>
+                    <option>Dr. Tara H</option>
                   </select>
                 </InputGroup>
               </div>

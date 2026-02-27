@@ -1,9 +1,38 @@
+import { useRef, useState, useEffect, useCallback } from 'react';
 import DepartmentCard from '../DepartmentCard';
 import { departments } from '../../data/departments';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const DepartmentsSection = () => {
+  const scrollRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleScroll = useCallback(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const scrollLeft = container.scrollLeft;
+    const cardWidth = container.firstElementChild?.offsetWidth || 1;
+    const gap = 24;
+    const index = Math.round(scrollLeft / (cardWidth + gap));
+    setActiveIndex(Math.min(index, departments.length - 1));
+  }, []);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  const scrollToCard = (index) => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const cardWidth = container.firstElementChild?.offsetWidth || 0;
+    const gap = 24;
+    container.scrollTo({ left: index * (cardWidth + gap), behavior: 'smooth' });
+  };
+
   return (
     <section id="departments" className="bg-primary/5 relative section-padding">
       {/* Decorative background element */}
@@ -20,11 +49,29 @@ const DepartmentsSection = () => {
           </p>
         </div>
 
-        <div className="flex gap-6 lg:gap-10 overflow-x-auto pb-12 scrollbar-hide -mx-5 px-5 lg:mx-0 lg:px-0">
+        <div
+          ref={scrollRef}
+          className="flex gap-6 lg:gap-10 overflow-x-auto pb-6 lg:pb-12 scrollbar-hide -mx-5 px-5 lg:mx-0 lg:px-0 snap-x snap-mandatory"
+        >
           {departments.map((dept) => (
-            <div key={dept.id} className="shrink-0 w-[85vw] md:w-[420px]">
+            <div key={dept.id} className="shrink-0 w-[85vw] md:w-[420px] snap-start">
               <DepartmentCard department={dept} />
             </div>
+          ))}
+        </div>
+
+        {/* Mobile scroll indicator dots */}
+        <div className="flex justify-center gap-2 pb-6 lg:hidden">
+          {departments.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => scrollToCard(index)}
+              className={`h-2.5 rounded-full transition-all duration-300 ${
+                index === activeIndex
+                  ? 'w-7 bg-primary'
+                  : 'w-2.5 bg-primary/20'
+              }`}
+            />
           ))}
         </div>
 

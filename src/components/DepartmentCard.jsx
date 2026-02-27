@@ -17,16 +17,17 @@ const DepartmentCard = ({ department }) => {
   return (
     <Link 
       to={`/departments/${department.slug}`}
-      className="card-modern group h-full flex flex-col cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 block"
+      className="card-modern group h-full flex flex-col cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 isolate"
     >
       {/* Image Container */}
-      <div className="relative h-40 md:h-48 overflow-hidden">
+      <div className="relative h-40 md:h-48 overflow-hidden rounded-t-xl">
         <img 
           src={department.image} 
           alt={department.name}
+          loading="eager"
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div className="absolute inset-0 bg-linear-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         
         {/* Floating Icon Badge */}
         <div className="absolute -bottom-6 right-8 w-14 h-14 bg-white text-secondary flex items-center justify-center rounded-full shadow-lg border border-divider group-hover:bg-secondary group-hover:text-white transition-all duration-300 z-10">
@@ -35,10 +36,10 @@ const DepartmentCard = ({ department }) => {
       </div>
 
       {/* Content Section */}
-      <div className="px-6 py-2 pt-2 flex flex-col flex-grow">
+      <div className="px-6 py-2 pt-2 flex flex-col grow">
         <h3 className="text-2xl font-bold text-primary mb-1 uppercase tracking-tight font-display">{department.name}</h3>
         
-        <p className="text-gray-600 mb-3 line-clamp-3 leading-relaxed text-sm flex-grow">
+        <p className="text-gray-600 mb-3 line-clamp-3 leading-relaxed text-sm grow">
           {department.shortDescription || department.fullDescription.substring(0, 120) + "..."}
         </p>
 

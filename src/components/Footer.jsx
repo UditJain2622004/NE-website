@@ -45,9 +45,10 @@ const Footer = () => {
               { name: 'Departments', path: '/departments' },
               { name: 'Book Appointment', path: '/#book' },
               { name: 'Contact Us', path: '/contact' },
-              { name: 'Cardiology', path: '/departments/cardiology' },
-              { name: 'Neurology', path: '/departments/neurology' },
-              { name: 'Pediatrics', path: '/departments/pediatrics' }
+              { name: 'Medicine', path: '/departments/medicine' },
+              { name: 'Radiology', path: '/departments/radiology' },
+              { name: 'Paediatrics', path: '/departments/paediatrics' },
+              { name: 'Endocrinology', path: '/departments/endocrinology' }
             ].map((link) => (
               <Link key={link.name} to={link.path} className="text-gray-400 text-xs font-medium py-1">
                 {link.name}
@@ -123,9 +124,10 @@ const Footer = () => {
               </h3>
                <ul className="space-y-4">
                 {[
-                  { name: 'Cardiology', path: '/departments/cardiology' },
-                  { name: 'Neurology', path: '/departments/neurology' },
-                  { name: 'Pediatrics', path: '/departments/pediatrics' }
+                  { name: 'Medicine', path: '/departments/medicine' },
+                  { name: 'Radiology', path: '/departments/radiology' },
+                  { name: 'Paediatrics', path: '/departments/paediatrics' },
+                  { name: 'Endocrinology', path: '/departments/endocrinology' }
                 ].map((dept) => (
                   <li key={dept.name}>
                     <Link to={dept.path} className="text-gray-400 hover:text-secondary group flex items-center gap-2 transition-all font-semibold text-sm">

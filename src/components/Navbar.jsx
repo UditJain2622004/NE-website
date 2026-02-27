@@ -76,7 +76,7 @@ const Navbar = () => {
     { 
       name: 'Departments', 
       path: '/departments',
-      dropdown: {'Cardiology':"/departments/cardiology", 'Neurology':"/departments/neurology", 'Pediatrics':"/departments/pediatrics"}
+      dropdown: {'Medicine':"/departments/medicine", 'Radiology':"/departments/radiology", 'Paediatrics':"/departments/paediatrics", 'Endocrinology':"/departments/endocrinology"}
     },
     { name: 'Find a Doctor', path: '/doctors' },
     { 
