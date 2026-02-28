@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const FounderIntroSection = () => {
   return (
     <section className="relative py-8 lg:py-14 px-4 lg:px-6 bg-gray-50 overflow-hidden">
@@ -8,7 +10,7 @@ const FounderIntroSection = () => {
       <div className="absolute left-[15%] -bottom-16 w-72 h-48 rounded-[50%_50%_30%_70%_/60%_40%_60%_40%] bg-gray-200/50" />
 
       <div className="relative max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+        <div  className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center transition-opacity hover:opacity-95 cursor-pointer">
           {/* Founder Photo - left side with design frame */}
           <div className="lg:col-span-6 order-1 relative">
             {/* Decorative offset block - fills space behind image */}
@@ -30,9 +32,12 @@ const FounderIntroSection = () => {
             <span className="text-secondary font-bold uppercase tracking-widest text-sm mb-2 block">
               Meet Our Founder
             </span>
+            <Link to="/doctors/abhijith-reddy">
             <h2 className="text-3xl lg:text-4xl font-black text-primary leading-tight mb-3 font-display">
+              
               Dr. Abhijith Reddy A
             </h2>
+            </Link>
             <p className="text-secondary font-semibold text-lg mb-2">
               MBBS, FICCC, FICD, MBA (UK)
             </p>
