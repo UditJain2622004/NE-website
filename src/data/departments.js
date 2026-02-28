@@ -73,7 +73,7 @@ export const departments = [
     comingSoon: false,
     shortDescription: "Expert care for hormonal and metabolic disorders including diabetes and thyroid conditions.",
     fullDescription: "Our Endocrinology department specializes in the diagnosis and management of hormonal imbalances and metabolic disorders. From diabetes management and thyroid conditions to adrenal and pituitary disorders, our specialists provide comprehensive, personalized treatment plans.",
-    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=90&w=1200&h=900",
+    image: "/general images/Endocrinology.jpeg",
     conditions: ["Diabetes (Type 1 & Type 2)", "Thyroid Disorders", "PCOS", "Adrenal Disorders", "Pituitary Disorders", "Obesity & Metabolic Syndrome"],
     procedures: ["Thyroid Function Tests", "HbA1c Monitoring", "Hormone Level Testing", "Insulin Therapy Management", "Bone Density Scan"],
     faqs: [

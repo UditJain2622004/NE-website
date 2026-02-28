@@ -82,8 +82,9 @@ const Navbar = () => {
     {
       name: 'Our Services',
       path: '/services',
-      dropdown: {'Clinic':"/services/clinic", 'Consultation':"/services/consultation", 'Pharmacy':"/services/pharmacy", 'Day Care Health Service':"/services/day-care-health-service", 'Diagnostics':"/services/diagnostics", 'Occupational Health':"/services/occupational-industrial-health"}
+      dropdown: {'Clinic':"/services/clinic", 'Consultation':"/services/consultation", 'Pharmacy':"/services/pharmacy", 'Day Care Health Service':"/services/day-care-health-service", 'Diagnostics':"/services/diagnostics", 'Occupational Health':"/services/occupational-industrial-health", 'Health Care Packages':"/services/health-care-packages"}
     },
+    { name: 'Health Packages', path: '/services/health-care-packages' },
     { 
       name: 'Contact', 
       path: '/contact', 
@@ -206,10 +207,10 @@ const Navbar = () => {
         onClick={() => setIsOpen(false)}
       >
         <div 
-          className={`absolute right-0 top-0 bottom-0 w-4/5 max-w-sm bg-white shadow-2xl transition-transform duration-300 transform ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          className={`absolute right-0 top-0 bottom-0 w-4/5 max-w-sm bg-white shadow-2xl transition-transform duration-300 transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} flex flex-col`}
           onClick={e => e.stopPropagation()}
         >
-          <div className="flex justify-between items-center p-6 border-b border-divider">
+          <div className="flex justify-between items-center p-6 border-b border-divider shrink-0">
             <div className="flex items-center">
               <img src="/logo2.png" alt="Logo" className="h-10 w-auto object-contain" />
             </div>
@@ -218,7 +219,7 @@ const Navbar = () => {
             </button>
           </div>
           
-          <div className="flex flex-col p-6 gap-2 overflow-y-auto">
+          <div className="flex flex-col p-6 gap-2 overflow-y-auto flex-1 pb-40">
             {navLinks.map((link) => (
               <MobileNavLink key={link.name} link={link} setIsOpen={setIsOpen} />
             ))}

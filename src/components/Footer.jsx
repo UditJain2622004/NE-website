@@ -58,11 +58,11 @@ const Footer = () => {
 
           {/* Bottom bar */}
           <div className="pt-6 border-t border-white/10 flex flex-col gap-3 items-center text-center">
-            <p className="text-gray-500 text-[10px] font-medium">© 2024 NexusEnliven Health System. All rights reserved.</p>
-            <div className="flex gap-4 text-gray-500 text-[10px] font-medium">
+            <p className="text-gray-500 text-[10px] font-medium">© 2026 NexusEnliven Health System. All rights reserved.</p>
+            {/* <div className="flex gap-4 text-gray-500 text-[10px] font-medium">
               <Link to="/#privacy">Privacy</Link>
               <Link to="/#terms">Terms</Link>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -167,11 +167,11 @@ const Footer = () => {
           </div>
 
           <div className="mt-20 pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8 text-gray-400 text-xs font-bold uppercase tracking-widest">
-            <p>© 2024 NexusEnliven Health System. All rights reserved.</p>
-            <div className="flex gap-8">
+            <p>© 2026 NexusEnliven Health System. All rights reserved.</p>
+            {/* <div className="flex gap-8">
               <Link to="/#privacy" className="hover:text-white">Privacy Policy</Link>
               <Link to="/#terms" className="hover:text-white">Terms of Service</Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

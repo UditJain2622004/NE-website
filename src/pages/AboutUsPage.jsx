@@ -85,7 +85,7 @@ const AboutUsPage = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="-mt-16 container-custom relative z-20">
+      {/* <section className="-mt-16 container-custom relative z-20">
         <div className="bg-white rounded-3xl shadow-2xl border border-divider p-6 lg:p-8 grid grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
             <div key={index} className="text-center lg:border-r last:border-0 border-divider">
@@ -94,7 +94,7 @@ const AboutUsPage = () => {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* Content Section */}
       <section className="py-16 lg:py-20">

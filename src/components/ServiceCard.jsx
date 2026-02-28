@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Stethoscope, MessageSquare, Pill, Sun, ScanLine, HardHat, Activity, ArrowRight } from 'lucide-react';
+import { Stethoscope, MessageSquare, Pill, Sun, ScanLine, HardHat, Package, Activity, ArrowRight } from 'lucide-react';
 
 const icons = {
   StethoscopeIcon: Stethoscope,
@@ -7,7 +7,8 @@ const icons = {
   PillIcon: Pill,
   SunIcon: Sun,
   ScanLineIcon: ScanLine,
-  HardHatIcon: HardHat
+  HardHatIcon: HardHat,
+  PackageIcon: Package
 };
 
 const ServiceCard = ({ service }) => {

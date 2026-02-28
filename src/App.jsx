@@ -10,6 +10,8 @@ import ContactUsPage from './pages/ContactUsPage';
 import DoctorDetailsPage from './pages/DoctorDetailsPage';
 import DepartmentDetailsPage from './pages/DepartmentDetailsPage';
 import ServiceDetailsPage from './pages/ServiceDetailsPage';
+import HealthCarePackagesPage from './pages/HealthCarePackagesPage';
+import PackageDetailsPage from './pages/PackageDetailsPage';
 import ScrollToTop from './components/ScrollToTop';
 import StickyBottomBar from './components/StickyBottomBar';
 import FloatingCallButton from './components/FloatingCallButton';
@@ -29,6 +31,8 @@ function App() {
             <Route path="/departments" element={<CentersOfExcellencePage />} />
             <Route path="/departments/:slug" element={<DepartmentDetailsPage />} />
             <Route path="/services" element={<AllServicesPage />} />
+            <Route path="/services/health-care-packages" element={<HealthCarePackagesPage />} />
+            <Route path="/services/health-care-packages/:packageSlug" element={<PackageDetailsPage />} />
             <Route path="/services/:slug" element={<ServiceDetailsPage />} />
             <Route path="/about" element={<AboutUsPage />} />
             <Route path="/contact" element={<ContactUsPage />} />

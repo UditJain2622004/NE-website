@@ -61,7 +61,7 @@ const ServicesSection = () => {
         </div>
 
         {/* Mobile scroll indicator dots */}
-        <div className="flex justify-center gap-2 pb-6 lg:hidden">
+        <div className="flex justify-center gap-2 pb-6">
           {services.map((_, index) => (
             <button
               key={index}
