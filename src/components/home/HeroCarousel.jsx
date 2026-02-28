@@ -7,6 +7,9 @@ const HeroCarousel = ({ className }) => {
   const images = [
     '/hero_images/download.jpg',
     '/hero_images/download (1).jpg',
+    '/hero_images/download (3).jpg',
+    '/hero_images/download (4).jpg',
+    '/hero_images/download (5).jpg',
     '/hero_images/download (2).jpg'
   ];
 
