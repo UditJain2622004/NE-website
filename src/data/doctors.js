@@ -31,7 +31,7 @@ Under his guidance, Nexus Enliven is committed to excellence, transparency, and 
     location: "NE Hospital",
     experience: "10+ Years",
     qualifications: "MBBS, MRCP(UK), FICCC, FICD, FECHO, FECMO, APGD(OHSM)",
-    about: "General Practitioner and Internal Medicine Specialist with extensive training in Infectious diseases, Cardiac Critical Care, Palliative care, Cardiodiabetes, Cardiac Nutrition, Echocardiography, ECMO, with International qualifications including MRCP(UK), APGD in Occupational Health, Fellowship in Aesthetic Medicine.",
+    about: "Dr. Akshath Ramesh Acharya is a General Practitioner and Internal Medicine Specialist with extensive training in Infectious diseases, Cardiac Critical Care, Palliative care, Cardiodiabetes, Cardiac Nutrition, Echocardiography, ECMO, with International qualifications including MRCP(UK), APGD in Occupational Health, Fellowship in Aesthetic Medicine.",
     languages: ["English", "Kannada", "Hindi"],
     availability: "Mon - Sat, 9:00 AM - 5:00 PM"
   },
