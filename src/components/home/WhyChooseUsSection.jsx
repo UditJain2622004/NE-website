@@ -10,7 +10,7 @@ const WhyChooseUsSection = () => {
     {
       icon: Clock,
       title: "24/7 Day Care",
-      description: "Immediate medical response for critical situations, available every second of every day."
+      description: "Round-the-clock medical observation and specialized day care services for a swift recovery."
     },
     {
       icon: ShieldCheck,

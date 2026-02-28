@@ -48,8 +48,8 @@ const AboutUsPage = () => {
       icon: Shield
     },
     {
-      title: '24/7 Availability',
-      description: 'Our emergency and critical care teams are available around the clock.',
+      title: '24/7 Day Care',
+      description: 'Round-the-clock medical observation and specialized day care services for a swift recovery.',
       icon: Clock
     }
   ];
@@ -75,10 +75,10 @@ const AboutUsPage = () => {
           <div className="max-w-3xl">
             <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-6 block">Our Story</span>
             <h1 className="text-4xl lg:text-7xl font-bold mb-8 font-display leading-[1.1] text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.6)]">
-              Redefining Healthcare <br className="hidden lg:block"/> Through Excellence
+              The Future of <br className="hidden lg:block"/> Healthcare is Here
             </h1>
             <p className="text-white/80 text-lg lg:text-xl leading-relaxed mb-10">
-              With a legacy of over 25 years, we are dedicated to providing world-class medical services with a touch of compassion and care.
+              Nexus Enliven is a next-generation healthcare destination, purpose-built to deliver state-of-the-art medical services with advanced technology and unmatched patient comfort.
             </p>
           </div>
         </div>
@@ -116,13 +116,13 @@ const AboutUsPage = () => {
             
             <div>
               <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Who We Are</span>
-              <h2 className="text-3xl lg:text-5xl font-bold text-primary mb-8 font-display">A Legacy of Care and Commitment</h2>
+              <h2 className="text-3xl lg:text-5xl font-bold text-primary mb-8 font-display">Modern Care, Built for You</h2>
               <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
                 <p>
-                  Founded in 1998, our hospital has grown to become one of the most trusted names in healthcare. We began with a simple mission: to provide high-quality, affordable medical care to our community.
+                  Nexus Enliven was established with a singular vision: to create a premium healthcare ecosystem that integrates cutting-edge medical innovation with deeply personalized care. We aren't just a hospital; we are a modern medical center designed to set new benchmarks in patient experience.
                 </p>
                 <p>
-                  Today, we house over 25 specialized departments, equipped with the latest diagnostic and surgical technologies. Our team consists of world-renowned specialists and dedicated support staff who work together to ensure optimal patient outcomes.
+                  Our facility features world-class infrastructure, sophisticated diagnostic tools, and contemporary clinical environments. By bringing together a team of exceptionally talented specialists and utilizing the latest healthcare protocols, we ensure that every patient receives the highest standard of modern medicine.
                 </p>
               </div>
             </div>

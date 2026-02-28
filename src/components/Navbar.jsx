@@ -82,7 +82,7 @@ const Navbar = () => {
     {
       name: 'Our Services',
       path: '/services',
-      dropdown: {'Clinic':"/services/clinic", 'Consultation':"/services/consultation", 'Pharmacy':"/services/pharmacy", 'Day Care Health Service':"/services/day-care-health-service", 'Diagnostics':"/services/diagnostics", 'Occupational Health':"/services/occupational-industrial-health", 'Health Care Packages':"/services/health-care-packages"}
+      dropdown: {'Clinic':"/services/clinic", 'Consultation':"/services/consultation", 'Pharmacy':"/services/pharmacy", 'Day Care Health Service':"/services/day-care-health-service", 'Diagnostics':"/services/diagnostics", 'Occupational Health':"/services/occupational-industrial-health", 'Health Check Packages':"/services/health-care-packages"}
     },
     { name: 'Health Packages', path: '/services/health-care-packages' },
     { 

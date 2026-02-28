@@ -15,11 +15,11 @@ const HealthCarePackagesPage = () => {
           <Breadcrumb items={[
             { label: 'Home', path: '/' },
             { label: 'Our Services', path: '/services' },
-            { label: 'Health Care Packages' }
+            { label: 'Health Check Packages' }
           ]} />
           <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Preventive Care</span>
           <h1 className="text-4xl lg:text-7xl font-bold text-primary mb-6 font-display">
-            Health Care Packages
+            Health Check Packages
           </h1>
           <p className="max-w-3xl mx-auto text-gray-600 text-lg lg:text-xl px-4 lg:px-0">
             {service?.fullDescription || 'Choose from our curated health checkup packages designed to give you a complete picture of your well-being.'}

@@ -11,10 +11,10 @@ const Footer = () => {
           {/* Brand + socials */}
           <div className="flex items-center justify-between mb-8">
             <Link to="/" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 bg-secondary flex items-center justify-center rounded-lg">
-                <img src="/logo symbol.png" alt="Logo" className="w-5 h-5 object-contain" />
+              <div className="w-10 h-10  flex items-center justify-center">
+                <img src="/logo symbol.png" alt="Logo" className="w-10 h-10 object-contain rounded-lg" />
               </div>
-              <span className="text-white font-bold text-lg tracking-tighter uppercase">NexusEnliven</span>
+              <span className="text-white font-bold text-lg tracking-tighter">Nexus Enliven</span>
             </Link>
             <div className="flex gap-2.5">
               {[Facebook, Instagram, Twitter].map((Icon, i) => (

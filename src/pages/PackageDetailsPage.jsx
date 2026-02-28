@@ -27,14 +27,14 @@ const PackageDetailsPage = () => {
           <Breadcrumb items={[
             { label: 'Home', path: '/' },
             { label: 'Our Services', path: '/services' },
-            { label: 'Health Care Packages', path: '/services/health-care-packages' },
+            { label: 'Health Check Packages', path: '/services/health-care-packages' },
             { label: pkg.name }
           ]} />
 
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1.2fr)] gap-6 sm:gap-8 lg:gap-12 xl:gap-16 items-start">
             {/* Left Content */}
             <div className="order-2 lg:order-1">
-              <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Health Care Package</span>
+              <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Health Check Package</span>
               <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-primary mb-6 sm:mb-8 leading-[1.05] font-display">
                 {pkg.name}
               </h1>
