@@ -1,4 +1,5 @@
 import HeroSection from '../components/home/HeroSection';
+import FounderIntroSection from '../components/home/FounderIntroSection';
 import DepartmentsSection from '../components/home/DepartmentsSection';
 import FeaturedDoctorsSection from '../components/home/FeaturedDoctorsSection';
 import ServicesSection from '../components/home/ServicesSection';
@@ -13,6 +14,7 @@ const HomePage = () => {
   return (
     <div className="flex flex-col">
       <HeroSection />
+      <FounderIntroSection />
       <DepartmentsSection />
       <FeaturedDoctorsSection />
       <ServicesSection />
