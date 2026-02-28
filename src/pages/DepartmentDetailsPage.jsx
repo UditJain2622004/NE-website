@@ -1,10 +1,11 @@
 import { useParams, Link } from 'react-router-dom';
 import { departments } from '../data/departments';
 import { doctors } from '../data/doctors';
-import { CheckCircle2, Calendar, Phone, Users, ChevronLeft, ArrowRight } from 'lucide-react';
+import { CheckCircle2, Calendar, Phone, Users, ArrowRight, Clock } from 'lucide-react';
 import DoctorCard from '../components/DoctorCard';
 import FAQAccordion from '../components/FAQAccordion';
 import CTABanner from '../components/CTABanner';
+import Breadcrumb from '../components/Breadcrumb';
 
 const DepartmentDetailsPage = () => {
   const { slug } = useParams();
@@ -27,9 +28,23 @@ const DepartmentDetailsPage = () => {
       {/* Hero Section */}
       <section className="bg-hospital-bg pt-4 pb-8 sm:pt-6 sm:pb-12 lg:py-24 border-b border-divider">
         <div className="container-custom px-4 sm:px-6 lg:px-0">
-          <Link to="/departments" className="inline-flex items-center gap-2 text-primary font-semibold hover:translate-x-1 transition-transform mb-4 sm:mb-8">
-            <ChevronLeft size={20} /> Back to All Departments
-          </Link>
+          <Breadcrumb items={[
+            { label: 'Home', path: '/' },
+            { label: 'Clinical Departments', path: '/departments' },
+            { label: department.name }
+          ]} />
+
+          {department.comingSoon && (
+            <div className="bg-amber-50 border border-amber-200 rounded-xl px-5 py-4 mb-6 sm:mb-8 flex items-center gap-3">
+              <div className="w-10 h-10 bg-amber-500 text-white rounded-full flex items-center justify-center shrink-0">
+                <Clock size={20} />
+              </div>
+              <div>
+                <p className="text-amber-800 font-bold text-sm">Coming Soon</p>
+                <p className="text-amber-700 text-xs sm:text-sm">This department is currently being set up and will be available shortly. Stay tuned for updates!</p>
+              </div>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,1.2fr)] gap-6 sm:gap-8 lg:gap-12 xl:gap-16 items-center">
             <div className="order-2 lg:order-1 lg:pr-6 xl:pr-8">
@@ -42,12 +57,20 @@ const DepartmentDetailsPage = () => {
                 {department.fullDescription}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <button className="btn-primary px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2">
-                  <Calendar size={18} className="shrink-0" /> Request Consultation
-                </button>
-                <a href="tel:+1234567890" className="btn-outline px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2">
-                  <Phone size={18} className="shrink-0" /> Department Helpline
-                </a>
+                {department.comingSoon ? (
+                  <span className="bg-amber-500 text-white px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2 rounded-xl">
+                    <Clock size={18} className="shrink-0" /> Coming Soon
+                  </span>
+                ) : (
+                  <>
+                    <button className="btn-primary px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2">
+                      <Calendar size={18} className="shrink-0" /> Request Consultation
+                    </button>
+                    <a href="tel:+1234567890" className="btn-outline px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2">
+                      <Phone size={18} className="shrink-0" /> Department Helpline
+                    </a>
+                  </>
+                )}
               </div>
             </div>
             
@@ -56,7 +79,7 @@ const DepartmentDetailsPage = () => {
                 <img 
                   src={department.image} 
                   alt={department.name} 
-                  className="w-full aspect-4/3 object-cover object-center"
+                  className={`w-full aspect-4/3 object-cover object-center ${department.comingSoon ? 'grayscale-[30%]' : ''}`}
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-primary/5 via-transparent to-transparent pointer-events-none" />
               </div>

@@ -36,7 +36,7 @@ const AppointmentSection = () => {
                     <option>Select Department</option>
                     <option>Medicine</option>
                     <option>Radiology</option>
-                    <option>Paediatrics</option>
+                    <option>Pediatrics</option>
                     <option>Endocrinology</option>
                   </select>
                 </InputGroup>

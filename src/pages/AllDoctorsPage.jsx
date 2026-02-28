@@ -2,6 +2,7 @@ import { doctors } from '../data/doctors';
 import DoctorCard from '../components/DoctorCard';
 import { Building2, UserRound, ChevronDown, Search, X } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
+import Breadcrumb from '../components/Breadcrumb';
 
 const AllDoctorsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -59,6 +60,10 @@ const AllDoctorsPage = () => {
     <div className="pt-16 lg:pt-20 min-h-screen">
       <div className="bg-primary/5 py-4 lg:py-10">
         <div className="container-custom text-center">
+          <Breadcrumb items={[
+            { label: 'Home', path: '/' },
+            { label: 'Find a Doctor' }
+          ]} />
           {/* <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Our Experts</span> */}
           <h1 className="text-3xl lg:text-6xl font-bold text-primary mt-10 font-display">
             Meet Our Doctors

@@ -4,10 +4,12 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import AllDoctorsPage from './pages/AllDoctorsPage';
 import CentersOfExcellencePage from './pages/CentersOfExcellencePage';
+import AllServicesPage from './pages/AllServicesPage';
 import AboutUsPage from './pages/AboutUsPage';
 import ContactUsPage from './pages/ContactUsPage';
 import DoctorDetailsPage from './pages/DoctorDetailsPage';
 import DepartmentDetailsPage from './pages/DepartmentDetailsPage';
+import ServiceDetailsPage from './pages/ServiceDetailsPage';
 import ScrollToTop from './components/ScrollToTop';
 import StickyBottomBar from './components/StickyBottomBar';
 import FloatingCallButton from './components/FloatingCallButton';
@@ -26,6 +28,8 @@ function App() {
             <Route path="/doctors/:slug" element={<DoctorDetailsPage />} />
             <Route path="/departments" element={<CentersOfExcellencePage />} />
             <Route path="/departments/:slug" element={<DepartmentDetailsPage />} />
+            <Route path="/services" element={<AllServicesPage />} />
+            <Route path="/services/:slug" element={<ServiceDetailsPage />} />
             <Route path="/about" element={<AboutUsPage />} />
             <Route path="/contact" element={<ContactUsPage />} />
           </Routes>

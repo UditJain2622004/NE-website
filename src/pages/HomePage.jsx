@@ -1,6 +1,7 @@
 import HeroSection from '../components/home/HeroSection';
 import DepartmentsSection from '../components/home/DepartmentsSection';
 import FeaturedDoctorsSection from '../components/home/FeaturedDoctorsSection';
+import ServicesSection from '../components/home/ServicesSection';
 import AppointmentSection from '../components/home/AppointmentSection';
 import WhyChooseUsSection from '../components/home/WhyChooseUsSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
@@ -14,6 +15,7 @@ const HomePage = () => {
       <HeroSection />
       <DepartmentsSection />
       <FeaturedDoctorsSection />
+      <ServicesSection />
       <AppointmentSection />
       <WhyChooseUsSection />
       <TestimonialsSection />

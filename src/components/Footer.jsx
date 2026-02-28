@@ -12,7 +12,7 @@ const Footer = () => {
           <div className="flex items-center justify-between mb-8">
             <Link to="/" className="flex items-center gap-2.5">
               <div className="w-9 h-9 bg-secondary flex items-center justify-center rounded-lg">
-                <HeartPulseIcon className="w-5 h-5 text-white" />
+                <img src="/logo symbol.png" alt="Logo" className="w-5 h-5 object-contain" />
               </div>
               <span className="text-white font-bold text-lg tracking-tighter uppercase">NexusEnliven</span>
             </Link>
@@ -47,7 +47,7 @@ const Footer = () => {
               { name: 'Contact Us', path: '/contact' },
               { name: 'Medicine', path: '/departments/medicine' },
               { name: 'Radiology', path: '/departments/radiology' },
-              { name: 'Paediatrics', path: '/departments/paediatrics' },
+              { name: 'Pediatrics', path: '/departments/Pediatrics' },
               { name: 'Endocrinology', path: '/departments/endocrinology' }
             ].map((link) => (
               <Link key={link.name} to={link.path} className="text-gray-400 text-xs font-medium py-1">
@@ -73,11 +73,15 @@ const Footer = () => {
             {/* Brand Column */}
             <div className="space-y-8">
               <Link to="/" className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-secondary flex items-center justify-center rounded-lg shadow-inner">
-                  <HeartPulseIcon className="w-8 h-8 text-white" />
+                <div className=" flex items-center justify-center rounded-lg shadow-inner">
+                  <img
+                    src="/logo symbol.png"
+                    alt="Logo"
+                    className="w-12 h-12 object-contain rounded-lg"
+                  />
                 </div>
                 <div className="leading-none">
-                  <span className="text-white font-bold text-2xl tracking-tighter block uppercase">NexusEnliven</span>
+                  <span className="text-white font-bold text-2xl tracking-tighter block">Nexus Enliven</span>
                 </div>
               </Link>
               <p className="text-gray-400 leading-relaxed font-medium text-sm">
@@ -126,7 +130,7 @@ const Footer = () => {
                 {[
                   { name: 'Medicine', path: '/departments/medicine' },
                   { name: 'Radiology', path: '/departments/radiology' },
-                  { name: 'Paediatrics', path: '/departments/paediatrics' },
+                  { name: 'Pediatrics', path: '/departments/Pediatrics' },
                   { name: 'Endocrinology', path: '/departments/endocrinology' }
                 ].map((dept) => (
                   <li key={dept.name}>

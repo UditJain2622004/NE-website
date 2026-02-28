@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Heart, Brain, Users, ArrowRight, Activity, Eye, Bone, Microscope } from 'lucide-react';
+import { Heart, Brain, Users, ArrowRight, Activity, Eye, Bone, Microscope, Clock } from 'lucide-react';
 
 const icons = {
   HeartIcon: Heart,
@@ -13,6 +13,7 @@ const icons = {
 
 const DepartmentCard = ({ department }) => {
   const Icon = icons[department.icon] || Activity;
+  const isComingSoon = department.comingSoon;
 
   return (
     <Link 
@@ -25,10 +26,20 @@ const DepartmentCard = ({ department }) => {
           src={department.image} 
           alt={department.name}
           loading="eager"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${isComingSoon ? 'grayscale-[40%]' : ''}`}
         />
         <div className="absolute inset-0 bg-linear-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         
+        {/* Coming Soon Ribbon */}
+        {isComingSoon && (
+          <div className="absolute top-3 left-3 z-20">
+            <div className="bg-amber-500 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 shadow-lg">
+              <Clock size={12} />
+              Coming Soon
+            </div>
+          </div>
+        )}
+
         {/* Floating Icon Badge */}
         <div className="absolute -bottom-6 right-8 w-14 h-14 bg-white text-secondary flex items-center justify-center rounded-full shadow-lg border border-divider group-hover:bg-secondary group-hover:text-white transition-all duration-300 z-10">
           <Icon size={28} />
@@ -44,17 +55,22 @@ const DepartmentCard = ({ department }) => {
         </p>
 
         <div className="flex items-center justify-between border-t border-divider pt-3 mt-auto">
-          <button 
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              // Add booking logic here if needed
-              window.location.href = '#booking';
-            }}
-            className="w-full bg-gray-100 text-primary px-4 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-secondary hover:text-white transition-all transform active:scale-95"
-          >
-            Book Visit
-          </button>
+          {isComingSoon ? (
+            <span className="w-full bg-amber-50 text-amber-600 px-4 py-3 rounded-xl font-bold text-xs uppercase tracking-widest text-center flex items-center justify-center gap-2">
+              <Clock size={14} /> Coming Soon
+            </span>
+          ) : (
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.location.href = '#booking';
+              }}
+              className="w-full bg-gray-100 text-primary px-4 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-secondary hover:text-white transition-all transform active:scale-95"
+            >
+              Book Visit
+            </button>
+          )}
         </div>
       </div>
     </Link>
@@ -62,3 +78,4 @@ const DepartmentCard = ({ department }) => {
 };
 
 export default DepartmentCard;
+

@@ -74,7 +74,7 @@ const StickyBottomBar = () => {
         </div>
         <div className="relative h-14 w-14">
           <button 
-            onClick={() => handleNav('/#doctors')}
+            onClick={() => handleNav('/doctors')}
             className="group/btn absolute right-0 top-0 flex items-center gap-3 h-14 w-14 rounded-full p-1.5 bg-violet-200 hover:bg-violet-300 transition-all duration-300 hover:w-[180px] overflow-hidden cursor-pointer"
           >
             <div className="shrink-0 w-11 h-11 rounded-full bg-violet-600 flex items-center justify-center text-white">

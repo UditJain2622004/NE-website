@@ -1,7 +1,8 @@
 import { useParams, Link } from 'react-router-dom';
 import { doctors } from '../data/doctors';
-import { Calendar, MessageSquare, Phone, Globe, Star, Award, GraduationCap, ChevronLeft } from 'lucide-react';
+import { Calendar, MessageSquare, Phone, Globe, Star, Award, GraduationCap } from 'lucide-react';
 import CTABanner from '../components/CTABanner';
+import Breadcrumb from '../components/Breadcrumb';
 
 const DoctorDetailsPage = () => {
   const { slug } = useParams();
@@ -21,9 +22,11 @@ const DoctorDetailsPage = () => {
   return (
     <div className="pt-16 lg:pt-32">
       <div className="container-custom py-8">
-        <Link to="/doctors" className="inline-flex items-center gap-2 text-primary font-semibold hover:translate-x-1 transition-transform mb-8">
-          <ChevronLeft size={20} /> Back to All Doctors
-        </Link>
+        <Breadcrumb items={[
+          { label: 'Home', path: '/' },
+          { label: 'Find a Doctor', path: '/doctors' },
+          { label: doctor.name }
+        ]} />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12 items-start">
 
@@ -136,9 +139,9 @@ const DoctorDetailsPage = () => {
               <p className="text-gray-600 text-base lg:text-xl leading-relaxed whitespace-pre-line font-normal opacity-90">
                 {doctor.about}
               </p>
-              <p className="mt-6 lg:mt-8 text-gray-600 leading-relaxed">
+              {/* <p className="mt-6 lg:mt-8 text-gray-600 leading-relaxed">
                 Dr. {doctor.name.split(' ').pop()} is committed to providing the highest quality of care. Her approach combines medical excellence with compassionate patient support, ensuring that every individual receives a personalized treatment plan tailored to their specific needs.
-              </p>
+              </p> */}
             </section>
 
             <section className="bg-blue-50 border border-blue-100 p-5 lg:p-10 rounded-2xl">

@@ -35,7 +35,7 @@ const HeroSection = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-primary font-display tracking-tight">24/7</p>
-                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Emergency Care</p>
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Day Care</p>
               </div>
             </div>
           </div>
@@ -84,7 +84,8 @@ const HeroSection = () => {
               </div>
               <div>
                 <p className="text-4xl font-bold text-primary font-display tracking-tight">24/7</p>
-                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Emergency Care</p>
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Day Care <span className="text-xs font-bold text-secondary tracking-widest mt-1">(Coming Soon)</span></p>
+                {/* <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">(Coming Soon)</p> */}
               </div>
             </div>
           </div>

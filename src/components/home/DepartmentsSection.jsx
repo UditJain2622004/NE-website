@@ -40,12 +40,12 @@ const DepartmentsSection = () => {
 
       <div className="container-custom">
         <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-20 px-5 lg:px-0">
-          <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Centers of Excellence</span>
+          <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Clinical Departments</span>
           <h2 className="text-3xl lg:text-6xl font-bold text-primary leading-tight mb-4 lg:mb-6 font-display">
-            Our Centers of Excellence
+            Our Clinical Departments
           </h2>
           <p className="hidden lg:block text-gray-600 text-sm lg:text-lg">
-            We offer comprehensive medical services across a wide range of specialties, all under one roof. Our centers of excellence are equipped with the latest technology.
+            We offer comprehensive medical services across a wide range of specialties, all under one roof. Our clinical departments are equipped with the latest technology.
           </p>
         </div>
 
