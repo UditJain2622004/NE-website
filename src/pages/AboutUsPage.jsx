@@ -1,11 +1,39 @@
+import { useState, useEffect } from 'react';
 import { Shield, Users, Clock, Award, CheckCircle2 } from 'lucide-react';
 
+const HERO_IMAGES = ['/image1.jpg', '/image2.jpg', '/image3.jpg', '/image4.jpg'];
+
 const AboutUsPage = () => {
+  const [bgIndex, setBgIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBgIndex((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
   const stats = [
     { label: 'Successful Surgeries', value: '15,000+' },
     { label: 'Expert Doctors', value: '120+' },
     { label: 'Modern Rooms', value: '250+' },
     { label: 'Satisfied Patients', value: '50,000+' },
+  ];
+
+  const founders = [
+    {
+      name: 'Dr. Abhijith Reddy A',
+      credentials: 'MBBS, FICCC, FICD, MBA (UK)',
+      role: 'Founder & Chief Executive Officer',
+      image: '/intro.png',
+      bio: 'Dr. Abhijith Reddy A combines medical expertise with strong healthcare leadership. He leads with a vision to build a patient-centered, ethical, and innovative healthcare institution focused on quality care and sustainable growth.',
+    },
+    {
+      name: 'Dr. Jane Smith',
+      credentials: 'MD, FRCS',
+      role: 'Co-Founder & Medical Director',
+      image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400',
+      bio: 'With over 20 years of clinical experience, Dr. Jane Smith oversees medical excellence and ensures the highest standards of patient care across all departments.',
+    },
   ];
 
   const values = [
@@ -34,12 +62,24 @@ const AboutUsPage = () => {
   return (
     <div className="pt-16 lg:pt-20 min-h-screen">
       {/* Hero Section */}
-      <section className="bg-primary text-white py-20 lg:py-32 relative overflow-hidden">
+      <section className="bg-primary text-white py-12 lg:py-20 relative overflow-hidden">
+        {/* Rotating background - one image every 5 seconds with crossfade */}
+        {HERO_IMAGES.map((src, idx) => (
+          <div
+            key={src}
+            className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
+            style={{
+              backgroundImage: `url(${src})`,
+              opacity: idx === bgIndex ? 1 : 0,
+            }}
+          />
+        ))}
+        <div className="absolute inset-0 bg-primary/50"></div>
         <div className="absolute top-0 right-0 w-1/2 h-full bg-secondary/10 skew-x-12 translate-x-1/4"></div>
         <div className="container-custom relative z-10">
           <div className="max-w-3xl">
             <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-6 block">Our Story</span>
-            <h1 className="text-4xl lg:text-7xl font-bold mb-8 font-display leading-[1.1]">
+            <h1 className="text-4xl lg:text-7xl font-bold mb-8 font-display leading-[1.1] text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.6)]">
               Redefining Healthcare <br className="hidden lg:block"/> Through Excellence
             </h1>
             <p className="text-white/80 text-lg lg:text-xl leading-relaxed mb-10">
@@ -51,7 +91,7 @@ const AboutUsPage = () => {
 
       {/* Stats Section */}
       <section className="-mt-16 container-custom relative z-20">
-        <div className="bg-white rounded-3xl shadow-2xl border border-divider p-8 lg:p-12 grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="bg-white rounded-3xl shadow-2xl border border-divider p-6 lg:p-8 grid grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
             <div key={index} className="text-center lg:border-r last:border-0 border-divider">
               <p className="text-3xl lg:text-5xl font-bold text-primary mb-2 font-display">{stat.value}</p>
@@ -62,9 +102,9 @@ const AboutUsPage = () => {
       </section>
 
       {/* Content Section */}
-      <section className="py-24 lg:py-32">
+      <section className="py-16 lg:py-20">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
             <div className="relative">
               <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl">
                 <img 
@@ -95,20 +135,54 @@ const AboutUsPage = () => {
         </div>
       </section>
 
-      {/* Core Values */}
-      <section className="bg-hospital-bg py-24 lg:py-32">
+      {/* Founders Section */}
+      <section className="py-16 lg:py-20 bg-white">
         <div className="container-custom">
-          <div className="text-center max-w-3xl mx-auto mb-20 px-4">
-            <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Core Values</span>
-            <h2 className="text-3xl lg:text-5xl font-bold text-primary mb-6 font-display">What We Stand For</h2>
+          <div className="text-center max-w-3xl mx-auto mb-12 px-4">
+            <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-3 block">Our Leadership</span>
+            <h2 className="text-3xl lg:text-5xl font-bold text-primary mb-4 font-display">Meet Our Founders</h2>
+            <p className="text-gray-600 text-lg">The visionaries behind our mission to deliver exceptional healthcare with compassion and excellence.</p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            {founders.map((founder, index) => (
+              <div key={index} className="flex flex-col sm:flex-row gap-8 items-start">
+                <div className="shrink-0 w-full sm:w-64">
+                  <div className="aspect-square sm:aspect-[4/5] rounded-2xl overflow-hidden shadow-xl bg-gray-100">
+                    <img
+                      src={founder.image}
+                      alt={founder.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <span className="text-secondary font-bold uppercase tracking-[0.2em] text-[10px] mb-2 block">Founder</span>
+                  <h3 className="text-2xl lg:text-3xl font-bold text-primary mb-2 font-display">{founder.name}</h3>
+                  <p className="text-secondary font-semibold text-base mb-1">{founder.credentials}</p>
+                  <p className="text-primary font-bold uppercase tracking-wide text-sm mb-4">{founder.role}</p>
+                  <p className="text-gray-600 leading-relaxed">{founder.bio}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Core Values */}
+      <section className="bg-hospital-bg py-16 lg:py-20">
+        <div className="container-custom">
+          <div className="text-center max-w-3xl mx-auto mb-12 px-4">
+            <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-3 block">Core Values</span>
+            <h2 className="text-3xl lg:text-5xl font-bold text-primary mb-4 font-display">What We Stand For</h2>
             <p className="text-gray-600 text-lg">Our values are the foundation of our institution and guide every decision we make in our daily practice.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => {
               const Icon = value.icon;
               return (
-                <div key={index} className="bg-white p-10 rounded-3xl border border-divider hover:shadow-xl transition-all duration-300">
+                <div key={index} className="bg-white p-8 rounded-3xl border border-divider hover:shadow-xl transition-all duration-300">
                   <div className="w-16 h-16 bg-primary/5 text-primary rounded-2xl flex items-center justify-center mb-6">
                     <Icon size={32} />
                   </div>
