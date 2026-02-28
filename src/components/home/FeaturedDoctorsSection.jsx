@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const FeaturedDoctorsSection = () => {
   return (
-    <section id="doctors" className="section-padding bg-hospital-bg">
+    <section id="doctors" className="section-padding bg-hospital-bg bg-primary/5">
       <div className="container-custom">
         {/* header */}
         <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-20 px-5 lg:px-0">

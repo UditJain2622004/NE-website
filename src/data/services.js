@@ -61,6 +61,27 @@ export const services = [
   },
   {
     id: 4,
+    name: "Health Check Packages",
+    slug: "health-check-packages",
+    icon: "PackageIcon",
+    shortDescription: "Curated health checkup packages designed to assess your overall well-being with comprehensive tests and specialist consultations.",
+    fullDescription: "Our Health Check Packages offer a range of curated health assessments — from basic screenings to executive-level comprehensive checkups. Each package is designed to give you a complete picture of your health with bundled tests, imaging, and specialist consultations at value-driven pricing.",
+    image: "/general images/health package.png",
+    customPage: true,
+    highlights: ["Basic to Executive Packages", "Bundled Tests & Imaging", "Specialist Consultations Included", "Value-Driven Pricing", "Detailed Wellness Reports"],
+    faqs: [
+      {
+        question: "How do I choose the right package?",
+        answer: "Choose based on your age, health concerns, and goals. Basic packages suit routine monitoring, while comprehensive and executive packages are ideal for in-depth assessments."
+      },
+      {
+        question: "Can I customize a package?",
+        answer: "Yes, our team can help you add or modify tests based on your specific needs. Contact us for a personalized package."
+      }
+    ]
+  },
+  {
+    id: 5,
     name: "Day Care Health Service",
     slug: "day-care-health-service",
     icon: "SunIcon",
@@ -80,7 +101,7 @@ export const services = [
     ]
   },
   {
-    id: 5,
+    id: 6,
     name: "Diagnostics",
     slug: "diagnostics",
     icon: "ScanLineIcon",
@@ -100,7 +121,7 @@ export const services = [
     ]
   },
   {
-    id: 6,
+    id: 7,
     name: "Occupational / Industrial Health",
     slug: "occupational-industrial-health",
     icon: "HardHatIcon",
@@ -119,25 +140,5 @@ export const services = [
       }
     ]
   },
-  {
-    id: 7,
-    name: "Health Care Packages",
-    slug: "health-care-packages",
-    icon: "PackageIcon",
-    shortDescription: "Curated health checkup packages designed to assess your overall well-being with comprehensive tests and specialist consultations.",
-    fullDescription: "Our Health Care Packages offer a range of curated health assessments — from basic screenings to executive-level comprehensive checkups. Each package is designed to give you a complete picture of your health with bundled tests, imaging, and specialist consultations at value-driven pricing.",
-    image: "/general images/health package.png",
-    customPage: true,
-    highlights: ["Basic to Executive Packages", "Bundled Tests & Imaging", "Specialist Consultations Included", "Value-Driven Pricing", "Detailed Wellness Reports"],
-    faqs: [
-      {
-        question: "How do I choose the right package?",
-        answer: "Choose based on your age, health concerns, and goals. Basic packages suit routine monitoring, while comprehensive and executive packages are ideal for in-depth assessments."
-      },
-      {
-        question: "Can I customize a package?",
-        answer: "Yes, our team can help you add or modify tests based on your specific needs. Contact us for a personalized package."
-      }
-    ]
-  }
+  
 ];

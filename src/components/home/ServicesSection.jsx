@@ -34,7 +34,7 @@ const ServicesSection = () => {
   };
 
   return (
-    <section id="services" className="bg-primary/5 relative section-padding">
+    <section id="services" className=" relative section-padding">
       {/* Decorative background element */}
       <div className="absolute top-0 left-0 w-full h-32 bg-linear-to-b from-hospital-bg to-transparent -z-10"></div>
 
@@ -42,7 +42,7 @@ const ServicesSection = () => {
         <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-20 px-5 lg:px-0">
           <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Healthcare Services</span>
           <h2 className="text-3xl lg:text-6xl font-bold text-primary leading-tight mb-4 lg:mb-6 font-display">
-            Our Services
+            Explore Our Services
           </h2>
           <p className="hidden lg:block text-gray-600 text-sm lg:text-lg">
             From clinical consultations to diagnostics and specialized health programs, we provide a comprehensive suite of healthcare services designed for your well-being.

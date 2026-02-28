@@ -24,8 +24,8 @@ const AboutUsPage = () => {
     {
       name: 'Dr. Abhijith Reddy A',
       credentials: 'MBBS, FICCC, FICD, MBA (UK)',
-      role: 'Founder & Chief Executive Officer',
-      image: '/intro.png',
+      role: 'Founder & Clinical Consultant',
+      image: '/intro2.png',
       bio: 'Dr. Abhijith Reddy A combines medical expertise with strong healthcare leadership. He leads with a vision to build a patient-centered, ethical, and innovative healthcare institution focused on quality care and sustainable growth.',
       slug: 'abhijith-reddy',
     },

@@ -10,7 +10,7 @@ export const doctors = [
     location: "NE Hospital",
     experience: "5+ Years",
     qualifications: "MBBS, FICCC, FICD, MBA(UK)",
-    about: `Dr. Abhijith Reddy A is the Founder and Chief Executive Officer of Nexus Enliven, where he brings together clinical expertise and strategic healthcare leadership to create a patient-centered and forward-thinking medical practice.
+    about: `Dr. Abhijith Reddy A is the Founder and Clinical Consultant of Nexus Enliven, where he brings together clinical expertise and strategic healthcare leadership to create a patient-centered and forward-thinking medical practice.
 
 After completing his MBBS, Dr. Abhijith further strengthened his professional credentials by earning fellowships including FICCC and FICD, reflecting his commitment to maintaining high standards of medical excellence and continuous learning. Recognizing the importance of combining clinical knowledge with strong organizational leadership, he pursued an MBA in Healthcare Management in the United Kingdom.
 
@@ -33,7 +33,7 @@ Under his guidance, Nexus Enliven is committed to excellence, transparency, and 
     qualifications: "MBBS, MRCP(UK), FICCC, FICD, FECHO, FECMO, APGD(OHSM)",
     about: "Dr. Akshath Ramesh Acharya is a General Practitioner and Internal Medicine Specialist with extensive training in Infectious diseases, Cardiac Critical Care, Palliative care, Cardiodiabetes, Cardiac Nutrition, Echocardiography, ECMO, with International qualifications including MRCP(UK), APGD in Occupational Health, Fellowship in Aesthetic Medicine.",
     languages: ["English", "Kannada", "Hindi"],
-    availability: "Mon - Sat, 9:00 AM - 5:00 PM"
+    availability: "Mon - Sat, 9 AM to 1 PM ; 6 PM to 10 PM"
   },
   
   {

@@ -9,9 +9,8 @@ const HeroCarousel = ({ className }) => {
     '/hero_images/download (1).jpg',
     '/hero_images/download (3).jpg',
     '/hero_images/download (4).jpg',
-    '/hero_images/download (5).jpg',
-    '/hero_images/download (2).jpg'
-  ];
+    '/hero_images/download (5).jpg'
+    ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
 

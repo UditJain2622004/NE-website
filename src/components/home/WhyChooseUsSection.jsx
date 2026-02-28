@@ -9,7 +9,7 @@ const WhyChooseUsSection = () => {
     },
     {
       icon: Clock,
-      title: "24/7 Emergency Care",
+      title: "24/7 Day Care",
       description: "Immediate medical response for critical situations, available every second of every day."
     },
     {
@@ -25,7 +25,7 @@ const WhyChooseUsSection = () => {
   ];
 
   return (
-    <section className="section-padding bg-white">
+    <section className="section-padding  bg-primary/5">
       <div className="container-custom">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
