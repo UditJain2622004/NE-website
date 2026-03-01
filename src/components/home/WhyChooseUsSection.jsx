@@ -9,7 +9,7 @@ const WhyChooseUsSection = () => {
     },
     {
       icon: Clock,
-      title: "24/7 Day Care",
+      title: "Day Care & 24/7 Service",
       description: "Round-the-clock medical observation and specialized day care services for a swift recovery."
     },
     {

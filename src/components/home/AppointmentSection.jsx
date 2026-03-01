@@ -31,17 +31,17 @@ const AppointmentSection = () => {
 
   const availableDepartments = departments
     .filter(d => !d.comingSoon && d.name.toLowerCase().includes(deptSearch.toLowerCase()))
-    .map(d => d.name);
+    .map(d => d.slug);
   
   const filteredDoctorNames = doctors
-    .filter(d => !selectedDepartment || d.department === selectedDepartment)
+    .filter(d => !selectedDepartment || d.department.toLowerCase() === selectedDepartment.toLowerCase())
     .filter(d => d.name.toLowerCase().includes(docSearch.toLowerCase()))
     .map(d => d.name);
 
   // Reset selected doctor if they are not in the new filtered list (ignoring search)
   useEffect(() => {
     const validDoctorNames = doctors
-      .filter(d => !selectedDepartment || d.department === selectedDepartment)
+      .filter(d => !selectedDepartment || d.department.toLowerCase() === selectedDepartment.toLowerCase())
       .map(d => d.name);
     if (selectedDoctor && !validDoctorNames.includes(selectedDoctor)) {
       setSelectedDoctor('');
@@ -87,7 +87,7 @@ const AppointmentSection = () => {
                       onClick={() => { setIsDeptOpen(!isDeptOpen); setIsDocOpen(false); }}
                       className="w-full flex items-center justify-between gap-2 bg-gray-50 border border-divider p-3.5 rounded-xl outline-none focus:ring-2 focus:ring-secondary transition-all font-bold text-sm text-primary text-left"
                     >
-                      <span className="truncate">{selectedDepartment || 'Select Department'}</span>
+                      <span className="truncate">{selectedDepartment.charAt(0).toUpperCase() + selectedDepartment.slice(1) || 'Select Department'}</span>
                       <ChevronDown size={18} className={`text-gray-400 transition-transform duration-300 shrink-0 ${isDeptOpen ? 'rotate-180' : ''}`} />
                     </button>
                   </InputGroup>
@@ -120,7 +120,7 @@ const AppointmentSection = () => {
                             className={`px-4 py-2 hover:bg-blue-50 cursor-pointer text-xs font-medium transition-colors ${selectedDepartment === dept ? 'bg-blue-50 text-secondary font-bold' : 'text-gray-600'}`}
                             onClick={() => { setSelectedDepartment(dept); setIsDeptOpen(false); setDeptSearch(''); }}
                           >
-                            {dept}
+                            {dept.charAt(0).toUpperCase() + dept.slice(1)}
                           </div>
                         ))}
                       </div>

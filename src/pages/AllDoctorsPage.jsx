@@ -32,10 +32,10 @@ const AllDoctorsPage = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const availableDepartments = departments.filter(d => !d.comingSoon).map(d => d.name);
+  const availableDepartments = departments.filter(d => !d.comingSoon).map(d => d.slug);
   
   const filteredDoctorNames = doctors
-    .filter(d => !selectedDepartment || d.department === selectedDepartment)
+    .filter(d => !selectedDepartment || d.department.toLowerCase() === selectedDepartment.toLowerCase())
     .filter(d => d.name.toLowerCase().includes(docSearch.toLowerCase()))
     .map(d => d.name);
 
@@ -43,8 +43,8 @@ const AllDoctorsPage = () => {
     const matchesSearch = doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          doctor.speciality.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          doctor.department.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesDept = !selectedDepartment || doctor.department === selectedDepartment;
-    const matchesDoc = !selectedDoctor || doctor.name === selectedDoctor;
+    const matchesDept = !selectedDepartment || doctor.department.toLowerCase() === selectedDepartment.toLowerCase();
+    const matchesDoc = !selectedDoctor || doctor.name.toLowerCase() === selectedDoctor.toLowerCase();
     
     return matchesSearch && matchesDept && matchesDoc;
   });
@@ -63,8 +63,8 @@ const AllDoctorsPage = () => {
             { label: 'Home', path: '/' },
             { label: 'Find a Doctor' }
           ]} />
-          {/* <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Our Experts</span> */}
-          <h1 className="text-3xl lg:text-6xl font-bold text-primary mt-10 font-display">
+          <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Our Experts</span>
+          <h1 className="text-3xl lg:text-6xl font-bold text-primary mt-2 font-display">
             Meet Our Doctors
           </h1>
           <p className="text-gray-600 text-sm lg:text-lg mt-5">
@@ -87,7 +87,7 @@ const AllDoctorsPage = () => {
                   <div className="text-left flex-1 min-w-0">
                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Department</p>
                     <p className="text-gray-700 font-bold text-sm lg:text-base">
-                      {selectedDepartment || 'Select a Department'}
+                      {selectedDepartment.charAt(0).toUpperCase() + selectedDepartment.slice(1) || 'Select a Department'}
                     </p>
                   </div>
                   <ChevronDown size={18} className={`text-black-300 transition-transform duration-300 shrink-0 ${isDeptOpen ? 'rotate-180' : ''}`} />
@@ -121,7 +121,7 @@ const AllDoctorsPage = () => {
                           className={`px-6 py-3 hover:bg-blue-50 cursor-pointer text-sm font-medium transition-colors ${selectedDepartment === dept ? 'bg-blue-50 text-secondary font-bold' : 'text-gray-600'}`}
                           onClick={() => { setSelectedDepartment(dept); setIsDeptOpen(false); setDeptSearch(''); }}
                         >
-                          {dept}
+                          {dept.charAt(0).toUpperCase() + dept.slice(1)}
                         </div>
                       ))}
                     </div>

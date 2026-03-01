@@ -46,7 +46,7 @@ export const departments = [
   {
     id: 3,
     name: "Pediatrics",
-    slug: "Pediatrics",
+    slug: "pediatrics",
     icon: "UserGroupIcon",
     comingSoon: false,
     shortDescription: "Compassionate and specialized healthcare for infants, children, and adolescents.",

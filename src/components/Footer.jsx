@@ -40,15 +40,17 @@ const Footer = () => {
           {/* Links in two columns */}
           <div className="grid grid-cols-2 gap-x-6 gap-y-2.5 mb-8">
             {[
-              { name: 'About Us', path: '/about' },
+              { name: 'Home', path: '/' },
               { name: 'Our Doctors', path: '/doctors' },
+              { name: 'About Us', path: '/about' },
               { name: 'Departments', path: '/departments' },
-              { name: 'Book Appointment', path: '/#book' },
               { name: 'Contact Us', path: '/contact' },
-              { name: 'Medicine', path: '/departments/medicine' },
-              { name: 'Radiology', path: '/departments/radiology' },
-              { name: 'Pediatrics', path: '/departments/Pediatrics' },
-              { name: 'Endocrinology', path: '/departments/endocrinology' }
+              { name: 'Services', path: '/services' },
+              { name: 'Book Appointment', path: '/#book' },
+              { name: 'Health Check Packages', path: '/services/health-care-packages' },
+              // { name: 'Radiology', path: '/departments/radiology' },
+              // { name: 'Pediatrics', path: '/departments/pediatrics' },
+              // { name: 'Endocrinology', path: '/departments/endocrinology' }
             ].map((link) => (
               <Link key={link.name} to={link.path} className="text-gray-400 text-xs font-medium py-1">
                 {link.name}
@@ -58,7 +60,7 @@ const Footer = () => {
 
           {/* Bottom bar */}
           <div className="pt-6 border-t border-white/10 flex flex-col gap-3 items-center text-center">
-            <p className="text-gray-500 text-[10px] font-medium">© 2026 NexusEnliven Health System. All rights reserved.</p>
+            <p className="text-gray-500 text-[10px] font-medium">© 2026 Nexus Enliven Hospitals. All rights reserved.</p>
             {/* <div className="flex gap-4 text-gray-500 text-[10px] font-medium">
               <Link to="/#privacy">Privacy</Link>
               <Link to="/#terms">Terms</Link>
@@ -68,7 +70,7 @@ const Footer = () => {
 
         {/* === DESKTOP FOOTER === */}
         <div className="hidden lg:block pt-24 pb-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-16">
             
             {/* Brand Column */}
             <div className="space-y-8">
@@ -130,8 +132,32 @@ const Footer = () => {
                 {[
                   { name: 'Medicine', path: '/departments/medicine' },
                   { name: 'Radiology', path: '/departments/radiology' },
-                  { name: 'Pediatrics', path: '/departments/Pediatrics' },
-                  { name: 'Endocrinology', path: '/departments/endocrinology' }
+                  { name: 'Pediatrics', path: '/departments/pediatrics' },
+                  { name: 'Endocrinology', path: '/departments/endocrinology' },
+                  { name: 'View All Departments', path: '/departments' }
+                ].map((dept) => (
+                  <li key={dept.name}>
+                    <Link to={dept.path} className="text-gray-400 hover:text-secondary group flex items-center gap-2 transition-all font-semibold text-sm">
+                      <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                      {dept.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold mb-8 text-white uppercase tracking-tight flex items-center gap-3 font-display">
+                <span className="w-1 h-6 bg-secondary rounded-full"></span>
+                Services
+              </h3>
+               <ul className="space-y-4">
+                {[
+                  { name: 'Clinic', path: '/services/clinic' },
+                  { name: 'Consultation', path: '/services/consultation' },
+                  { name: 'Health Check Packages', path: '/services/health-care-packages' },
+                  { name: 'Diagnostics', path: '/services/diagnostics' },
+                  { name: 'View All services', path: '/services' }
                 ].map((dept) => (
                   <li key={dept.name}>
                     <Link to={dept.path} className="text-gray-400 hover:text-secondary group flex items-center gap-2 transition-all font-semibold text-sm">
@@ -167,7 +193,7 @@ const Footer = () => {
           </div>
 
           <div className="mt-20 pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8 text-gray-400 text-xs font-bold uppercase tracking-widest">
-            <p>© 2026 NexusEnliven Health System. All rights reserved.</p>
+            <p>© 2026 Nexus Enliven Hospitals. All rights reserved.</p>
             {/* <div className="flex gap-8">
               <Link to="/#privacy" className="hover:text-white">Privacy Policy</Link>
               <Link to="/#terms" className="hover:text-white">Terms of Service</Link>

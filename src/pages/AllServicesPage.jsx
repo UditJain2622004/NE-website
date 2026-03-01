@@ -11,11 +11,11 @@ const AllServicesPage = () => {
             { label: 'Home', path: '/' },
             { label: 'Our Services' }
           ]} />
-          <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Healthcare Solutions</span>
-          <h1 className="text-4xl lg:text-7xl font-bold text-primary mb-6 font-display">
+          <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Healthcare Services</span>
+          <h1 className="text-3xl lg:text-6xl font-bold text-primary mt-2 font-display">
             Our Services
           </h1>
-          <p className="max-w-3xl mx-auto text-gray-600 text-lg lg:text-xl px-4 lg:px-0">
+          <p className="text-gray-600 text-sm lg:text-lg mt-5">
             Comprehensive healthcare services designed to meet all your medical needs — from routine consultations to specialized diagnostics and occupational health programs.
           </p>
         </div>

@@ -36,7 +36,7 @@ const StickyBottomBar = () => {
       <div className="fixed bottom-1 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-2xl lg:hidden">
         <div className="bg-white/70 backdrop-blur-3xl rounded-2xl shadow-[0_8px_32px_rgba(28,78,149,0.18)] border border-primary/10 px-2 py-2 flex items-center justify-between gap-3">
           <button 
-            onClick={() => handleNav('/#doctors')}
+            onClick={() => handleNav('/doctors')}
             className="flex flex-col items-center justify-center gap-1 bg-primary/80 text-white rounded-xl shadow-lg shadow-primary/20 active:scale-95 transition-all px-2 py-3 flex-1 cursor-pointer"
           >
             <Stethoscope size={22} strokeWidth={2.5} />

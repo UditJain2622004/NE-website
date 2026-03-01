@@ -76,7 +76,7 @@ const Navbar = () => {
     { 
       name: 'Departments', 
       path: '/departments',
-      dropdown: {'Medicine':"/departments/medicine", 'Radiology':"/departments/radiology", 'Pediatrics':"/departments/Pediatrics", 'Endocrinology':"/departments/endocrinology", 'Cardiology':"/departments/cardiology", 'ENT':"/departments/ent", 'Obstetrics & Gynecology':"/departments/obstetrics-and-gynecology", 'Ophthalmology':"/departments/ophthalmology", 'Urology':"/departments/urology"}
+      dropdown: {'Medicine':"/departments/medicine", 'Radiology':"/departments/radiology", 'Pediatrics':"/departments/pediatrics", 'Endocrinology':"/departments/endocrinology", 'Cardiology':"/departments/cardiology", 'ENT':"/departments/ent", 'Obstetrics & Gynecology':"/departments/obstetrics-and-gynecology", 'Ophthalmology':"/departments/ophthalmology", 'Urology':"/departments/urology"}
     },
     { name: 'Find a Doctor', path: '/doctors' },
     {
