@@ -10,7 +10,7 @@ import Breadcrumb from '../components/Breadcrumb';
 const DepartmentDetailsPage = () => {
   const { slug } = useParams();
   const department = departments.find((d) => d.slug === slug);
-  const deptDoctors = doctors.filter((d) => d.department === department?.name);
+  const deptDoctors = doctors.filter((d) => d.department.toLowerCase() === department?.name.toLowerCase());
 
   if (!department) {
     return (
