@@ -12,7 +12,7 @@ export const doctors = [
     qualifications: "MBBS, FICCC, FICD, MBA(UK)",
     about: `Dr. Abhijith Reddy A is the Founder and Clinical Consultant of Nexus Enliven, where he brings together clinical expertise and strategic healthcare leadership to create a patient-centered and forward-thinking medical practice.
 
-After completing his MBBS, Dr. Abhijith further strengthened his professional credentials by earning fellowships including FICCC and FICD, reflecting his commitment to maintaining high standards of medical excellence and continuous learning. Recognizing the importance of combining clinical knowledge with strong organizational leadership, he pursued an MBA in Healthcare Management in the United Kingdom.
+After completing his MBBS, Dr. Abhijith further strengthened his professional credentials by earning fellowships from Delhi AIIMS, including FICCC and FICD, reflecting his commitment to maintaining high standards of medical excellence and continuous learning. Recognizing the importance of combining clinical knowledge with strong organizational leadership, he pursued an MBA in Healthcare Management in the United Kingdom.
 
 With a unique blend of medical training and business acumen, Dr. Abhijith leads Nexus Enliven with a clear vision: to build a trusted healthcare institution grounded in ethics, innovation, and quality care. His leadership focuses on strategic development, operational excellence, clinical governance, and delivering a safe, efficient, and compassionate patient experience.
 

@@ -56,7 +56,7 @@ const FounderIntroSection = () => {
 
             <div className="space-y-3 text-gray-600 leading-relaxed">
               <p>
-                Dr. Abhijith Reddy A is the Founder and Clinical Consultant of Nexus Enliven, combining medical expertise with strong healthcare leadership. After completing his MBBS, he earned fellowships (FICCC, FICD) and pursued an MBA in Healthcare Management in the UK to strengthen his strategic and organizational skills.
+                Dr. Abhijith Reddy A is the Founder and Clinical Consultant of Nexus Enliven, combining medical expertise with strong healthcare leadership. After completing his MBBS, he earned fellowships from Delhi AIIMS (FICCC, FICD) and pursued an MBA in Healthcare Management in the UK to strengthen his strategic and organizational skills.
               </p>
               <p>
                 He leads Nexus Enliven with a clear vision to build a patient-centered, ethical, and innovative healthcare institution focused on quality care, operational excellence, and sustainable growth.
