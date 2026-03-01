@@ -16,7 +16,7 @@ const CentersOfExcellencePage = () => {
             Explore Our Departments
           </h1>
           <p className="text-gray-600 text-sm lg:text-lg mt-5">
-            World-class medical facilities and expertise across a wide range of specialties, dedicated to providing the highest quality of patient care.
+            Quality medical facilities and expertise across a wide range of specialties, dedicated to providing the highest quality of patient care.
           </p>
         </div>
       </div>

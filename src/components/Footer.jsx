@@ -87,7 +87,7 @@ const Footer = () => {
                 </div>
               </Link>
               <p className="text-gray-400 leading-relaxed font-medium text-sm">
-                Providing world-class healthcare with compassion and excellence. Your health is our priority.
+                Providing quality healthcare with compassion and excellence. Your health is our priority.
               </p>
               <div className="flex gap-4">
                 {[Facebook, Twitter, Instagram, Linkedin].map((Icon, i) => (

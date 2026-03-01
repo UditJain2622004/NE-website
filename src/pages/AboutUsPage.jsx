@@ -122,7 +122,7 @@ const AboutUsPage = () => {
                   Nexus Enliven was established with a singular vision: to create a premium healthcare ecosystem that integrates cutting-edge medical innovation with deeply personalized care. We aren't just a hospital; we are a modern medical center designed to set new benchmarks in patient experience.
                 </p>
                 <p>
-                  Our facility features world-class infrastructure, sophisticated diagnostic tools, and contemporary clinical environments. By bringing together a team of exceptionally talented specialists and utilizing the latest healthcare protocols, we ensure that every patient receives the highest standard of modern medicine.
+                  Our facility features quality infrastructure, sophisticated diagnostic tools, and contemporary clinical environments. By bringing together a team of exceptionally talented specialists and utilizing the latest healthcare protocols, we ensure that every patient receives the highest standard of modern medicine.
                 </p>
               </div>
             </div>

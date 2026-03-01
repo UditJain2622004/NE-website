@@ -26,7 +26,7 @@ const HeroSection = () => {
               <span className="text-4xl text-secondary">Our Priority.</span>
             </h1>
             <p className="text-gray-600 text-base leading-relaxed">
-              Experience world-class healthcare with a personal touch. Our dedicated team is committed to your well-being.
+              Experience quality healthcare with a personal touch. Our dedicated team is committed to your well-being.
             </p>
             <div className="flex items-center gap-4 border-divider pt-4">
               <div>
@@ -65,7 +65,7 @@ const HeroSection = () => {
             </h1>
             
             <p className="text-xl text-gray-600 mb-10 max-w-xl leading-relaxed font-sans">
-              Experience world-class healthcare with a personal touch. Our dedicated team of specialists is committed to your well-being, offering cutting-edge treatments in a comfortable environment.
+              Experience quality healthcare with a personal touch. Our dedicated team of specialists is committed to your well-being, offering cutting-edge treatments in a comfortable environment.
             </p>
             
             {/* <div className="flex flex-row gap-5 mb-16">
