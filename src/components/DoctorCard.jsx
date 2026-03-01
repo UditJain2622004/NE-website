@@ -12,7 +12,7 @@ const DoctorCard = ({ doctor }) => {
           <img 
             src={doctor.image} 
             alt={doctor.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
           />
           <div className="absolute top-4 right-4 bg-secondary/90 backdrop-blur-sm text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-sm shadow-md">
             {doctor.department}
@@ -65,7 +65,7 @@ const DoctorCard = ({ doctor }) => {
           <img
             src={doctor.image}
             alt={doctor.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
           />
         </div>
 

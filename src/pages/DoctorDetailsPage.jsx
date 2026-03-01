@@ -36,7 +36,7 @@ const DoctorDetailsPage = () => {
               <img 
                 src={doctor.image} 
                 alt={doctor.name} 
-                className="w-full h-auto max-h-72 lg:max-h-none lg:aspect-[3/4] object-cover"
+                className="w-full h-auto block"
               />
             </div>
 
