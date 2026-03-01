@@ -1,4 +1,5 @@
 import { doctors } from '../data/doctors';
+import { departments } from '../data/departments';
 import DoctorCard from '../components/DoctorCard';
 import { Building2, UserRound, ChevronDown, Search, X } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
@@ -31,9 +32,7 @@ const AllDoctorsPage = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const departments = [...new Set(doctors.map(d => d.department))].filter(d => 
-    d.toLowerCase().includes(deptSearch.toLowerCase())
-  );
+  const availableDepartments = departments.filter(d => !d.comingSoon).map(d => d.name);
   
   const filteredDoctorNames = doctors
     .filter(d => !selectedDepartment || d.department === selectedDepartment)
@@ -116,7 +115,7 @@ const AllDoctorsPage = () => {
                       >
                         All Departments
                       </div>
-                      {departments.map(dept => (
+                      {availableDepartments.map(dept => (
                         <div 
                           key={dept}
                           className={`px-6 py-3 hover:bg-blue-50 cursor-pointer text-sm font-medium transition-colors ${selectedDepartment === dept ? 'bg-blue-50 text-secondary font-bold' : 'text-gray-600'}`}
