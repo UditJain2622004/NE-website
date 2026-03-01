@@ -27,7 +27,7 @@ const ServiceDetailsPage = () => {
         <div className="container-custom px-4 sm:px-6 lg:px-0">
           <Breadcrumb items={[
             { label: 'Home', path: '/' },
-            { label: 'Our Services', path: '/services' },
+            { label: 'Services', path: '/services' },
             { label: service.name }
           ]} />
 

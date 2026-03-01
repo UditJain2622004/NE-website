@@ -108,10 +108,10 @@ const AboutUsPage = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-8 -right-8 bg-secondary p-8 rounded-2xl shadow-xl hidden lg:block">
+              {/* <div className="absolute -bottom-8 -right-8 bg-secondary p-8 rounded-2xl shadow-xl hidden lg:block">
                 <CheckCircle2 size={48} className="text-white mb-4" />
                 <p className="text-white font-bold uppercase tracking-widest text-xs">NABH Accredited</p>
-              </div>
+              </div> */}
             </div>
             
             <div>
@@ -157,7 +157,7 @@ const AboutUsPage = () => {
                     <img
                       src={founder.image}
                       alt={founder.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover object-top"
                     />
                   </div>
                 </div>

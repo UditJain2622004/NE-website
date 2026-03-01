@@ -24,7 +24,7 @@ const DoctorDetailsPage = () => {
       <div className="container-custom py-8">
         <Breadcrumb items={[
           { label: 'Home', path: '/' },
-          { label: 'Find a Doctor', path: '/doctors' },
+          { label: 'Doctors', path: '/doctors' },
           { label: doctor.name }
         ]} />
 

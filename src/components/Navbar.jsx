@@ -219,7 +219,7 @@ const Navbar = () => {
             </button>
           </div>
           
-          <div className="flex flex-col p-6 gap-2 overflow-y-auto flex-1 pb-40">
+          <div className="flex flex-col p-6 overflow-y-auto flex-1 pb-40">
             {navLinks.map((link) => (
               <MobileNavLink key={link.name} link={link} setIsOpen={setIsOpen} />
             ))}
