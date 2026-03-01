@@ -32,8 +32,8 @@ function App() {
             <Route path="/departments" element={<CentersOfExcellencePage />} />
             <Route path="/departments/:slug" element={<DepartmentDetailsPage />} />
             <Route path="/services" element={<AllServicesPage />} />
-            <Route path="/services/health-care-packages" element={<HealthCarePackagesPage />} />
-            <Route path="/services/health-care-packages/:packageSlug" element={<PackageDetailsPage />} />
+            <Route path="/services/health-check-packages" element={<HealthCarePackagesPage />} />
+            <Route path="/services/health-check-packages/:packageSlug" element={<PackageDetailsPage />} />
             <Route path="/services/diagnostics" element={<DiagnosticsPage />} />
             <Route path="/services/:slug" element={<ServiceDetailsPage />} />
             <Route path="/about" element={<AboutUsPage />} />

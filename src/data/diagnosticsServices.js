@@ -37,7 +37,7 @@ export const diagnosticsServices = [
     name: "PFT (Pulmonary Function Test)",
     icon: "Wind",
     image: "/pft.webp",
-    description: "Pulmonary Function Test (PFT) measures lung capacity, volume, and airflow to assess how well your lungs are working. You breathe into a spirometer following specific instructions—the test is safe, non-invasive, and takes about 15–20 minutes. It helps diagnose and monitor asthma, COPD, bronchitis, emphysema, and restrictive lung diseases. PFT is commonly required for pre-operative assessment, occupational health screening (especially for workers in dust or chemical exposure), and disability evaluation. Results help guide treatment and monitor disease progression.",
+    description: "Pulmonary Function Test (PFT) measures lung capacity, volume, and airflow to assess how well your lungs are working. You breathe into a spirometer following specific instructions-the test is safe, non-invasive, and takes about 15–20 minutes. It helps diagnose and monitor asthma, COPD, bronchitis, emphysema, and restrictive lung diseases. PFT is commonly required for pre-operative assessment, occupational health screening (especially for workers in dust or chemical exposure), and disability evaluation. Results help guide treatment and monitor disease progression.",
     subServices: [],
   },
   {

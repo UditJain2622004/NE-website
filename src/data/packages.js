@@ -120,7 +120,7 @@ export const packages = [
     id: 4,
     name: "Senior Citizens Health Check - Executive",
     slug: "senior-citizens-executive",
-    image: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/senior.png",
     description: "A tailored package for seniors, focusing on vital mineral balance, cardiac health, and a wide choice of specialist consultations.",
     price: 7500,
     inclusions: [
@@ -386,7 +386,7 @@ export const packages = [
       "Both fasting and post-meal sugar tests are required.",
       "Foot screening requires you to be barefoot for a while.",
       "Carry your diabetic identity card/records.",
-      "Ophthalmology includes dilated eye fundus examination — avoid driving back.",
+      "Ophthalmology includes dilated eye fundus examination - avoid driving back.",
       "Check your sugar levels if you stay more than 4 hours."
     ]
   },

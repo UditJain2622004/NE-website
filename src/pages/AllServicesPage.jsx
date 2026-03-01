@@ -16,7 +16,7 @@ const AllServicesPage = () => {
             Our Services
           </h1>
           <p className="text-gray-600 text-sm lg:text-lg mt-5">
-            Comprehensive healthcare services designed to meet all your medical needs — from routine consultations to specialized diagnostics and occupational health programs.
+            Comprehensive healthcare services designed to meet all your medical needs - from routine consultations to specialized diagnostics and occupational health programs.
           </p>
         </div>
       </div>

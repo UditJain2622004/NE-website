@@ -13,7 +13,7 @@ const PackageDetailsPage = () => {
       <div className="min-h-screen flex items-center justify-center pt-24">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-primary mb-4">Package Not Found</h2>
-          <Link to="/services/health-care-packages" className="btn-primary">Back to All Packages</Link>
+          <Link to="/services/health-check-packages" className="btn-primary">Back to All Packages</Link>
         </div>
       </div>
     );
@@ -27,7 +27,7 @@ const PackageDetailsPage = () => {
           <Breadcrumb items={[
             { label: 'Home', path: '/' },
             { label: 'Services', path: '/services' },
-            { label: 'Health Check Packages', path: '/services/health-care-packages' },
+            { label: 'Health Check Packages', path: '/services/health-check-packages' },
             { label: pkg.name }
           ]} />
 
@@ -139,7 +139,7 @@ const PackageDetailsPage = () => {
               .map((otherPkg) => (
                 <Link
                   key={otherPkg.id}
-                  to={`/services/health-care-packages/${otherPkg.slug}`}
+                  to={`/services/health-check-packages/${otherPkg.slug}`}
                   className="group bg-white rounded-xl border border-divider hover:border-secondary/30 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col"
                 >
                   {/* Mini image */}
@@ -166,7 +166,7 @@ const PackageDetailsPage = () => {
               ))}
           </div>
           <div className="text-center mt-10">
-            <Link to="/services/health-care-packages" className="btn-outline inline-flex items-center gap-2 px-8 py-3 rounded-xl">
+            <Link to="/services/health-check-packages" className="btn-outline inline-flex items-center gap-2 px-8 py-3 rounded-xl">
               View All Packages <ArrowRight size={16} />
             </Link>
           </div>

@@ -65,7 +65,7 @@ export const services = [
     slug: "health-check-packages",
     icon: "PackageIcon",
     shortDescription: "Curated health checkup packages designed to assess your overall well-being with comprehensive tests and specialist consultations.",
-    fullDescription: "Our Health Check Packages offer a range of curated health assessments — from basic screenings to executive-level comprehensive checkups. Each package is designed to give you a complete picture of your health with bundled tests, imaging, and specialist consultations at value-driven pricing.",
+    fullDescription: "Our Health Check Packages include curated assessments - from basic screenings to comprehensive executive checkups offering bundled tests, imaging, and specialist consultations at value-driven pricing.",
     image: "/general images/health package.png",
     customPage: true,
     highlights: ["Basic to Executive Packages", "Bundled Tests & Imaging", "Specialist Consultations Included", "Value-Driven Pricing", "Detailed Wellness Reports"],

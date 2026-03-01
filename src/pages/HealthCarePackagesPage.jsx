@@ -5,25 +5,39 @@ import { CheckCircle2, IndianRupee, ArrowRight } from 'lucide-react';
 import Breadcrumb from '../components/Breadcrumb';
 
 const HealthCarePackagesPage = () => {
-  const service = services.find(s => s.slug === 'health-care-packages');
+  const service = services.find(s => s.slug === 'health-check-packages');
 
   return (
     <div className="pt-16 lg:pt-20 min-h-screen">
-      {/* Hero Header */}
-      <div className="bg-primary/5 py-4 lg:py-10">
-        <div className="container-custom text-center">
-          <Breadcrumb items={[
-            { label: 'Home', path: '/' },
-            { label: 'Our Services', path: '/services' },
-            { label: 'Health Check Packages' }
-          ]} />
-          <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Preventive Care</span>
-          <h1 className="text-3xl lg:text-6xl font-bold text-primary mt-2 font-display">
-            Health Check Packages
-          </h1>
-          <p className="text-gray-600 text-sm lg:text-lg mt-5">
-            {service?.fullDescription || 'Choose from our curated health checkup packages designed to give you a complete picture of your well-being.'}
-          </p>
+      {/* Header Container */}
+      <div className="container-custom py-8 lg:py-12">
+        <Breadcrumb items={[
+          { label: 'Home', path: '/' },
+          { label: 'Services', path: '/services' },
+          { label: 'Health Check Packages' }
+        ]} />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center mt-8">
+          {/* Feature Image */}
+          <div className="relative aspect-[4/3] lg:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl group order-1 lg:order-2">
+            <img 
+              src="/general images/health-check.png" 
+              alt="Health Check Packages"
+              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-primary/20 to-transparent"></div>
+          </div>
+
+          {/* Title and Description */}
+          <div className="text-center lg:text-left order-2 lg:order-1">
+            <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-3 block">Preventive Care</span>
+            <h1 className="text-4xl lg:text-7xl font-bold text-primary mb-6 font-display leading-tight">
+              Health Check Packages
+            </h1>
+            <p className="text-gray-600 text-sm lg:text-xl leading-relaxed max-w-2xl mx-auto lg:mx-0">
+              {service?.fullDescription || 'Choose from our curated health checkup packages designed to give you a complete picture of your well-being.'}
+            </p>
+          </div>
         </div>
       </div>
 
@@ -33,7 +47,7 @@ const HealthCarePackagesPage = () => {
           {packages.map((pkg) => (
             <Link
               key={pkg.id}
-              to={`/services/health-care-packages/${pkg.slug}`}
+              to={`/services/health-check-packages/${pkg.slug}`}
               className="card-modern group h-full flex flex-col cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 isolate"
             >
               {/* Image Container */}

@@ -47,7 +47,7 @@ const Footer = () => {
               { name: 'Contact Us', path: '/contact' },
               { name: 'Services', path: '/services' },
               { name: 'Book Appointment', path: '/#book' },
-              { name: 'Health Check Packages', path: '/services/health-care-packages' },
+              { name: 'Health Check Packages', path: '/services/health-check-packages' },
               // { name: 'Radiology', path: '/departments/radiology' },
               // { name: 'Pediatrics', path: '/departments/pediatrics' },
               // { name: 'Endocrinology', path: '/departments/endocrinology' }
@@ -155,7 +155,7 @@ const Footer = () => {
                 {[
                   { name: 'Clinic', path: '/services/clinic' },
                   { name: 'Consultation', path: '/services/consultation' },
-                  { name: 'Health Check Packages', path: '/services/health-care-packages' },
+                  { name: 'Health Check Packages', path: '/services/health-check-packages' },
                   { name: 'Diagnostics', path: '/services/diagnostics' },
                   { name: 'View All services', path: '/services' }
                 ].map((dept) => (

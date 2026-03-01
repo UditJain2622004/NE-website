@@ -30,7 +30,7 @@ const DoctorDetailsPage = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12 items-start">
 
-          {/* Image — visible on mobile as compact card, full sidebar on desktop */}
+          {/* Image - visible on mobile as compact card, full sidebar on desktop */}
           <div className="lg:col-span-1 lg:row-span-2 space-y-8">
             <div className="rounded-2xl lg:rounded-sm overflow-hidden border border-divider shadow-md">
               <img 
@@ -58,7 +58,7 @@ const DoctorDetailsPage = () => {
               </div>
             </div>
 
-            {/* CTA buttons on mobile — below image+profile row */}
+            {/* CTA buttons on mobile - below image+profile row */}
             <div className="flex flex-col sm:flex-row gap-3 lg:hidden">
               <button className="btn-primary px-4 py-3 text-base font-bold flex items-center justify-center gap-2 flex-1">
                 <Calendar size={18} /> Book Appointment
@@ -105,7 +105,7 @@ const DoctorDetailsPage = () => {
 
           {/* Right Column: Profile & Details */}
           <div className="lg:col-span-2 space-y-12">
-            {/* Desktop profile header — hidden on mobile since it's shown next to image */}
+            {/* Desktop profile header - hidden on mobile since it's shown next to image */}
             <div className="hidden lg:block border-b border-divider pb-8">
               <h1 className="text-5xl font-bold text-primary mb-4 leading-tight">{doctor.name}</h1>
               <div className=''>
