@@ -3,7 +3,7 @@ export const packages = [
     id: 1,
     name: "Master Health Check",
     slug: "master-health-check",
-    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/full test.jpg",
     description: "A well-rounded health screening covering vital organs and metabolic functions for a baseline health assessment.",
     price: 5000,
     inclusions: [
@@ -36,7 +36,7 @@ export const packages = [
     id: 2,
     name: "Executive Health Check",
     slug: "executive-health-check",
-    image: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/full test2.jpg",
     description: "An advanced wellness screening designed for individuals seeking a more comprehensive evaluation, including cardiac and specialist consultations.",
     price: 8000,
     inclusions: [
@@ -72,7 +72,7 @@ export const packages = [
     id: 3,
     name: "Comprehensive Health Check",
     slug: "comprehensive-health-check",
-    image: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/full test.jpg",
     description: "Our most extensive health evaluation, providing an in-depth analysis of major organ systems, vitamins, and specialized diagnostics.",
     price: 16000,
     inclusions: [
@@ -157,7 +157,7 @@ export const packages = [
     id: 5,
     name: "Senior Citizens Health Check - Bronze",
     slug: "senior-citizens-bronze",
-    image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/senior2.jpg",
     description: "A focused health screening for seniors covering essential metabolic and organ health parameters.",
     price: 5000,
     inclusions: [
@@ -193,7 +193,7 @@ export const packages = [
     id: 6,
     name: "Women Health Check - Executive",
     slug: "women-health-executive",
-    image: "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/woman.jpg",
     description: "A package specifically designed for women, including essential screenings like Pap smear and specialized gynecological consultation.",
     price: 7500,
     inclusions: [
@@ -230,7 +230,7 @@ export const packages = [
     id: 7,
     name: "Women Health Check - Bronze",
     slug: "women-health-bronze",
-    image: "https://images.unsplash.com/photo-1590611380053-da6447021fbb?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/woman2.jpg",
     description: "A primary health screening for women covering essential blood parameters, vital organs, and gynecological consultation.",
     price: 5000,
     inclusions: [
@@ -263,7 +263,7 @@ export const packages = [
     id: 8,
     name: "Full Body Check Up - Male",
     slug: "full-body-male",
-    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/man.jpg",
     description: "An exhaustive head-to-toe health assessment for men, including advanced diagnostics, cardiac stress tests, and multiple specialist consultations.",
     price: 32500,
     inclusions: [
@@ -283,7 +283,7 @@ export const packages = [
     id: 9,
     name: "Full Body Check Up - Female",
     slug: "full-body-female",
-    image: "https://images.unsplash.com/photo-1512678080530-7760d81faba6?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/woman3.jpg",
     description: "The most comprehensive wellness evaluation for women, featuring advanced imaging, cancer screenings, and high-level specialist reviews.",
     price: 37500,
     inclusions: [
@@ -303,7 +303,7 @@ export const packages = [
     id: 10,
     name: "Cardiac Screening",
     slug: "cardiac-screening",
-    image: "https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/heart.jpg",
     description: "A focused cardiac evaluation for early detection of heart conditions and risk factors.",
     price: 3500,
     inclusions: [
@@ -328,7 +328,7 @@ export const packages = [
     id: 11,
     name: "Basic Health Check",
     slug: "basic-health-check",
-    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/general.jpg",
     description: "A budget-friendly checkup covering essential markers for overall health monitoring.",
     price: 1500,
     inclusions: [
@@ -353,7 +353,7 @@ export const packages = [
     id: 12,
     name: "Hypertension Basic",
     slug: "hypertension-basic",
-    image: "https://images.unsplash.com/photo-1579153173746-8354fe3dc4a1?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/bp.jpg",
     description: "Specifically designed for individuals with high blood pressure to monitor organ impact and metabolic status.",
     price: 2800,
     inclusions: [
@@ -375,7 +375,7 @@ export const packages = [
     id: 13,
     name: "Diabetes & Diabetic Foot Screening",
     slug: "diabetes-foot-screening",
-    image: "https://images.unsplash.com/photo-1542884748-2b87b36c6b90?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/sugar.jpg",
     description: "A specialized package for diabetics focusing on long-term sugar control and early detection of nerve/foot complications.",
     price: 6500,
     inclusions: [
@@ -394,7 +394,7 @@ export const packages = [
     id: 14,
     name: "Routine Health Check",
     slug: "routine-health-check",
-    image: "https://images.unsplash.com/photo-1631217818242-f0bb90334a9a?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/stethoscope.jpg",
     description: "A standard comprehensive package for regular health tracking with imaging and metabolic labs.",
     price: 3500,
     inclusions: [
@@ -421,7 +421,7 @@ export const packages = [
     id: 15,
     name: "HC Women 1 Addon",
     slug: "hc-women-addon-1",
-    image: "https://images.unsplash.com/photo-1590611380023-e406346e09cc?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/woman add on.jpg",
     description: "Enhanced women's screening addon including Mammogram and Pap smear for detailed cancer risk assessment.",
     price: 3800,
     inclusions: [
@@ -439,7 +439,7 @@ export const packages = [
     id: 16,
     name: "HC Women 2 Addon",
     slug: "hc-women-addon-2",
-    image: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/woman add on2.png",
     price: 3200,
     description: "Compact women's diagnostic addon focusing on core gynecological screenings.",
     inclusions: [
@@ -456,7 +456,7 @@ export const packages = [
     id: 17,
     name: "HC Men 1 Addon",
     slug: "hc-men-addon-1",
-    image: "https://images.unsplash.com/photo-1579684453401-966b11832744?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/man2.png",
     description: "Advanced prostate health addon for men over 40.",
     price: 1100,
     inclusions: [
@@ -472,7 +472,7 @@ export const packages = [
     id: 18,
     name: "Bystander package",
     slug: "bystander-package",
-    image: "https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/family2.jpg",
     description: "A quick health screening for attendants/family members while they wait, ensuring their well-being too.",
     price: 1200,
     inclusions: [
@@ -492,7 +492,7 @@ export const packages = [
     id: 19,
     name: "HC Women 3 Addon",
     slug: "hc-women-addon-3",
-    image: "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/woman.jpg",
     description: "Essential cervical health addon including Pap smear and consultation.",
     price: 1000,
     inclusions: [
@@ -508,7 +508,7 @@ export const packages = [
     id: 20,
     name: "HC Sono/Mammo Scan Addon",
     slug: "hc-sono-mammo-addon",
-    image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/woman4.jpg",
     description: "Detailed breast imaging assessment via Mammography.",
     price: 2850,
     inclusions: [
@@ -523,7 +523,7 @@ export const packages = [
     id: 21,
     name: "HC Glucose Addon",
     slug: "hc-glucose-addon",
-    image: "https://images.unsplash.com/photo-1579153173710-bc56e52292f7?auto=format&fit=crop&q=90&w=800&h=600",
+    image: "/health checkup/sugar2.jpg",
     description: "Supplementary Post-Prandial Blood Sugar test.",
     price: 80,
     inclusions: [
