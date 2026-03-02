@@ -46,7 +46,7 @@ const DoctorDetailsPage = () => {
               <div className=''>
 
               <span className="text-secondary font-bold mb-5 tracking-[0.2em] text-sm mb-1 block"><span className="text-primary"></span> {doctor.designation}</span>
-              <span className="text-secondary font-bold  mb-5 tracking-[0.2em] text-sm mb-1 block"><span className="text-primary">Department -</span> {doctor.department}</span>
+              <span className="text-secondary font-bold  mb-5 tracking-[0.2em] text-sm mb-1 block"><span className="text-primary">Department -</span> {doctor.department.charAt(0).toUpperCase() + doctor.department.slice(1)}</span>
               </div>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
                 <div className="flex items-center gap-1.5 bg-gray-100 px-2 py-2 rounded-sm text-xs font-bold text-gray-600">
@@ -110,7 +110,7 @@ const DoctorDetailsPage = () => {
               <h1 className="text-5xl font-bold text-primary mb-4 leading-tight">{doctor.name}</h1>
               <div className=''>
                 <span className="text-secondary font-bold mb-5 tracking-[0.2em] text-sm mb-1 block"><span className="text-primary"></span> {doctor.designation}</span>
-                <span className="text-secondary font-bold  mb-5 tracking-[0.2em] text-sm mb-1 block"><span className="text-primary">Department -</span> {doctor.department}</span>
+                <span className="text-secondary font-bold  mb-5 tracking-[0.2em] text-sm mb-1 block"><span className="text-primary">Department -</span> {doctor.department.charAt(0).toUpperCase() + doctor.department.slice(1)}</span>
               </div>
               <div className="flex flex-wrap items-center gap-4 mb-8">
                 <div className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-sm text-sm font-bold text-gray-600">

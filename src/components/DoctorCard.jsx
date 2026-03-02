@@ -15,7 +15,7 @@ const DoctorCard = ({ doctor }) => {
             className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
           />
           <div className="absolute top-4 right-4 bg-secondary/90 backdrop-blur-sm text-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-sm shadow-md">
-            {doctor.department}
+            {doctor.department.charAt(0).toUpperCase() + doctor.department.slice(1)}
           </div>
         </div>
 
@@ -77,7 +77,7 @@ const DoctorCard = ({ doctor }) => {
           </p>
           <p className="flex items-center gap-1 text-xs text-gray-500 mb-1 truncate">
             <Stethoscope size={13} className="text-secondary shrink-0" />
-            <span className="truncate">{doctor.department}</span>
+            <span className="truncate">{doctor.department.charAt(0).toUpperCase() + doctor.department.slice(1)}</span>
           </p>
           {/* <div className="flex items-center gap-1.5 mt-1.5">
             <Star size={13} className="text-yellow-400" fill="currentColor" />
