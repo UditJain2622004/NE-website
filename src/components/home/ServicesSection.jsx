@@ -60,13 +60,13 @@ const ServicesSection = () => {
           ))}
         </div>
 
-        {/* Mobile scroll indicator dots */}
+        {/* scroll indicator dots */}
         <div className="flex justify-center gap-2 pb-6">
           {services.map((_, index) => (
             <button
               key={index}
               onClick={() => scrollToCard(index)}
-              className={`h-2.5 rounded-full transition-all duration-300 ${
+              className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
                 index === activeIndex
                   ? 'w-7 bg-primary'
                   : 'w-2.5 bg-primary/20'
