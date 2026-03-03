@@ -6,7 +6,8 @@ export const services = [
     icon: "StethoscopeIcon",
     shortDescription: "Walk-in and scheduled clinical consultations with experienced healthcare professionals for all your primary care needs.",
     fullDescription: "Our Clinic offers comprehensive outpatient care in a comfortable, modern environment. From routine health check-ups to management of chronic conditions, our experienced team of physicians provides personalized attention and evidence-based treatment plans. Walk-in and scheduled appointments are available to ensure timely access to quality healthcare.",
-    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=90&w=1200&h=900",
+    image: "/general images/clinic2.jpg",
+    // image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=90&w=1200&h=900",
     highlights: ["Walk-in & Scheduled Appointments", "Chronic Disease Management", "Preventive Health Screenings", "Minor Procedures & Wound Care", "Health Certificates & Reports"],
     faqs: [
       {
@@ -46,7 +47,7 @@ export const services = [
     icon: "PillIcon",
     shortDescription: "Full-service in-house pharmacy with a comprehensive range of medications, health products, and expert pharmaceutical advice.",
     fullDescription: "Our in-house Pharmacy provides convenient access to a comprehensive range of prescription and over-the-counter medications. Our licensed pharmacists offer expert guidance on medication usage, potential interactions, and proper dosage. We maintain a well-stocked inventory to ensure patients can fill their prescriptions without delay.",
-    image: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&q=90&w=1200&h=900",
+    image: "/general images/pharmacy.png",
     highlights: ["Prescription Dispensing", "Over-the-Counter Medications", "Medication Counseling", "Drug Interaction Checks", "Health & Wellness Products"],
     faqs: [
       {
@@ -87,7 +88,7 @@ export const services = [
     icon: "SunIcon",
     shortDescription: "Short-stay medical procedures and treatments that don't require overnight hospitalization, ensuring quick recovery.",
     fullDescription: "Our Day Care Health Services provide a range of medical procedures and treatments that can be completed within a single day, eliminating the need for overnight hospital stays. From minor surgeries to infusion therapies and specialized treatments, our day care facility is equipped with modern amenities to ensure patient comfort and safety throughout the process.",
-    image: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&q=90&w=1200&h=900",
+    image: "/general images/day care.png",
     highlights: ["Minor Surgical Procedures", "Infusion & IV Therapies", "Chemotherapy Sessions", "Post-Operative Monitoring", "Short-Stay Recovery Suites"],
     faqs: [
       {

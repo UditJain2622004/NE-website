@@ -20,12 +20,12 @@ const ServiceCard = ({ service }) => {
       className="card-modern group h-full flex flex-col cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 isolate"
     >
       {/* Image Container */}
-      <div className="relative h-40 md:h-48 overflow-hidden rounded-t-xl">
+      <div className="relative h-48 md:h-56 overflow-hidden rounded-t-xl">
         <img 
           src={service.image} 
           alt={service.name}
           loading="eager"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-linear-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         

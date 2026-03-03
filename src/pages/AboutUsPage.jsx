@@ -141,8 +141,8 @@ const AboutUsPage = () => {
         <div className="container-custom relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-12 px-4">
             <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-3 block">Our Leadership</span>
-            <h2 className="text-3xl lg:text-5xl font-bold text-primary mb-4 font-display">Meet Our Founders</h2>
-            <p className="text-gray-600 text-lg">The visionaries behind our mission to deliver exceptional healthcare with compassion and excellence.</p>
+            <h2 className="text-3xl lg:text-5xl font-bold text-primary mb-4 font-display">Meet Our Founder</h2>
+            <p className="text-gray-600 text-lg">The visionary behind our mission to deliver exceptional healthcare with compassion and excellence.</p>
           </div>
 
           <div className="flex flex-col items-center max-w-3xl mx-auto">
