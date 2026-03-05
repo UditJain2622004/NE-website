@@ -143,11 +143,11 @@ const ContactUsPage = () => {
       {/* Map Placeholder */}
       <section className="container-custom pb-24 lg:pb-32">
         <div className="aspect-[21/9] bg-gray-200 rounded-3xl overflow-hidden relative group">
-          <div className="absolute inset-0 bg-primary/10 group-hover:pointer-events-none group-hover:bg-transparent transition-all duration-500"></div>
+          <div className="absolute inset-0 bg-primary/10 pointer-events-none group-hover:bg-transparent transition-all duration-500"></div>
           <iframe 
-                src="https://www.google.com/maps?q=Door+No.4-57/A+VIJAYA+MAHAL+Surathkal+Mangaluru+575014&output=embed"
+                src="https://www.google.com/maps?q=Door No.4 57 A VIJAYA+MAHAL+Surathkal+Mangaluru+575014&output=embed"
+                // src="https://www.google.com/maps?q=Door+No.4-57/A+VIJAYA+MAHAL+Surathkal+Mangaluru+575014&output=embed"
 
-            // src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7775.494403084334!2d74.79118287563324!3d12.988014269659146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba351b1446dffd7%3A0x62e18a30671f13c7!2sNaturals%20Unisex%20Salon%20Surathkal!5e0!3m2!1sen!2sin!4v1772725274540!5m2!1sen!2sin" 
             width="100%" 
             height="100%" 
             style={{ border: 0 }} 
