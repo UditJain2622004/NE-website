@@ -90,9 +90,9 @@ const Navbar = () => {
       path: '/contact', 
       dropdownType: 'contact',
       dropdown: [
-        { label: 'Book an Appointment:', value: '080 4969 4969', path: 'tel:08049694969' },
-        { label: 'Emergency Number:', value: '080 4962 4962', path: 'tel:08049624962', isRed: true },
-        { label: 'Toll free Number:', value: '1800 202 4969', path: 'tel:18002024969' }
+        { label: 'Book an Appointment:', value: '+91 91876 34758', path: 'tel:+919187634758' },
+        { label: 'Enquiry Number:', value: '+91 91876 34758', path: 'tel:+919187634758' },
+        { label: 'Emergency Number:', value: '112', path: 'tel:112', isRed: true },
       ]
     },
   ];
@@ -105,8 +105,8 @@ const Navbar = () => {
           <a href="tel:112" className="flex items-center gap-1.5 hover:text-secondary whitespace-nowrap">
             <Siren size={14} className="text-secondary" /> Emergency: <span className="font-bold">112</span>
           </a>
-          <a href="tel:+1234567890" className="flex items-center gap-1.5 hover:text-secondary whitespace-nowrap">
-            <Phone size={14} className="text-secondary" /> +1 (555) 123-4567
+          <a href="tel:+919187634758" className="flex items-center gap-1.5 hover:text-secondary whitespace-nowrap">
+            <Phone size={14} className="text-secondary" /> +91 91876 34758
           </a>
         </div>
         <div className="flex items-center gap-6">
@@ -134,7 +134,7 @@ const Navbar = () => {
           <img src="/logo2.png" alt="Logo" className="h-10 w-auto object-contain" />
         </Link>
         <div className="flex items-center gap-2">
-          <a href="tel:08049624962" className="w-10 h-10 bg-emergency/10 text-emergency rounded-full flex items-center justify-center animate-pulse shadow-sm">
+          <a href="tel:112" className="w-10 h-10 bg-emergency/10 text-emergency rounded-full flex items-center justify-center animate-pulse shadow-sm">
             <Siren size={20} />
           </a>
           <button 

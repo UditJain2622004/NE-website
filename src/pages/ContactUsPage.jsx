@@ -5,19 +5,20 @@ const ContactUsPage = () => {
     {
       icon: Phone,
       title: 'Phone Numbers',
-      details: ['Main: 080 4969 4969', 'Emergency: 080 4962 4962', 'Toll Free: 1800 202 4969'],
+      details: ['Phone: +91 91876 34758'],
+      // details: ['+91 91876 34758', 'Emergency: 080 4962 4962', 'Toll Free: 1800 202 4969'],
       label: 'Call us'
     },
     {
       icon: Mail,
       title: 'Email Addresses',
-      details: ['info@example.com', 'appointments@example.com', 'careers@example.com'],
+      details: ['info@nexusenliven.com'],
       label: 'Email us'
     },
     {
       icon: MapPin,
       title: 'Our Location',
-      details: ['123 Medical Drive, Healthcare City', 'Bangalore, Karnataka - 560001', 'India'],
+      details: ['NEXUS ENLIVEN HEALTH CENTRE', 'Door No.4-57/A, VIJAYA MAHAL', 'Surathkal, Iddya, Mangaluru Taluk', 'Dakshina Kannada District', 'Karnataka - 575014'],
       label: 'Visit us'
     },
     {
@@ -95,7 +96,7 @@ const ContactUsPage = () => {
                     <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">Email Address</label>
                     <input 
                       type="email" 
-                      placeholder="john@example.com" 
+                      placeholder="your.email@example.com" 
                       className="w-full bg-hospital-bg border border-divider rounded-xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-secondary/20 transition-all font-medium"
                     />
                   </div>
@@ -142,9 +143,11 @@ const ContactUsPage = () => {
       {/* Map Placeholder */}
       <section className="container-custom pb-24 lg:pb-32">
         <div className="aspect-[21/9] bg-gray-200 rounded-3xl overflow-hidden relative group">
-          <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-all duration-500"></div>
+          <div className="absolute inset-0 bg-primary/10 group-hover:pointer-events-none group-hover:bg-transparent transition-all duration-500"></div>
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.384661853416!2d77.63182631165506!3d12.947231415691062!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae144670000001%3A0xf6938a5369c24090!2sManipal%20Hospital%20Old%20Airport%20Road!5e0!3m2!1sen!2sin!4v1709400000000!5m2!1sen!2sin" 
+                src="https://www.google.com/maps?q=Door+No.4-57/A+VIJAYA+MAHAL+Surathkal+Mangaluru+575014&output=embed"
+
+            // src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7775.494403084334!2d74.79118287563324!3d12.988014269659146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba351b1446dffd7%3A0x62e18a30671f13c7!2sNaturals%20Unisex%20Salon%20Surathkal!5e0!3m2!1sen!2sin!4v1772725274540!5m2!1sen!2sin" 
             width="100%" 
             height="100%" 
             style={{ border: 0 }} 

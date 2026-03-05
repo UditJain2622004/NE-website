@@ -25,7 +25,7 @@ const DiagnosticsHero = ({ overviewRef }) => {
               <a href="/#book" className="btn-primary px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2">
                 <Calendar size={18} className="shrink-0" /> Request Consultation
               </a>
-              <a href="tel:+1234567890" className="btn-outline px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2">
+              <a href="tel:+919187634758" className="btn-outline px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2">
                 <Phone size={18} className="shrink-0" /> Contact Helpline
               </a>
             </div>

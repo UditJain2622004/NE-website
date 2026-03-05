@@ -21,7 +21,7 @@ const FAQSection = () => {
             <h3 className="text-2xl font-bold text-primary mb-2 uppercase tracking-tight font-display">Still have questions?</h3>
             <p className="text-gray-600 font-medium">Can't find the answer you're looking for? Please chat with our friendly team.</p>
           </div>
-          <a href="tel:+1234567890" className="btn-primary whitespace-nowrap px-12 py-4">
+          <a href="tel:+919187634758" className="btn-primary whitespace-nowrap px-12 py-4">
             Contact Support
           </a>
         </div>

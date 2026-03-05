@@ -27,9 +27,9 @@ const Footer = () => {
 
           {/* Quick contact row */}
           <div className="grid grid-cols-2 gap-3 mb-8">
-            <a href="tel:+15551234567" className="flex items-center gap-2.5 bg-white/5 rounded-xl px-3.5 py-3">
+            <a href="tel:+919187634758" className="flex items-center gap-2.5 bg-white/5 rounded-xl px-3.5 py-3">
               <Phone size={15} className="text-secondary shrink-0" />
-              <span className="text-xs text-gray-300 font-medium">+1 (555) 123-4567</span>
+              <span className="text-xs text-gray-300 font-medium">+91 91876 34758</span>
             </a>
             <a href="mailto:info@nexusenliven.com" className="flex items-center gap-2.5 bg-white/5 rounded-xl px-3.5 py-3">
               <Mail size={15} className="text-secondary shrink-0" />
@@ -176,8 +176,11 @@ const Footer = () => {
                 Contact Us
               </h3>
               <div className="space-y-6">
-                <ContactItem icon={MapPin} text="123 Medical Center Drive, Health City, HC 90210" />
-                <ContactItem icon={Phone} text="+1 (555) 123-4567" isLink link="tel:+15551234567" />
+                <ContactItem icon={MapPin} text={`NEXUS ENLIVEN HEALTH CENTRE,
+Door No.4-57/A, VIJAYA MAHAL,
+Surathkal, Iddya, Mangaluru Taluk,
+Dakshina Kannada Dist, Karnataka - 575014`} />
+                <ContactItem icon={Phone} text="+91 91876 34758" isLink link="tel:+919187634758" />
                 <ContactItem icon={Mail} text="info@nexusenliven.com" isLink link="mailto:info@nexusenliven.com" />
                 <div className="flex items-center gap-4 text-gray-400">
                   <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">
@@ -209,14 +212,14 @@ const Footer = () => {
 };
 
 const ContactItem = ({ icon: Icon, text, isLink, link }) => (
-  <div className="flex items-center gap-4 text-gray-400 group">
-    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:bg-secondary/20 transition-all">
+  <div className="flex items-start gap-4 text-gray-400 group">
+    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:bg-secondary/20 transition-all mt-0.5">
       <Icon size={18} className="text-secondary" />
     </div>
     {isLink ? (
-      <a href={link} className="hover:text-white font-semibold text-sm transition-all">{text}</a>
+      <a href={link} className="hover:text-white font-semibold text-sm transition-all leading-relaxed whitespace-pre-line">{text}</a>
     ) : (
-      <p className="font-semibold text-sm">{text}</p>
+      <p className="font-semibold text-sm leading-relaxed whitespace-pre-line">{text}</p>
     )}
   </div>
 );

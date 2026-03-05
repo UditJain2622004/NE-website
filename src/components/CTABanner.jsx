@@ -25,7 +25,7 @@ const CTABanner = ({
             <Link to="/#book" className="btn-secondary px-10 py-4 text-lg font-bold flex items-center gap-3 w-full sm:w-auto justify-center">
               <Calendar size={22} /> Book Appointment
             </Link>
-            <a href="tel:+1234567890" className="bg-white text-primary hover:bg-blue-50 px-10 py-4 text-lg font-bold flex items-center gap-3 w-full sm:w-auto justify-center transition-colors rounded-sm">
+            <a href="tel:+919187634758" className="bg-white text-primary hover:bg-blue-50 px-10 py-4 text-lg font-bold flex items-center gap-3 w-full sm:w-auto justify-center transition-colors rounded-sm">
               <Phone size={22} /> Call Now
             </a>
           </div>
