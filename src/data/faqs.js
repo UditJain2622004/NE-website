@@ -9,7 +9,7 @@ export const generalFaqs = [
   },
   {
     question: "What are your visiting hours?",
-    answer: "Visiting hours are daily from 10:00 AM to 8:00 PM. Special restrictions may apply in some departments."
+    answer: "Visiting hours are daily from 9:00 AM to 10:00 PM. Special restrictions may apply in some departments."
   },
   {
     question: "Do you offer emergency services?",

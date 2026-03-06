@@ -24,7 +24,7 @@ const ContactUsPage = () => {
     {
       icon: Clock,
       title: 'Working Hours',
-      details: ['OPD: 9:00 AM - 8:00 PM', 'Emergency: 24/7 Available', 'Pharmacy: 24/7 Available'],
+      details: ['OPD: 9:00 AM - 10:00 PM', 'Emergency: 24/7 Available', 'Pharmacy: 24/7 Available'],
       label: 'Timing'
     }
   ];
@@ -145,9 +145,9 @@ const ContactUsPage = () => {
         <div className="aspect-[21/9] bg-gray-200 rounded-3xl overflow-hidden relative group">
           <div className="absolute inset-0 bg-primary/10 pointer-events-none group-hover:bg-transparent transition-all duration-500"></div>
           <iframe 
-                src="https://www.google.com/maps?q=Door No.4 57 A VIJAYA+MAHAL+Surathkal+Mangaluru+575014&output=embed"
-                // src="https://www.google.com/maps?q=Door+No.4-57/A+VIJAYA+MAHAL+Surathkal+Mangaluru+575014&output=embed"
+            src="https://maps.google.com/maps?q=12.9883611,74.8006111&z=19&output=embed"
 
+                // src="https://www.google.com/maps?q=Door No.4 57 A VIJAYA+MAHAL+Surathkal+Mangaluru+575014&output=embed"
             width="100%" 
             height="100%" 
             style={{ border: 0 }} 

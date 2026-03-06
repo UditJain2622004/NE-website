@@ -10,9 +10,9 @@ const Footer = () => {
         <div className="lg:hidden py-10">
           {/* Brand + socials */}
           <div className="flex items-center justify-between mb-8">
-            <Link to="/" className="flex items-center gap-2.5">
+            <Link to="/" className="flex items-center">
               <div className="w-10 h-10  flex items-center justify-center">
-                <img src="/logo symbol.png" alt="Logo" className="w-10 h-10 object-contain rounded-lg" />
+                <img src="/favicon/favicon-96x96.png" alt="Logo" className="w-10 h-10 object-contain rounded-lg" />
               </div>
               <span className="text-white font-bold text-lg tracking-tighter">Nexus Enliven</span>
             </Link>
@@ -74,10 +74,10 @@ const Footer = () => {
             
             {/* Brand Column */}
             <div className="space-y-8">
-              <Link to="/" className="flex items-center gap-3">
-                <div className=" flex items-center justify-center rounded-lg shadow-inner">
+              <Link to="/" className="flex items-center gap-1">
+                <div className=" flex items-center justify-center rounded-md shadow-inner">
                   <img
-                    src="/logo symbol.png"
+                    src="/favicon/favicon-96x96.png"
                     alt="Logo"
                     className="w-12 h-12 object-contain rounded-lg"
                   />
@@ -187,8 +187,8 @@ Dakshina Kannada Dist, Karnataka - 575014`} />
                     <ClockIcon className="w-5 h-5 text-secondary" />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-white leading-none mb-1">Mon - Fri</p>
-                    <p className="text-xs font-medium">8:00 AM - 8:00 PM</p>
+                    {/* <p className="text-sm font-bold text-white leading-none mb-1">Mon - Fri</p> */}
+                    <p className="text-xs font-bold">9:00 AM - 10:00 PM</p>
                   </div>
                 </div>
               </div>

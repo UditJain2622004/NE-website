@@ -51,7 +51,7 @@ export const departments = [
     comingSoon: false,
     shortDescription: "Compassionate and specialized healthcare for infants, children, and adolescents.",
     fullDescription: "Our Pediatrics department is dedicated to the physical, emotional, and developmental health of children from birth through adolescence. We provide a child-friendly environment with specialized neonatal care, vaccinations, growth monitoring, and treatment for childhood illnesses.",
-    image: "/general images/pediatrics2.jpeg",
+    image: "/general images/pediatrics5.jpeg",
     conditions: ["Childhood Infections", "Asthma", "Developmental Delays", "Nutritional Disorders", "Neonatal Conditions", "Allergies"],
     procedures: ["Vaccinations", "Well-child Checkups", "Growth Monitoring", "Hearing & Vision Screening", "Neonatal Intensive Care"],
     faqs: [

@@ -131,7 +131,7 @@ const Navbar = () => {
       {/* Mobile Nav Bar */}
       <nav className="lg:hidden flex justify-between items-center px-5 py-3 border-b border-gray-200 bg-white">
         <Link to="/" className="flex items-center">
-          <img src="/logo2.png" alt="Logo" className="h-10 w-auto object-contain" />
+          <img src="/favicon/textSymbolLogo.png" alt="Logo" className="h-13 w-23 object-stretch" />
         </Link>
         <div className="flex items-center gap-2">
           <a href="tel:112" className="w-10 h-10 bg-emergency/10 text-emergency rounded-full flex items-center justify-center animate-pulse shadow-sm">
@@ -149,7 +149,7 @@ const Navbar = () => {
       {/* Desktop Nav Bar */}
       <nav className="hidden lg:flex container-custom justify-between items-center py-2">
         <Link to="/" className="flex items-center">
-          <img src="/logo2.png" alt="Logo" className="h-14 w-auto object-contain" />
+          <img src="favicon/textSymbolLogo.png" alt="Logo" className="h-15 w-30 object-stretch" />
         </Link>
 
         <div className="flex items-center gap-8">
@@ -212,7 +212,8 @@ const Navbar = () => {
         >
           <div className="flex justify-between items-center p-6 border-b border-divider shrink-0">
             <div className="flex items-center">
-              <img src="/logo2.png" alt="Logo" className="h-10 w-auto object-contain" />
+              <img src="/favicon/textSymbolLogo.png" alt="Logo" className="h-13 w-23 object-stretch" />
+              {/* <img src="/favicon/textSymbolLogo.png" alt="Logo" className="h-10 w-auto object-contain" /> */}
             </div>
             <button onClick={() => setIsOpen(false)} className="p-2 text-gray-400 hover:text-primary transition-colors">
               <X size={28} />
