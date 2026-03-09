@@ -6,7 +6,7 @@
 
 import { db } from './_utils/firebaseAdmin.js';
 import { sendError, sendSuccess, validateRequired } from './_utils/apiHelpers.js';
-import { FieldValue } from 'firebase-admin/firestore';
+import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
@@ -26,48 +26,51 @@ async function handleGet(req, res) {
   const { doctorId, date, status, patientPhone } = req.query;
 
   try {
+    // Use a single primary filter to avoid needing composite indexes.
+    // Additional filtering and sorting happens in memory.
     let query = db.collection('appointments');
 
-    // Apply filters
+    // Pick the best single filter for the Firestore query
     if (doctorId) {
       query = query.where('doctorId', '==', doctorId);
-    }
-
-    if (date) {
-      query = query.where('appointmentDate', '==', date);
-    }
-
-    if (status) {
-      // Support comma-separated statuses: "pending,confirmed"
-      const statuses = status.split(',').map(s => s.trim());
-      if (statuses.length === 1) {
-        query = query.where('status', '==', statuses[0]);
-      } else {
-        query = query.where('status', 'in', statuses);
-      }
-    }
-
-    if (patientPhone) {
+    } else if (patientPhone) {
       query = query.where('patientId', '==', patientPhone);
     }
 
-    // Order by appointment date
-    query = query.orderBy('appointmentDate', 'asc');
-
     const snapshot = await query.get();
 
-    const appointments = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-      createdAt: doc.data().createdAt?.toDate?.()?.toISOString() || null,
-      confirmedAt: doc.data().confirmedAt?.toDate?.()?.toISOString() || null,
-    }));
+    let appointments = snapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        createdAt: data.createdAt?.toDate?.()?.toISOString() || null,
+        confirmedAt: data.confirmedAt?.toDate?.()?.toISOString() || null,
+      };
+    });
+
+    // Apply remaining filters in memory
+    if (doctorId && patientPhone) {
+      appointments = appointments.filter(a => a.patientId === patientPhone);
+    }
+
+    if (date) {
+      appointments = appointments.filter(a => a.appointmentDate === date);
+    }
+
+    if (status) {
+      const statuses = status.split(',').map(s => s.trim());
+      appointments = appointments.filter(a => statuses.includes(a.status));
+    }
+
+    // Sort by appointment date ascending
+    appointments.sort((a, b) => (a.appointmentDate || '').localeCompare(b.appointmentDate || ''));
 
     return sendSuccess(res, { appointments });
 
   } catch (error) {
     console.error('Error in GET /api/appointments:', error);
-    return sendError(res, 500, 'Internal server error');
+    return sendError(res, 500, `Internal server error: ${error.message}`);
   }
 }
 
@@ -167,6 +170,6 @@ async function handlePatch(req, res) {
 
   } catch (error) {
     console.error('Error in PATCH /api/appointments:', error);
-    return sendError(res, 500, 'Internal server error');
+    return sendError(res, 500, `Internal server error: ${error.message}`);
   }
 }

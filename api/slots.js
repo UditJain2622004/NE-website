@@ -9,7 +9,6 @@ import { db } from './_utils/firebaseAdmin.js';
 import { generateSlotTimes, buildSlotId, classifyBookingDate } from './_utils/slotGenerator.js';
 import { checkDoctorLeave } from './_utils/leaveChecker.js';
 import { sendError, sendSuccess, isValidDate } from './_utils/apiHelpers.js';
-import { FieldValue } from 'firebase-admin/firestore';
 
 export default async function handler(req, res) {
   // Only allow GET
@@ -146,6 +145,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Error in /api/slots:', error);
-    return sendError(res, 500, 'Internal server error');
+    return sendError(res, 500, `Internal server error: ${error.message}`);
   }
 }

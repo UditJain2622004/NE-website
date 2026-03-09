@@ -195,7 +195,7 @@ export default async function handler(req, res) {
     }
 
     console.error('Error in /api/createAppointment:', error);
-    return sendError(res, 500, 'Internal server error');
+    return sendError(res, 500, `Internal server error: ${error.message}`);
   }
 }
 
@@ -210,20 +210,28 @@ export default async function handler(req, res) {
  */
 async function detectFollowUp(patientId, doctorId) {
   try {
+    // Simple query: just get recent appointments for this patient.
+    // Uses single equality filter to avoid needing composite indexes.
     const recentAppointments = await db
       .collection('appointments')
       .where('patientId', '==', patientId)
-      .where('doctorId', '==', doctorId)
-      .where('status', 'in', ['confirmed', 'completed'])
-      .orderBy('appointmentDate', 'desc')
-      .limit(1)
       .get();
 
     if (recentAppointments.empty) {
       return 'new';
     }
 
-    const lastAppointment = recentAppointments.docs[0].data();
+    // Filter in memory: same doctor, confirmed/completed status
+    const matching = recentAppointments.docs
+      .map(doc => doc.data())
+      .filter(a => a.doctorId === doctorId && ['confirmed', 'completed'].includes(a.status))
+      .sort((a, b) => (b.appointmentDate || '').localeCompare(a.appointmentDate || ''));
+
+    if (matching.length === 0) {
+      return 'new';
+    }
+
+    const lastAppointment = matching[0];
     const lastDate = new Date(lastAppointment.appointmentDate + 'T00:00:00');
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -233,7 +241,7 @@ async function detectFollowUp(patientId, doctorId) {
 
     return diffDays <= 7 ? 'followup' : 'new';
   } catch (err) {
-    // If the query fails (e.g., missing index), default to "new"
+    // If the query fails, default to "new"
     console.warn('Follow-up detection failed, defaulting to "new":', err.message);
     return 'new';
   }
