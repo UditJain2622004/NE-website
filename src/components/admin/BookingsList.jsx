@@ -8,7 +8,7 @@ import {
   ChevronRight, Calendar, Search,
   CheckCircle2, XCircle, Clock,
   MoreVertical, Phone, Mail,
-  Check, X, FileEdit
+  Check, X, FileEdit, User
 } from 'lucide-react';
 import { format, addDays, subDays } from 'date-fns';
 
