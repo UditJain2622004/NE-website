@@ -1,22 +1,30 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import ServiceCard from '../ServiceCard';
 import { services } from '../../data/services';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const ServicesSection = () => {
   const scrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const getScrollMetrics = useCallback(() => {
+    const container = scrollRef.current;
+    if (!container) return { cardWidth: 0, gap: 24, paddingLeft: 0 };
+    const cardWidth = container.firstElementChild?.offsetWidth || 0;
+    const gap = parseInt(getComputedStyle(container).gap) || 24;
+    const paddingLeft = parseInt(getComputedStyle(container).paddingLeft) || 0;
+    return { cardWidth, gap, paddingLeft };
+  }, []);
+
   const handleScroll = useCallback(() => {
     const container = scrollRef.current;
     if (!container) return;
+    const { cardWidth, gap, paddingLeft } = getScrollMetrics();
     const scrollLeft = container.scrollLeft;
-    const cardWidth = container.firstElementChild?.offsetWidth || 1;
-    const gap = 24;
-    const index = Math.round(scrollLeft / (cardWidth + gap));
-    setActiveIndex(Math.min(index, services.length - 1));
-  }, []);
+    const index = Math.round((scrollLeft - paddingLeft) / (cardWidth + gap));
+    setActiveIndex(Math.min(Math.max(0, index), services.length - 1));
+  }, [getScrollMetrics]);
 
   useEffect(() => {
     const container = scrollRef.current;
@@ -28,9 +36,16 @@ const ServicesSection = () => {
   const scrollToCard = (index) => {
     const container = scrollRef.current;
     if (!container) return;
-    const cardWidth = container.firstElementChild?.offsetWidth || 0;
-    const gap = 24;
-    container.scrollTo({ left: index * (cardWidth + gap), behavior: 'smooth' });
+    const { cardWidth, gap, paddingLeft } = getScrollMetrics();
+    container.scrollTo({ left: paddingLeft + index * (cardWidth + gap), behavior: 'smooth' });
+  };
+
+  const goPrev = () => {
+    scrollToCard(Math.max(0, activeIndex - 1));
+  };
+
+  const goNext = () => {
+    scrollToCard(Math.min(services.length - 1, activeIndex + 1));
   };
 
   return (
@@ -49,15 +64,36 @@ const ServicesSection = () => {
           </p>
         </div>
 
-        <div
-          ref={scrollRef}
-          className="flex gap-6 lg:gap-10 overflow-x-auto pb-6 lg:pb-12 scrollbar-hide -mx-5 px-5 lg:mx-0 lg:px-0 snap-x snap-mandatory"
-        >
-          {services.map((service) => (
-            <div key={service.id} className="shrink-0 w-[85vw] md:w-[420px] snap-start">
-              <ServiceCard service={service} />
-            </div>
-          ))}
+        <div className="relative px-6 sm:px-10 lg:px-16">
+          {/* Left arrow */}
+          <button
+            onClick={goPrev}
+            disabled={activeIndex === 0}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-white shadow-lg text-primary border border-gray-200 transition-colors hover:bg-primary hover:text-white disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-primary"
+            aria-label="Previous service"
+          >
+            <ChevronLeft size={24} />
+          </button>
+          {/* Right arrow */}
+          <button
+            onClick={goNext}
+            disabled={activeIndex === services.length - 1}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-white shadow-lg text-primary border border-gray-200 transition-colors hover:bg-primary hover:text-white disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-primary"
+            aria-label="Next service"
+          >
+            <ChevronRight size={24} />
+          </button>
+
+          <div
+            ref={scrollRef}
+            className="flex gap-4 sm:gap-6 lg:gap-10 overflow-x-auto pb-6 lg:pb-12 scrollbar-hide snap-x snap-mandatory pl-4 pr-4 sm:pl-6 sm:pr-6 lg:pl-8 lg:pr-8"
+          >
+            {services.map((service) => (
+              <div key={service.id} className="shrink-0 w-[calc(100vw-5rem)] min-w-[280px] md:min-w-0 md:w-[420px] snap-start">
+                <ServiceCard service={service} />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* scroll indicator dots */}

@@ -5,7 +5,7 @@ const HeroCarousel = ({ className }) => {
   // Since we cannot dynamically list files from the public folder in a React frontend,
   // we use an array of filenames. The user can update this list as needed.
   const images = [
-    '/hero_images/download.jpg',
+    '/hero_images/download.webp',
     '/hero_images/download (1).jpg',
     '/hero_images/download (3).jpg',
     '/hero_images/download (4).jpg',
