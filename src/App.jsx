@@ -13,6 +13,7 @@ import ServiceDetailsPage from './pages/ServiceDetailsPage';
 import HealthCarePackagesPage from './pages/HealthCarePackagesPage';
 import PackageDetailsPage from './pages/PackageDetailsPage';
 import DiagnosticsPage from './pages/DiagnosticsPage';
+import AdminPage from './pages/AdminPage';
 import ScrollToTop from './components/ScrollToTop';
 import StickyBottomBar from './components/StickyBottomBar';
 import FloatingCallButton from './components/FloatingCallButton';
@@ -26,6 +27,7 @@ function App() {
         <Navbar />
         <main className="grow pb-20 lg:pb-0">
           <Routes>
+            <Route path="/admin" element={<AdminPage />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/doctors" element={<AllDoctorsPage />} />
             <Route path="/doctors/:slug" element={<DoctorDetailsPage />} />
