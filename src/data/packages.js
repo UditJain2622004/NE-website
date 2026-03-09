@@ -21,7 +21,7 @@ export const packages = [
       "X Ray - Chest",
       "Ultrasound Scan - Abdomen",
       "ECG",
-      "Physician Consultation"
+      "Consultation"
     ],
     guidelines: [
       "10-12 hours of fasting is required before the checkup (plain water is allowed).",
@@ -55,9 +55,7 @@ export const packages = [
       "Ultrasound Abdomen",
       "ECG",
       "TMT or Echo",
-      "Physician Consultation",
-      "Dental Consultation",
-      "Ophthalmology Consultation"
+      "Consultation"
     ],
     guidelines: [
       "10-12 hours of fasting is required before the checkup (plain water is allowed).",
@@ -102,10 +100,7 @@ export const packages = [
       "Ultrasound Abdomen",
       "ECG",
       "TMT or Echo",
-      "Physician Consultation",
-      "Dental Consultation",
-      "Ophthalmology Consultation",
-      "Cardiology Consultation"
+      "Consultation"
     ],
     guidelines: [
       "Complete overnight fasting of 10-12 hours is mandatory.",
@@ -141,7 +136,7 @@ export const packages = [
       "Ultrasound Abdomen",
       "ECG",
       "Echo - Cardiogram",
-      "Physician Consultation",
+      "Consultation",
       "Choice of 2 Consultations (Cardiology, Orthopedics, Dental, Eye, Gyneacology, Urology, Nutrition)"
     ],
     guidelines: [
@@ -177,13 +172,11 @@ export const packages = [
       "ECG",
       "X Ray - Chest",
       "Ultrasound Abdomen",
-      "Physician Consultation",
-      "Choice of 1 Consultation (Cardiology, Orthopedics, Dental, Eye, Gyneacology, Urology, Nutrition)"
+      "Consultation"
     ],
     guidelines: [
       "10-12 hours of fasting is mandatory.",
       "Advised for individuals above 60 years of age.",
-      "Choice of 1 specialist consultation included.",
       "Avoid oily foods for 24 hours prior to the checkup.",
       "Carry all current prescription details and medical history.",
       "Reach the facility early morning for the fasting blood sample."
@@ -194,7 +187,7 @@ export const packages = [
     name: "Women Health Check - Executive",
     slug: "women-health-executive",
     image: "/health checkup/woman.jpg",
-    description: "A package specifically designed for women, including essential screenings like Pap smear and specialized gynecological consultation.",
+    description: "A package specifically designed for women, including essential screenings like Pap smear and specialized consultation.",
     price: 7500,
     inclusions: [
       "Complete Blood Count",
@@ -212,10 +205,7 @@ export const packages = [
       "Ultrasound Abdomen",
       "ECG",
       "Pap smear",
-      "Physician Consultation",
-      "Dental Consultation",
-      "Ophthalmology Consultation",
-      "Gyneacology Consultation"
+      "Consultation"
     ],
     guidelines: [
       "Pap smear cannot be performed during the menstrual cycle.",
@@ -231,7 +221,7 @@ export const packages = [
     name: "Women Health Check - Bronze",
     slug: "women-health-bronze",
     image: "/health checkup/woman2.jpg",
-    description: "A primary health screening for women covering essential blood parameters, vital organs, and gynecological consultation.",
+    description: "A primary health screening for women covering essential blood parameters, vital organs, and consultation.",
     price: 5000,
     inclusions: [
       "Complete Blood Count",
@@ -248,8 +238,7 @@ export const packages = [
       "ECG",
       "X Ray - Chest",
       "Ultrasound Abdomen",
-      "Physician Consultation",
-      "Gyneacology Consultation"
+      "Consultation"
     ],
     guidelines: [
       "10-12 hours of fasting is required.",
@@ -314,7 +303,7 @@ export const packages = [
       "Serum Creatinine",
       "ECG",
       "TMT or Echo",
-      "Cardiology Consultation"
+      "Consultation"
     ],
     guidelines: [
       "10-12 hours fasting required.",
@@ -340,7 +329,7 @@ export const packages = [
       "SGOT ( Ast )",
       "SGPT ( Alt )",
       "ECG",
-      "Physician Consultation"
+      "Consultation"
     ],
     guidelines: [
       "10-12 hours fasting required.",
@@ -362,7 +351,7 @@ export const packages = [
       "Fasting Blood Sugar",
       "ECG",
       "Screening Echo",
-      "Physician Consultation"
+      "Consultation"
     ],
     guidelines: [
       "Maintain a 10-12 hour fast.",
@@ -408,7 +397,7 @@ export const packages = [
       "ECG",
       "X Ray - Chest",
       "Ultrasound Scan - Abdomen",
-      "Physician Consultation"
+      "Consultation"
     ],
     guidelines: [
       "Full 10-12 hour fast is mandatory.",
@@ -427,7 +416,7 @@ export const packages = [
     inclusions: [
       "Mammogram",
       "Pap smear",
-      "Gynaecology Consultation"
+      "Consultation"
     ],
     guidelines: [
       "Can be combined with any basic/master checkup.",
@@ -445,7 +434,7 @@ export const packages = [
     inclusions: [
       "Mammogram",
       "Pap smear",
-      "Gynaecology Consultation"
+      "Consultation"
     ],
     guidelines: [
       "Supplementary to routine health checks.",
@@ -461,7 +450,7 @@ export const packages = [
     price: 1100,
     inclusions: [
       "PSA (Prostatic Specific Antigen)",
-      "Urology Consultation"
+      "Consultation"
     ],
     guidelines: [
       "Recommended for men above 45 to monitor prostate health.",
@@ -480,7 +469,7 @@ export const packages = [
       "Serum Creatinine",
       "Lipid Profile",
       "Fasting Blood Sugar",
-      "Physician Consultation"
+      "Consultation"
     ],
     guidelines: [
       "Can be availed without an advance appointment.",
@@ -497,7 +486,7 @@ export const packages = [
     price: 1000,
     inclusions: [
       "Pap smear",
-      "Gynaecology Consultation"
+      "Consultation"
     ],
     guidelines: [
       "Focuses purely on cervical health screening.",
