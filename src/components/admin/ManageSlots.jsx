@@ -199,6 +199,7 @@ export default function ManageSlots({ doctorId }) {
               <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-red-500"></div> Blocked</span>
               <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-primary"></div> Booked</span>
             </div>
+            <p className="text-xs font-bold text-text-main/40 tracking-widest mb-5">Click on a slot to block/unblock it.</p>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {slots.map((slot) => {
