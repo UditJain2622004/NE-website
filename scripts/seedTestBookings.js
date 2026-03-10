@@ -30,7 +30,7 @@ const patientNames = [
 
 const statuses = ['pending', 'confirmed', 'completed', 'cancelled'];
 const timeSlots = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'];
-const targetDoctorId = 'doctor_abhijith';
+const targetDoctorId = 'doctor_akshath';
 
 const TEST_BOOKINGS = [
   // Keeping the original ones

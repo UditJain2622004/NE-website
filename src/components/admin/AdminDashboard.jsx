@@ -79,10 +79,11 @@ export default function AdminDashboard() {
           <span>{label}</span>
         </div>
         {badge > 0 && (
-          <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
+          <span className={`px-1 py-0.5 rounded-full text-[10px] font-black ${
             activeTab === id ? 'bg-white text-primary' : 'bg-primary text-white'
           }`}>
             {badge}
+            {/* <Bell className="w-4 h-4" /> */}
           </span>
         )}
       </button>
@@ -150,7 +151,7 @@ export default function AdminDashboard() {
           <NavItem id="approvals" label="Pending Approvals" icon={Bell} badge={pendingCount} />
           <NavItem id="slots" label="Manage Slots" icon={Clock} />
           <NavItem id="profile" label="Doctor Profile" icon={UserCircle} />
-          <NavItem id="doctors" label="Doctors List" icon={Users} adminOnly />
+          {/* <NavItem id="doctors" label="Doctors List" icon={Users} adminOnly /> */}
 
           <div className="pt-4 mt-4 border-t border-divider/50">
             <Link
@@ -217,6 +218,27 @@ export default function AdminDashboard() {
 
         {/* Dashboard Content */}
         <div className="p-4 lg:p-8 pt-6">
+          {/* Mobile Doctor Select */}
+          {user?.role === 'admin' && (
+            <div className="lg:hidden mb-6 flex items-center gap-3 bg-white p-4 rounded-2xl border border-divider shadow-sm">
+              <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary shrink-0">
+                <User className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[10px] font-black uppercase tracking-widest text-text-main/30 mb-0.5 ml-1">Managing Doctor</p>
+                <select 
+                  value={selectedDoctorId}
+                  onChange={(e) => setSelectedDoctorId(e.target.value)}
+                  className="w-full bg-hospital-bg border-divider rounded-lg text-sm font-bold py-1.5 focus:ring-primary/20 transition-all outline-none"
+                >
+                  {doctors.map(d => (
+                    <option key={d.id} value={d.id}>{d.name}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+
           {activeTab === 'bookings' && <BookingsList doctorId={effectiveDoctorId} />}
           {activeTab === 'approvals' && <PendingApprovals doctorId={effectiveDoctorId} />}
           {activeTab === 'slots' && <ManageSlots doctorId={effectiveDoctorId} />}
