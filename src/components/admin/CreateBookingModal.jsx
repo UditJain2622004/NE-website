@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import { format, addDays } from 'date-fns';
 
-export default function CreateBookingModal({ onClose, onSuccess }) {
+export default function CreateBookingModal({ onClose, onSuccess, initialDoctorId }) {
   const { apiCall } = useAdminAuth();
   const [step, setStep] = useState(1); // 1: Doctor/Date, 2: Slot/Patient
   
@@ -20,22 +20,22 @@ export default function CreateBookingModal({ onClose, onSuccess }) {
   const [slots, setSlots] = useState([]);
   const [loading, setLoading] = useState(true);
   const [slotsLoading, setSlotsLoading] = useState(false);
-
+ 
   // Form State
-  const [selectedDoctor, setSelectedDoctor] = useState('');
+  const [selectedDoctor, setSelectedDoctor] = useState(initialDoctorId || '');
   const [selectedDate, setSelectedDate] = useState(format(new Date(), 'yyyy-MM-dd'));
   const [selectedSlot, setSelectedSlot] = useState('');
   const [patientName, setPatientName] = useState('');
   const [patientPhone, setPatientPhone] = useState('');
   const [patientEmail, setPatientEmail] = useState('');
   const [saving, setSaving] = useState(false);
-
+ 
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
         const { doctors: dData } = await apiCall('/api/admin/doctors');
         setDoctors(dData || []);
-        if (dData?.[0]) setSelectedDoctor(dData[0].id);
+        if (dData?.[0] && !selectedDoctor) setSelectedDoctor(dData[0].id);
       } catch (err) {
         console.error('Fetch doctors failed:', err);
       } finally {
@@ -43,7 +43,8 @@ export default function CreateBookingModal({ onClose, onSuccess }) {
       }
     };
     fetchDoctors();
-  }, []);
+  }, [initialDoctorId]);
+
 
   const fetchSlots = async () => {
     if (!selectedDoctor || !selectedDate) return;

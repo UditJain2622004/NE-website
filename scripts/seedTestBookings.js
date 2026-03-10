@@ -22,31 +22,23 @@ if (!getApps().length) {
 
 const db = getFirestore();
 
+const patientNames = [
+  'Rahul Sharma', 'Priya Singh', 'Amit Verma', 'Anjali Gupta', 'Suresh Kumar',
+  'Deepak Chenoy', 'Sunita Williams', 'Rohan Mehra', 'Sonia Gandhi', 'Rajiv Bajaj',
+  'Arvind Kejriwal', 'Mamata Banerjee', 'Narendra Modi', 'Rahul Gandhi', 'Smriti Irani'
+];
+
+const statuses = ['pending', 'confirmed', 'completed', 'cancelled'];
+const timeSlots = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'];
+const targetDoctorId = 'doctor_abhijith';
+
 const TEST_BOOKINGS = [
-  {
-    doctorId: 'doctor_abhijith',
-    patientName: 'Rahul Sharma',
-    patientPhone: '+919876543210',
-    patientEmail: 'rahul@example.com',
-    appointmentDate: format(new Date(), 'yyyy-MM-dd'), // Today
-    timeSlot: '10:00',
-    status: 'pending',
-    bookingType: 'instant',
-  },
-  {
-    doctorId: 'doctor_abhijith',
-    patientName: 'Priya Singh',
-    patientPhone: '+918765432109',
-    appointmentDate: format(new Date(), 'yyyy-MM-dd'), // Today
-    timeSlot: '11:00',
-    status: 'confirmed',
-    bookingType: 'instant',
-  },
+  // Keeping the original ones
   {
     doctorId: 'doctor_akshath',
     patientName: 'Amit Verma',
     patientPhone: '+917654321098',
-    appointmentDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'), // Tomorrow
+    appointmentDate: format(addDays(new Date(), 1), 'yyyy-MM-dd'),
     timeSlot: '09:30',
     status: 'pending',
     bookingType: 'instant',
@@ -55,21 +47,48 @@ const TEST_BOOKINGS = [
     doctorId: 'doctor_vijaya',
     patientName: 'Anjali Gupta',
     patientPhone: '+916543210987',
-    appointmentDate: format(subDays(new Date(), 1), 'yyyy-MM-dd'), // Yesterday
+    appointmentDate: format(subDays(new Date(), 1), 'yyyy-MM-dd'),
     timeSlot: '15:00',
     status: 'completed',
     bookingType: 'instant',
   },
-  {
-    doctorId: 'doctor_tara',
-    patientName: 'Suresh Kumar',
-    patientPhone: '+915432109876',
-    appointmentDate: format(new Date(), 'yyyy-MM-dd'), // Today
-    timeSlot: '12:00',
-    status: 'cancelled',
-    bookingType: 'instant',
-  }
 ];
+
+// Generate 30+ appointments for doctor_abhijith over a range of 10 days
+for (let i = -3; i <= 7; i++) {
+  const date = addDays(new Date(), i);
+  const formattedDate = format(date, 'yyyy-MM-dd');
+  
+  // 3-4 appointments per day
+  const dailyCount = 3 + Math.floor(Math.random() * 2);
+  
+  for (let j = 0; j < dailyCount; j++) {
+    const timeSlot = timeSlots[(j * 2) % timeSlots.length]; // Spread them out a bit
+    const patientName = patientNames[Math.floor(Math.random() * patientNames.length)];
+    
+    // Bias status based on date
+    let status = 'pending';
+    if (i < 0) {
+      status = Math.random() > 0.2 ? 'completed' : 'cancelled';
+    } else if (i === 0) {
+      status = Math.random() > 0.5 ? 'confirmed' : 'pending';
+    } else {
+      status = Math.random() > 0.3 ? 'confirmed' : 'pending';
+    }
+
+    TEST_BOOKINGS.push({
+      doctorId: targetDoctorId,
+      patientName: patientName,
+      patientPhone: `+919${Math.floor(100000000 + Math.random() * 899999999)}`,
+      patientEmail: `${patientName.toLowerCase().replace(' ', '.')}@example.com`,
+      appointmentDate: formattedDate,
+      timeSlot,
+      status: status,
+      bookingType: 'instant',
+    });
+  }
+}
+
 
 async function seed() {
   console.log('🌱 Starting test bookings seed...\n');

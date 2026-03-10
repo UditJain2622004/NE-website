@@ -12,11 +12,19 @@ import {
 } from 'lucide-react';
 import { format, addDays, subDays } from 'date-fns';
 
-export default function BookingsList() {
+export default function BookingsList({ doctorId }) {
   const { user, apiCall } = useAdminAuth();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [statusFilter, setStatusFilter] = useState('pending,confirmed');
+  
+  // Tabs configuration based on role
+  const tabs = [
+    { id: 'confirmed', label: 'Scheduled' },
+    { id: 'completed', label: 'Completed' }
+  ];
+
+  const [statusFilter, setStatusFilter] = useState('confirmed');
+
   const [dateFilter, setDateFilter] = useState(format(new Date(), 'yyyy-MM-dd'));
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -29,11 +37,15 @@ export default function BookingsList() {
     cancelled: 'bg-red-100 text-red-600 font-bold border border-red-200',
   };
 
+
   const fetchBookings = async () => {
+    const targetId = doctorId || user?.doctorId;
+
     setIsRefreshing(true);
     try {
-      const { bookings: data } = await apiCall(`/api/admin/bookings?status=${statusFilter}&dateFrom=${dateFilter}&dateTo=${dateFilter}`);
-      setBookings(data || []);
+      const url = `/api/admin/bookings?status=${statusFilter}&dateFrom=${dateFilter}&dateTo=${dateFilter}${targetId ? `&doctorId=${targetId}` : ''}`;
+      const res = await apiCall(url);
+      setBookings(res.bookings || []);
     } catch (err) {
       console.error('Fetch failed:', err);
     } finally {
@@ -49,7 +61,9 @@ export default function BookingsList() {
     const handleRefresh = () => fetchBookings();
     window.addEventListener('refreshBookings', handleRefresh);
     return () => window.removeEventListener('refreshBookings', handleRefresh);
-  }, [statusFilter, dateFilter]);
+  }, [statusFilter, dateFilter, doctorId]);
+
+
 
   const handleAction = async (id, action) => {
     if (!confirm(`Are you sure you want to ${action} this appointment?`)) return;
@@ -65,6 +79,22 @@ export default function BookingsList() {
       }
     } catch (err) {
       console.error('Action failed:', err);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm('Permanently delete this record?')) return;
+    try {
+      const res = await apiCall(`/api/admin/bookings?appointmentId=${id}`, {
+        method: 'DELETE'
+      });
+      if (res.success) {
+        fetchBookings();
+      } else {
+        alert(res.error);
+      }
+    } catch (err) {
+      console.error('Delete failed:', err);
     }
   };
 
@@ -108,30 +138,34 @@ export default function BookingsList() {
             <ChevronRight className="w-5 h-5 text-text-main/60" />
           </button>
           
-          <button 
+          {/* <button 
             onClick={() => setDateFilter(format(new Date(), 'yyyy-MM-dd'))}
             className="text-xs font-bold text-primary px-3 py-2 bg-primary/5 rounded-lg hover:bg-primary/10"
           >
             Today
-          </button>
+          </button> */}
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          {['pending,confirmed', 'completed', 'rejected,cancelled'].map((val) => (
-            <button
-              key={val}
-              onClick={() => setStatusFilter(val)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold capitalize transition-all border ${
-                statusFilter === val 
-                  ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' 
-                  : 'bg-white text-text-main/40 border-divider hover:border-text-main/20'
-              }`}
-            >
-              {val === 'pending,confirmed' ? 'Active' : val === 'rejected,cancelled' ? 'Closed' : val}
-            </button>
-          ))}
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap gap-2">
+
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setStatusFilter(tab.id)}
+                className={`px-4 py-2 rounded-xl text-xs font-bold capitalize transition-all border ${
+                  statusFilter === tab.id 
+                    ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' 
+                    : 'bg-white text-text-main/40 border-divider hover:border-text-main/20'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
+
 
       {/* Bookings List */}
       <div className="space-y-3">
@@ -190,7 +224,7 @@ export default function BookingsList() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2 mt-4 lg:mt-0 lg:shrink-0 lg:w-48 lg:justify-end">
+              <div className="flex flex-wrap items-center gap-2 mt-4 lg:mt-0 lg:shrink-0 lg:w-64 lg:justify-end">
                 {booking.status === 'pending' && (
                   <>
                     <button 
@@ -216,7 +250,7 @@ export default function BookingsList() {
                       className="flex-1 lg:flex-none p-2.5 bg-primary text-white rounded-xl hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 px-4 shadow-lg shadow-primary/20"
                     >
                       <CheckCircle2 className="w-5 h-5" />
-                      <span className="lg:hidden font-bold">Mark Complete</span>
+                      <span className="font-bold">Mark Complete</span>
                     </button>
                     <button 
                        onClick={() => handleAction(booking.id, 'cancel')}
@@ -228,8 +262,15 @@ export default function BookingsList() {
                   </>
                 )}
                 {['rejected', 'cancelled', 'completed'].includes(booking.status) && (
-                  <div className="text-[10px] font-black uppercase tracking-widest text-text-main/20 italic p-2 px-4 border border-divider rounded-xl w-full text-center lg:w-auto">
-                    Entry Archived
+                  <div className="flex items-center gap-2 w-full lg:w-auto">
+                  
+                    <button 
+                      onClick={() => handleDelete(booking.id)}
+                      className="p-2.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all border border-transparent hover:border-red-100"
+                      title="Delete Entry"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
                   </div>
                 )}
               </div>

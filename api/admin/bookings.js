@@ -12,7 +12,41 @@ export default async function handler(req, res) {
   if (req.method === 'GET') return handleGet(req, res);
   if (req.method === 'POST') return handlePost(req, res);
   if (req.method === 'PATCH') return handlePatch(req, res);
+  if (req.method === 'DELETE') return handleDelete(req, res);
   return sendError(res, 405, 'Method not allowed');
+}
+
+// ─── DELETE: Remove a booking ───────────────────────────────────────────────────
+
+async function handleDelete(req, res) {
+  const result = await verifyAuth(req);
+  if (result.error) return sendError(res, result.status, result.error);
+
+  const { user } = result;
+  const { appointmentId } = req.query;
+
+  if (!appointmentId) return sendError(res, 400, 'Missing appointmentId');
+
+  try {
+    const appointmentRef = db.collection('appointments').doc(appointmentId);
+    const doc = await appointmentRef.get();
+
+    if (!doc.exists) return sendError(res, 404, 'Appointment not found');
+
+    const appointment = doc.data();
+
+    // Permissions check
+    if (user.role === 'doctor' && appointment.doctorId !== user.doctorId) {
+      return sendError(res, 403, 'You can only delete your own appointments');
+    }
+
+    await appointmentRef.delete();
+    return sendSuccess(res, { message: 'Appointment deleted successfully' });
+
+  } catch (error) {
+    console.error('Error in DELETE /api/admin/bookings:', error);
+    return sendError(res, 500, 'Internal server error');
+  }
 }
 
 // ─── GET: List bookings ─────────────────────────────────────────────────────────

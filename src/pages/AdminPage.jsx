@@ -2,9 +2,10 @@
 // Redirects to login or dashboard based on auth status.
 
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AdminAuthProvider, useAdminAuth } from '../hooks/useAdminAuth';
 import AdminDashboard from '../components/admin/AdminDashboard';
-import { Mail, Lock, Loader2, Hospital } from 'lucide-react';
+import { Mail, Lock, Loader2, Hospital, ArrowLeft } from 'lucide-react';
 
 function AdminContent() {
   const { user, loading, login, error } = useAdminAuth();
@@ -37,7 +38,15 @@ function AdminContent() {
   }
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center p-4">
+    <div className="min-h-[90vh] flex flex-col items-center justify-center p-4">
+      <Link 
+        to="/" 
+        className="mb-6 flex items-center gap-2 text-text-main/60 hover:text-primary transition-colors text-sm font-medium"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back to Website
+      </Link>
+      
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-divider overflow-hidden">
         <div className="bg-primary p-8 text-center text-white">
           <div className="flex justify-center mb-4">
