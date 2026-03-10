@@ -95,6 +95,7 @@ const Navbar = () => {
         { label: 'Emergency Number:', value: '112', path: 'tel:112', isRed: true },
       ]
     },
+    { name: 'Staff Login', path: '/admin' },
   ];
 
   return (
