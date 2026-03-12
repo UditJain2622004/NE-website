@@ -151,7 +151,7 @@ export default function AdminDashboard() {
           <NavItem id="bookings" label="Appointments" icon={ClipboardList} />
           <NavItem id="approvals" label="Pending Approvals" icon={Bell} badge={pendingCount} />
           <NavItem id="healthCheckups" label="Health Checkups" icon={HeartPulse} />
-          <NavItem id="slots" label="Manage Slots" icon={Clock} />
+          <NavItem id="slots" label="Manage Availability" icon={Clock} />
           <NavItem id="profile" label="Doctor Profile" icon={UserCircle} />
           {/* <NavItem id="doctors" label="Doctors List" icon={Users} adminOnly /> */}
 

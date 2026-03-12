@@ -51,7 +51,7 @@ export default function ManageSlots({ doctorId }) {
     if (!confirm(`Are you sure you want to block all slots on ${selectedDate}?`)) return;
     setLoading(true);
     try {
-      const res = await apiCall('/api/admin/leaves', {
+      const res = await apiCall('/api/admin/doctors', {
         method: 'POST',
         body: JSON.stringify({
           doctorId: targetId,

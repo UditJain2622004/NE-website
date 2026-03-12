@@ -31,7 +31,7 @@ export default function HealthCheckupsList() {
   const fetchCheckups = async () => {
     setIsRefreshing(true);
     try {
-      let url = `/api/admin/healthCheckups?status=${statusFilter}`;
+      let url = `/api/admin/bookings?type=healthCheckups&status=${statusFilter}`;
       if (dateFilter) {
         url += `&dateFrom=${dateFilter}&dateTo=${dateFilter}`;
       }
@@ -52,7 +52,7 @@ export default function HealthCheckupsList() {
   const handleAction = async (id, action) => {
     if (!confirm(`Are you sure you want to ${action} this health checkup?`)) return;
     try {
-      const res = await apiCall('/api/admin/healthCheckups', {
+      const res = await apiCall('/api/admin/bookings?type=healthCheckups', {
         method: 'PATCH',
         body: JSON.stringify({ checkupId: id, action }),
       });
@@ -69,7 +69,7 @@ export default function HealthCheckupsList() {
   const handleDelete = async (id) => {
     if (!confirm('Permanently delete this health checkup record?')) return;
     try {
-      const res = await apiCall(`/api/admin/healthCheckups?checkupId=${id}`, {
+      const res = await apiCall(`/api/admin/bookings?type=healthCheckups&checkupId=${id}`, {
         method: 'DELETE',
       });
       if (res.success) {

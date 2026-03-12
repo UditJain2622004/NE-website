@@ -7,7 +7,7 @@ let brevo = null;
 
 function getBrevo() {
   if (!brevo) {
-    console.log("Brevo API KEY - ", process.env.BREVO_API_KEY)
+    // console.log("Brevo API KEY - ", process.env.BREVO_API_KEY)
     brevo = new BrevoClient({
       apiKey: process.env.BREVO_API_KEY,
     });

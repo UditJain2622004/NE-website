@@ -1,4 +1,4 @@
-// Admin Auth Hook — handles session via Firebase and /api/admin/me
+// Admin Auth Hook — handles session via Firebase and /api/admin/account
 // Stores state in local storage/context to persistent logins.
 
 import { useState, useEffect, createContext, useContext } from 'react';
@@ -18,7 +18,7 @@ export function AdminAuthProvider({ children }) {
       if (fbUser) {
         try {
           const token = await fbUser.getIdToken(true);
-          const res = await fetch('/api/admin/me', {
+          const res = await fetch('/api/admin/account', {
             headers: { Authorization: `Bearer ${token}` }
           });
 
@@ -26,18 +26,12 @@ export function AdminAuthProvider({ children }) {
             console.error('API Error:', res.status, res.statusText);
             setUser(null);
           } else {
-            const contentType = res.headers.get('content-type');
-            if (contentType && contentType.includes('application/json')) {
-              const data = await res.json();
-              if (data.success) {
-                setUser({ ...fbUser, ...data.user, token });
-              } else {
-                console.error('Failed to get /me:', data.error);
-                setUser(null);
-              }
+            const data = await res.json();
+            if (data.success) {
+              // Combine Firebase profile, token, and database info (role, doctorId)
+              setUser({ ...fbUser, ...data.user, token });
             } else {
-              const text = await res.text();
-              console.error('Expected JSON, got:', text.substring(0, 50));
+              console.error('Failed to get account info:', data.error);
               setUser(null);
             }
           }

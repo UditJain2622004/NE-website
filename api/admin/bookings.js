@@ -1,6 +1,7 @@
-// GET  /api/admin/bookings  — List bookings (admin: all, doctor: own)
-// POST /api/admin/bookings  — Create a booking (admin only)
-// PATCH /api/admin/bookings — Update a booking (status, patient info)
+// GET    /api/admin/bookings?type=appointments|healthCheckups
+// POST   /api/admin/bookings (create appointment)
+// PATCH  /api/admin/bookings (update status/patient)
+// DELETE /api/admin/bookings (delete record)
 
 import { db } from '../_utils/firebaseAdmin.js';
 import { verifyAuth, requireAdmin } from '../_utils/authMiddleware.js';
@@ -10,350 +11,165 @@ import { sendBookingNotification, actionToEvent } from '../_utils/brevoNotificat
 import { FieldValue } from 'firebase-admin/firestore';
 
 export default async function handler(req, res) {
-  if (req.method === 'GET') return handleGet(req, res);
-  if (req.method === 'POST') return handlePost(req, res);
-  if (req.method === 'PATCH') return handlePatch(req, res);
-  if (req.method === 'DELETE') return handleDelete(req, res);
+  const result = await verifyAuth(req);
+  if (result.error) return sendError(res, result.status, result.error);
+  const { user } = result;
+
+  const type = req.query.type || 'appointments';
+
+  if (req.method === 'GET') {
+    if (type === 'healthCheckups') return handleGetHealth(req, res, user);
+    return handleGetAppointments(req, res, user);
+  }
+  
+  if (req.method === 'POST') {
+    return handlePostAppointment(req, res, user);
+  }
+
+  if (req.method === 'PATCH') {
+    if (type === 'healthCheckups') return handlePatchHealth(req, res, user);
+    return handlePatchAppointment(req, res, user);
+  }
+
+  if (req.method === 'DELETE') {
+    if (type === 'healthCheckups') return handleDeleteHealth(req, res, user);
+    return handleDeleteAppointment(req, res, user);
+  }
+
   return sendError(res, 405, 'Method not allowed');
 }
 
-// ─── DELETE: Remove a booking ───────────────────────────────────────────────────
-
-async function handleDelete(req, res) {
-  const result = await verifyAuth(req);
-  if (result.error) return sendError(res, result.status, result.error);
-
-  const { user } = result;
-  const { appointmentId } = req.query;
-
-  if (!appointmentId) return sendError(res, 400, 'Missing appointmentId');
-
-  try {
-    const appointmentRef = db.collection('appointments').doc(appointmentId);
-    const doc = await appointmentRef.get();
-
-    if (!doc.exists) return sendError(res, 404, 'Appointment not found');
-
-    const appointment = doc.data();
-
-    // Permissions check
-    if (user.role === 'doctor' && appointment.doctorId !== user.doctorId) {
-      return sendError(res, 403, 'You can only delete your own appointments');
-    }
-
-    await appointmentRef.delete();
-    return sendSuccess(res, { message: 'Appointment deleted successfully' });
-
-  } catch (error) {
-    console.error('Error in DELETE /api/admin/bookings:', error);
-    return sendError(res, 500, 'Internal server error');
-  }
-}
-
-// ─── GET: List bookings ─────────────────────────────────────────────────────────
-
-async function handleGet(req, res) {
-  const result = await verifyAuth(req);
-  if (result.error) return sendError(res, result.status, result.error);
-
-  const { user } = result;
+// ─── GET: Appointments ─────────────────────────────────────────────────────────
+async function handleGetAppointments(req, res, user) {
   const { doctorId, dateFrom, dateTo, status } = req.query;
-
   try {
     let query = db.collection('appointments');
-
-    // Doctor can only see their own bookings
     const filterDoctorId = user.role === 'doctor' ? user.doctorId : (doctorId || null);
-
-    if (filterDoctorId) {
-      query = query.where('doctorId', '==', filterDoctorId);
-    }
-
+    if (filterDoctorId) query = query.where('doctorId', '==', filterDoctorId);
+    
     const snapshot = await query.get();
-
     let bookings = snapshot.docs.map(doc => {
       const data = doc.data();
-      return {
-        id: doc.id,
-        ...data,
-        createdAt: data.createdAt?.toDate?.()?.toISOString() || null,
-        confirmedAt: data.confirmedAt?.toDate?.()?.toISOString() || null,
-      };
+      return { id: doc.id, ...data, createdAt: data.createdAt?.toDate?.()?.toISOString() || null };
     });
 
-    // Apply date range filter in memory
-    if (dateFrom) {
-      bookings = bookings.filter(b => b.appointmentDate >= dateFrom);
-    }
-    if (dateTo) {
-      bookings = bookings.filter(b => b.appointmentDate <= dateTo);
-    }
-
-    // Apply status filter
+    if (dateFrom) bookings = bookings.filter(b => b.appointmentDate >= dateFrom);
+    if (dateTo) bookings = bookings.filter(b => b.appointmentDate <= dateTo);
     if (status) {
       const statuses = status.split(',').map(s => s.trim());
       bookings = bookings.filter(b => statuses.includes(b.status));
     }
-
-    // Sort by date descending, then time ascending
-    bookings.sort((a, b) => {
-      const dateDiff = (b.appointmentDate || '').localeCompare(a.appointmentDate || '');
-      if (dateDiff !== 0) return dateDiff;
-      return (a.timeSlot || '').localeCompare(b.timeSlot || '');
-    });
-
-    // Fetch doctor names for enrichment
-    const doctorIds = [...new Set(bookings.map(b => b.doctorId).filter(Boolean))];
-    const doctorNames = {};
-
-    if (doctorIds.length > 0) {
-      const doctorDocs = await Promise.all(
-        doctorIds.map(id => db.collection('doctors').doc(id).get())
-      );
-      doctorDocs.forEach(doc => {
-        if (doc.exists) {
-          doctorNames[doc.id] = doc.data().name;
-        }
-      });
-    }
-
-    // Enrich bookings with doctor name
-    bookings = bookings.map(b => ({
-      ...b,
-      doctorName: doctorNames[b.doctorId] || b.doctorId,
-    }));
-
+    bookings.sort((a,b) => (b.appointmentDate||'').localeCompare(a.appointmentDate||'') || (a.timeSlot||'').localeCompare(b.timeSlot||''));
     return sendSuccess(res, { bookings });
-
-  } catch (error) {
-    console.error('Error in GET /api/admin/bookings:', error);
-    return sendError(res, 500, `Internal server error: ${error.message}`);
-  }
+  } catch (err) { return sendError(res, 500, err.message); }
 }
 
-// ─── POST: Create a booking (admin only) ─────────────────────────────────────────
+// ─── GET: Health Checkups ─────────────────────────────────────────────────────
+async function handleGetHealth(req, res, user) {
+  const { status, dateFrom, dateTo } = req.query;
+  try {
+    const snapshot = await db.collection('healthCheckups').get();
+    let checkups = snapshot.docs.map(doc => {
+      const data = doc.data();
+      return { id: doc.id, ...data, createdAt: data.createdAt?.toDate?.()?.toISOString() || null };
+    });
+    if (dateFrom) checkups = checkups.filter(c => c.preferredDate >= dateFrom);
+    if (dateTo) checkups = checkups.filter(c => c.preferredDate <= dateTo);
+    if (status) {
+      const statuses = status.split(',').map(s => s.trim());
+      checkups = checkups.filter(c => statuses.includes(c.status));
+    }
+    checkups.sort((a,b) => (a.preferredDate||'').localeCompare(b.preferredDate||''));
+    return sendSuccess(res, { checkups });
+  } catch (err) { return sendError(res, 500, err.message); }
+}
 
-async function handlePost(req, res) {
-  const admin = await requireAdmin(req, res);
-  if (!admin) return; // Response already sent
-
+// ─── POST: Create Appointment ──────────────────────────────────────────────────
+async function handlePostAppointment(req, res, user) {
+  if (user.role !== 'admin') return sendError(res, 403, 'Admin only');
   const body = req.body;
-
   const validationError = validateRequired(body, ['doctorId', 'date', 'time', 'patientName', 'patientPhone']);
   if (validationError) return sendError(res, 400, validationError);
 
-  const { doctorId, date, time, patientName, patientPhone, patientEmail, status: requestedStatus } = body;
-
-  if (!isValidDate(date)) return sendError(res, 400, 'Invalid date format. Use YYYY-MM-DD');
-  if (!isValidTime(time)) return sendError(res, 400, 'Invalid time format. Use HH:mm');
-
+  const { doctorId, date, time, patientName, patientPhone, patientEmail, status } = body;
   try {
-    // Verify doctor exists
     const doctorDoc = await db.collection('doctors').doc(doctorId).get();
     if (!doctorDoc.exists) return sendError(res, 404, 'Doctor not found');
-
-    // Validate time against schedule
     const doctor = doctorDoc.data();
-    const validSlotTimes = generateSlotTimes(doctor, date);
-    if (!validSlotTimes.includes(time)) {
-      return sendError(res, 400, 'Invalid time slot for this doctor on this date.');
-    }
-
-    const appointmentStatus = requestedStatus || 'confirmed';
-    const dateClass = classifyBookingDate(date);
-    const bookingType = dateClass.isInstant ? 'instant' : 'request';
-
-    // Create the appointment
-    const appointmentRef = db.collection('appointments').doc();
-    const appointmentData = {
-      patientId: patientPhone,
-      doctorId,
-      patientName,
-      patientPhone,
-      patientEmail: patientEmail || null,
-      appointmentDate: date,
-      timeSlot: time,
-      bookingType,
-      type: 'new',
-      status: appointmentStatus,
-      createdAt: FieldValue.serverTimestamp(),
-      confirmedAt: appointmentStatus === 'confirmed' ? FieldValue.serverTimestamp() : null,
-      createdByAdmin: true,
-    };
-
-    // If instant booking, also mark the slot
-    if (dateClass.isInstant) {
-      const slotId = buildSlotId(doctorId, date, time);
-      const slotRef = db.collection('doctorSlots').doc(slotId);
-
-      const batch = db.batch();
-      batch.set(appointmentRef, appointmentData);
-
-      // Create or update the slot document
-      batch.set(slotRef, {
-        doctorId,
-        date,
-        time,
-        booked: true,
-        appointmentId: appointmentRef.id,
-        expiresAt: new Date(date + 'T23:59:59+05:30'),
-      }, { merge: true });
-
-      await batch.commit();
-    } else {
-      await appointmentRef.set(appointmentData);
-    }
-
-    // Upsert patient
-    const patientRef = db.collection('patients').doc(patientPhone);
-    await patientRef.set({
-      name: patientName,
-      phone: patientPhone,
-      ...(patientEmail ? { email: patientEmail } : {}),
-      lastAppointmentAt: FieldValue.serverTimestamp(),
-    }, { merge: true });
-
-    const notifyEvent = appointmentStatus === 'confirmed' ? 'booking_confirmed' : 'booking_created';
-    sendBookingNotification(notifyEvent, {
-      patientName,
-      patientPhone,
-      patientEmail: patientEmail || null,
-      doctorId,
-      doctorName: doctor.name,
-      appointmentDate: date,
-      timeSlot: time,
-      bookingType,
-    }).catch(err => console.error('[Brevo] Notification error:', err.message));
-
-    return sendSuccess(res, {
-      appointmentId: appointmentRef.id,
-      message: 'Booking created successfully by admin.',
+    
+    const appointmentId = await db.runTransaction(async (transaction) => {
+      const appointmentRef = db.collection('appointments').doc();
+      const appointmentData = {
+        patientId: patientPhone, doctorId, patientName, patientPhone,
+        patientEmail: patientEmail || null, appointmentDate: date, timeSlot: time,
+        bookingType: 'instant', type: 'new', status: status || 'confirmed',
+        createdAt: FieldValue.serverTimestamp(), createdByAdmin: true,
+      };
+      transaction.set(appointmentRef, appointmentData);
+      return appointmentRef.id;
     });
 
-  } catch (error) {
-    console.error('Error in POST /api/admin/bookings:', error);
-    return sendError(res, 500, `Internal server error: ${error.message}`);
-  }
+    return sendSuccess(res, { appointmentId, message: 'Booking created' });
+  } catch (err) { return sendError(res, 500, err.message); }
 }
 
-// ─── PATCH: Update a booking ──────────────────────────────────────────────────────
-
-async function handlePatch(req, res) {
-  const result = await verifyAuth(req);
-  if (result.error) return sendError(res, result.status, result.error);
-
-  const { user } = result;
+// ─── PATCH: Appointment ────────────────────────────────────────────────────────
+async function handlePatchAppointment(req, res, user) {
   const { appointmentId, action, patientName, patientPhone, patientEmail } = req.body;
-
-  if (!appointmentId) return sendError(res, 400, 'Missing appointmentId');
-
   try {
-    const appointmentRef = db.collection('appointments').doc(appointmentId);
-    const appointmentDoc = await appointmentRef.get();
-
-    if (!appointmentDoc.exists) return sendError(res, 404, 'Appointment not found');
-
-    const appointment = appointmentDoc.data();
-
-    // Doctor can only update their own appointments
-    if (user.role === 'doctor' && appointment.doctorId !== user.doctorId) {
-      return sendError(res, 403, 'You can only manage your own appointments');
-    }
+    const ref = db.collection('appointments').doc(appointmentId);
+    const doc = await ref.get();
+    if (!doc.exists) return sendError(res, 404, 'Not found');
+    const app = doc.data();
+    if (user.role === 'doctor' && app.doctorId !== user.doctorId) return sendError(res, 403, 'Unauthorized');
 
     const updateData = {};
-
-    // Handle status change via action
     if (action) {
-      const statusMap = {
-        confirm: 'confirmed',
-        reject: 'rejected',
-        cancel: 'cancelled',
-        complete: 'completed',
-      };
-
-      const allowedTransitions = {
-        pending: ['confirm', 'reject', 'cancel'],
-        confirmed: ['complete', 'cancel'],
-        rejected: [],
-        cancelled: [],
-        completed: [],
-      };
-
-      if (!statusMap[action]) {
-        return sendError(res, 400, `Invalid action: ${action}`);
-      }
-
-      const allowed = allowedTransitions[appointment.status] || [];
-      if (!allowed.includes(action)) {
-        return sendError(res, 400, `Cannot ${action} an appointment with status "${appointment.status}"`);
-      }
-
+      const statusMap = { confirm: 'confirmed', reject: 'rejected', cancel: 'cancelled', complete: 'completed' };
       updateData.status = statusMap[action];
-
-      if (action === 'confirm') {
-        updateData.confirmedAt = FieldValue.serverTimestamp();
-      }
-
-      // Free slot if rejecting/cancelling an instant booking
-      if ((action === 'reject' || action === 'cancel') && appointment.bookingType === 'instant') {
-        const slotId = `${appointment.doctorId}_${appointment.appointmentDate}_${appointment.timeSlot}`;
-        const slotRef = db.collection('doctorSlots').doc(slotId);
-        const slotDoc = await slotRef.get();
-
-        if (slotDoc.exists && slotDoc.data().booked) {
-          const batch = db.batch();
-          batch.update(appointmentRef, updateData);
-          batch.update(slotRef, { booked: false, appointmentId: null });
-          await batch.commit();
-
-          const event = actionToEvent(action);
-          if (event) {
-            sendBookingNotification(event, appointment)
-              .catch(err => console.error('[Brevo] Notification error:', err.message));
-          }
-
-          return sendSuccess(res, {
-            appointmentId,
-            newStatus: statusMap[action],
-            slotFreed: true,
-            message: `Appointment ${statusMap[action]}. Slot freed.`,
-          });
-        }
-      }
+      if (action === 'confirm') updateData.confirmedAt = FieldValue.serverTimestamp();
     }
-
-    // Handle patient info updates (admin only)
     if (user.role === 'admin') {
       if (patientName) updateData.patientName = patientName;
-      if (patientPhone) {
-        updateData.patientPhone = patientPhone;
-        updateData.patientId = patientPhone;
-      }
+      if (patientPhone) { updateData.patientPhone = patientPhone; updateData.patientId = patientPhone; }
       if (patientEmail !== undefined) updateData.patientEmail = patientEmail || null;
     }
+    await ref.update(updateData);
+    return sendSuccess(res, { message: 'Updated' });
+  } catch (err) { return sendError(res, 500, err.message); }
+}
 
-    if (Object.keys(updateData).length === 0) {
-      return sendError(res, 400, 'No valid updates provided');
-    }
+// ─── PATCH: Health Checkup ────────────────────────────────────────────────────
+async function handlePatchHealth(req, res, user) {
+  const { checkupId, action } = req.body;
+  try {
+    const ref = db.collection('healthCheckups').doc(checkupId);
+    const doc = await ref.get();
+    if (!doc.exists) return sendError(res, 404, 'Not found');
+    const statusMap = { cancel: 'cancelled', complete: 'completed' };
+    await ref.update({ status: statusMap[action] });
+    return sendSuccess(res, { message: 'Updated' });
+  } catch (err) { return sendError(res, 500, err.message); }
+}
 
-    await appointmentRef.update(updateData);
+// ─── DELETE: ──────────────────────────────────────────────────────────────────
+async function handleDeleteAppointment(req, res, user) {
+  const { appointmentId } = req.query;
+  try {
+    const ref = db.collection('appointments').doc(appointmentId);
+    const doc = await ref.get();
+    if (!doc.exists) return sendError(res, 404, 'Not found');
+    if (user.role === 'doctor' && doc.data().doctorId !== user.doctorId) return sendError(res, 403, 'Unauthorized');
+    await ref.delete();
+    return sendSuccess(res, { message: 'Deleted' });
+  } catch (err) { return sendError(res, 500, err.message); }
+}
 
-    if (action) {
-      const event = actionToEvent(action);
-      if (event) {
-        sendBookingNotification(event, appointment)
-          .catch(err => console.error('[Brevo] Notification error:', err.message));
-      }
-    }
-
-    return sendSuccess(res, {
-      appointmentId,
-      message: 'Appointment updated successfully.',
-      ...(updateData.status ? { newStatus: updateData.status } : {}),
-    });
-
-  } catch (error) {
-    console.error('Error in PATCH /api/admin/bookings:', error);
-    return sendError(res, 500, `Internal server error: ${error.message}`);
-  }
+async function handleDeleteHealth(req, res, user) {
+  if (user.role !== 'admin') return sendError(res, 403, 'Admin only');
+  const { checkupId } = req.query;
+  try {
+    await db.collection('healthCheckups').doc(checkupId).delete();
+    return sendSuccess(res, { message: 'Deleted' });
+  } catch (err) { return sendError(res, 500, err.message); }
 }
