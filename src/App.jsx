@@ -14,6 +14,7 @@ import HealthCarePackagesPage from './pages/HealthCarePackagesPage';
 import PackageDetailsPage from './pages/PackageDetailsPage';
 import DiagnosticsPage from './pages/DiagnosticsPage';
 import AdminPage from './pages/AdminPage';
+import BookingPage from './pages/BookingPage';
 import ScrollToTop from './components/ScrollToTop';
 import StickyBottomBar from './components/StickyBottomBar';
 import FloatingCallButton from './components/FloatingCallButton';
@@ -31,6 +32,7 @@ function AppContent() {
         <Routes>
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/" element={<HomePage />} />
+          <Route path="/book" element={<BookingPage />} />
           <Route path="/doctors" element={<AllDoctorsPage />} />
           <Route path="/doctors/:slug" element={<DoctorDetailsPage />} />
           <Route path="/departments" element={<CentersOfExcellencePage />} />

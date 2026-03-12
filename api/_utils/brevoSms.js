@@ -1,21 +1,18 @@
-// Brevo transactional SMS sender for booking notifications.
-
-import {
-  TransactionalSMSApi,
-  TransactionalSMSApiApiKeys,
-} from '@getbrevo/brevo';
+import { BrevoClient } from '@getbrevo/brevo';
 import { formatDate, formatTime } from './brevoHelpers.js';
 
 // ─── API Client (lazy-initialized) ──────────────────────────────────────────
 
-let smsApi = null;
+let brevo = null;
 
-function getSmsApi() {
-  if (!smsApi) {
-    smsApi = new TransactionalSMSApi();
-    smsApi.setApiKey(TransactionalSMSApiApiKeys.apiKey, process.env.BREVO_API_KEY);
+function getBrevo() {
+  if (!brevo) {
+    console.log("Brevo API KEY - ", process.env.BREVO_API_KEY)
+    brevo = new BrevoClient({
+      apiKey: process.env.BREVO_API_KEY,
+    });
   }
-  return smsApi;
+  return brevo;
 }
 
 const SENDER = () => process.env.BREVO_SMS_SENDER || 'NexusEnlvn';
@@ -54,16 +51,16 @@ export async function sendBookingSms(event, data) {
   if (!templateFn) return null;
 
   try {
-    const result = await getSmsApi().sendTransacSms({
+    const result = await getBrevo().transactionalSms.sendTransacSms({
       sender: SENDER(),
       recipient: data.patientPhone.replace('+', ''),
       content: templateFn(data),
       type: 'transactional',
     });
-    console.log(`[Brevo:SMS] Sent to ${data.patientPhone}:`, result.body?.reference);
+    console.log(`[Brevo:SMS] Sent to ${data.patientPhone}`);
     return result;
   } catch (err) {
-    console.error(`[Brevo:SMS] Failed for ${data.patientPhone}:`, err.body || err.message);
+    console.error(`[Brevo:SMS] Failed for ${data.patientPhone}:`, err.message);
     return null;
   }
 }

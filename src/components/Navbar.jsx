@@ -195,7 +195,7 @@ const Navbar = () => {
           </ul>
 
           <div className="flex items-center gap-4">
-            <Link to="/#book" className="bg-secondary text-white px-6 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 hover:bg-secondary/90 transition-all shadow-md active:scale-95">
+            <Link to="/book" className="bg-secondary text-white px-6 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 hover:bg-secondary/90 transition-all shadow-md active:scale-95">
               <Calendar size={18} /> Book Appointment
             </Link>
           </div>
@@ -228,7 +228,7 @@ const Navbar = () => {
             
             <div className="mt-8 space-y-4">
               <Link 
-                to="/#book" 
+                to="/book" 
                 onClick={() => setIsOpen(false)}
                 className="bg-secondary text-white w-full py-4 rounded-xl font-bold flex justify-center items-center gap-3 text-lg shadow-lg"
               >

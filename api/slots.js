@@ -72,76 +72,94 @@ export default async function handler(req, res) {
       });
     }
 
-    // --- INSTANT BOOKING (≤20 days): Use Firestore slots ---
+    // --- Get existing appointments for this day ---
+    const appointmentsSnapshot = await db.collection('appointments')
+      .where('doctorId', '==', doctorId)
+      .where('appointmentDate', '==', date)
+      .where('status', 'in', ['pending', 'confirmed', 'completed'])
+      .get();
+
+    const appointmentsByTime = {};
+    appointmentsSnapshot.docs.forEach(doc => {
+      appointmentsByTime[doc.data().timeSlot] = doc.id;
+    });
+
+    // --- Handling for Instant vs Request ---
+    let finalSlots = [];
+
     if (dateClass.isInstant) {
-      // Check if slots already exist in Firestore
+      // 1. Get current slot overrides
       const existingSlotsSnapshot = await db
         .collection('doctorSlots')
         .where('doctorId', '==', doctorId)
         .where('date', '==', date)
         .get();
 
-      let slots;
+      const existingSlotsByTime = {};
+      existingSlotsSnapshot.docs.forEach(doc => {
+        existingSlotsByTime[doc.data().time] = doc.data();
+      });
 
-      if (existingSlotsSnapshot.empty) {
-        // Lazy generation: create slot documents
-        const batch = db.batch();
-        slots = [];
+      const batch = db.batch();
+      let hasNewSlots = false;
+      const expireDate = new Date(date + 'T23:59:59+05:30');
 
-        // Set expiresAt to end of the slot's date (23:59:59 IST → converted to UTC)
-        // IST is UTC+5:30, so 23:59:59 IST = 18:29:59 UTC
-        const expireDate = new Date(date + 'T23:59:59+05:30');
+      finalSlots = slotTimes.map(time => {
+        const appointmentId = appointmentsByTime[time];
+        const existing = existingSlotsByTime[time];
 
-        for (const time of slotTimes) {
+        // Determine booked status
+        let isBooked = !!appointmentId || !!existing?.booked;
+        
+        // If it's already in Firestore, use it
+        if (existing) {
+          // If Firestore says unbooked but we found an appointment, we should ideally sync it, 
+          // but for the response, just return it as booked.
+          return {
+            time,
+            booked: isBooked,
+          };
+        } else {
+          // Lazy generate
           const slotId = buildSlotId(doctorId, date, time);
           const slotData = {
             doctorId,
             date,
             time,
-            booked: false,
-            appointmentId: null,
+            booked: !!appointmentId,
+            appointmentId: appointmentId || null,
             expiresAt: expireDate,
           };
-
           batch.set(db.collection('doctorSlots').doc(slotId), slotData);
-          slots.push({ id: slotId, ...slotData, expiresAt: expireDate.toISOString() });
+          hasNewSlots = true;
+          return { time, booked: slotData.booked };
         }
-
-        await batch.commit();
-      } else {
-        // Return existing slots
-        slots = existingSlotsSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-          expiresAt: doc.data().expiresAt?.toDate?.()?.toISOString() || null,
-        }));
-      }
-
-      return sendSuccess(res, {
-        slots: slots.map(s => ({
-          id: s.id,
-          time: s.time,
-          booked: s.booked,
-          appointmentId: s.appointmentId || null,
-        })),
-        onLeave: false,
-        bookingType: 'instant',
       });
+
+      if (hasNewSlots) await batch.commit();
+    } else {
+      // Request booking (Virtual slots)
+      finalSlots = slotTimes.map(time => ({
+        time,
+        booked: !!appointmentsByTime[time],
+      }));
     }
 
-    // --- REQUEST BOOKING (21-90 days): Virtual slots (not stored) ---
-    const virtualSlots = slotTimes.map(time => ({
-      id: buildSlotId(doctorId, date, time),
-      time,
-      booked: false,
-      appointmentId: null,
-    }));
+    // --- Filter out past slots if the date is today (IST) ---
+    const nowIST = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+    const todayIST = nowIST.toLocaleDateString('en-CA'); // YYYY-MM-DD
+
+    if (date === todayIST) {
+      const currentHHmm = `${String(nowIST.getHours()).padStart(2, '0')}:${String(nowIST.getMinutes()).padStart(2, '0')}`;
+      finalSlots = finalSlots.filter(s => s.time > currentHHmm);
+    }
 
     return sendSuccess(res, {
-      slots: virtualSlots,
+      slots: finalSlots,
       onLeave: false,
-      bookingType: 'request',
+      bookingType: dateClass.isInstant ? 'instant' : 'request',
     });
+
 
   } catch (error) {
     console.error('Error in /api/slots:', error);

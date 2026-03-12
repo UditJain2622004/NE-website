@@ -30,7 +30,7 @@ const patientNames = [
 
 const statuses = ['pending', 'confirmed', 'completed', 'cancelled'];
 const timeSlots = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'];
-const targetDoctorId = 'doctor_akshath';
+const targetDoctorId = 'doctor_abhijith';
 
 const TEST_BOOKINGS = [
   // Keeping the original ones
@@ -55,12 +55,13 @@ const TEST_BOOKINGS = [
 ];
 
 // Generate 30+ appointments for doctor_abhijith over a range of 10 days
-for (let i = -3; i <= 7; i++) {
+for (let i = -3; i <= -7; i++) {
   const date = addDays(new Date(), i);
-  const formattedDate = format(date, 'yyyy-MM-dd');
+  let formattedDate = format(date, 'yyyy-MM-dd');
+  // formattedDate = "2026-03-10"
   
   // 3-4 appointments per day
-  const dailyCount = 3 + Math.floor(Math.random() * 2);
+  const dailyCount = 5 + Math.floor(Math.random() * 2);
   
   for (let j = 0; j < dailyCount; j++) {
     const timeSlot = timeSlots[(j * 2) % timeSlots.length]; // Spread them out a bit

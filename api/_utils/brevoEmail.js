@@ -1,22 +1,17 @@
-// Brevo transactional email sender for booking notifications.
-
-import {
-  TransactionalEmailsApi,
-  SendSmtpEmail,
-  TransactionalEmailsApiApiKeys,
-} from '@getbrevo/brevo';
+import { BrevoClient } from '@getbrevo/brevo';
 import { formatDate, formatTime } from './brevoHelpers.js';
 
 // ─── API Client (lazy-initialized) ──────────────────────────────────────────
 
-let emailApi = null;
+let brevo = null;
 
-function getEmailApi() {
-  if (!emailApi) {
-    emailApi = new TransactionalEmailsApi();
-    emailApi.setApiKey(TransactionalEmailsApiApiKeys.apiKey, process.env.BREVO_API_KEY);
+function getBrevo() {
+  if (!brevo) {
+    brevo = new BrevoClient({
+      apiKey: process.env.BREVO_API_KEY,
+    });
   }
-  return emailApi;
+  return brevo;
 }
 
 const SENDER = () => ({
@@ -128,18 +123,18 @@ export async function sendBookingEmail(event, data) {
   const template = templateFn(data);
 
   try {
-    const email = new SendSmtpEmail();
-    email.sender = SENDER();
-    email.to = [{ email: data.patientEmail }];
-    email.subject = template.subject;
-    email.htmlContent = template.html;
-    email.textContent = template.text;
-
-    const result = await getEmailApi().sendTransacEmail(email);
-    console.log(`[Brevo:Email] Sent to ${data.patientEmail}:`, result.body?.messageId);
+    const result = await getBrevo().transactionalEmails.sendTransacEmail({
+      sender: SENDER(),
+      to: [{ email: data.patientEmail }],
+      subject: template.subject,
+      htmlContent: template.html,
+      textContent: template.text,
+    });
+    
+    console.log(`[Brevo:Email] Sent to ${data.patientEmail}`);
     return result;
   } catch (err) {
-    console.error(`[Brevo:Email] Failed for ${data.patientEmail}:`, err.body || err.message);
+    console.error(`[Brevo:Email] Failed for ${data.patientEmail}:`, err.message);
     return null;
   }
 }
