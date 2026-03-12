@@ -6,13 +6,14 @@ import CreateBookingModal from './CreateBookingModal';
 import ManageSlots from './ManageSlots';
 import PendingApprovals from './PendingApprovals';
 import DoctorProfile from './DoctorProfile';
+import HealthCheckupsList from './HealthCheckupsList';
 import { 
   LogOut, Plus, 
   User, Users, Activity,
   ClipboardList,
   Menu, X, Globe, Clock,
   LayoutDashboard, Bell,
-  UserCircle
+  UserCircle, HeartPulse
 } from 'lucide-react';
 
 export default function AdminDashboard() {
@@ -149,6 +150,7 @@ export default function AdminDashboard() {
           
           <NavItem id="bookings" label="Appointments" icon={ClipboardList} />
           <NavItem id="approvals" label="Pending Approvals" icon={Bell} badge={pendingCount} />
+          <NavItem id="healthCheckups" label="Health Checkups" icon={HeartPulse} />
           <NavItem id="slots" label="Manage Slots" icon={Clock} />
           <NavItem id="profile" label="Doctor Profile" icon={UserCircle} />
           {/* <NavItem id="doctors" label="Doctors List" icon={Users} adminOnly /> */}
@@ -181,7 +183,7 @@ export default function AdminDashboard() {
         <div className="hidden lg:flex items-center justify-between px-8 py-6 sticky top-0 z-10 bg-hospital-bg/80 backdrop-blur-md border-b border-divider/20">
           <div className="flex items-center gap-6">
             <h1 className="text-xl font-display font-bold capitalize">
-              {activeTab.replace('_', ' ')}
+              {activeTab === 'healthCheckups' ? 'Health Checkups' : activeTab.replace('_', ' ')}
             </h1>
             
             {user?.role === 'admin' && (
@@ -241,6 +243,7 @@ export default function AdminDashboard() {
 
           {activeTab === 'bookings' && <BookingsList doctorId={effectiveDoctorId} />}
           {activeTab === 'approvals' && <PendingApprovals doctorId={effectiveDoctorId} />}
+          {activeTab === 'healthCheckups' && <HealthCheckupsList />}
           {activeTab === 'slots' && <ManageSlots doctorId={effectiveDoctorId} />}
           {activeTab === 'profile' && <DoctorProfile doctorId={effectiveDoctorId} />}
           {activeTab === 'doctors' && (

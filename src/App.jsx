@@ -12,6 +12,7 @@ import DepartmentDetailsPage from './pages/DepartmentDetailsPage';
 import ServiceDetailsPage from './pages/ServiceDetailsPage';
 import HealthCarePackagesPage from './pages/HealthCarePackagesPage';
 import PackageDetailsPage from './pages/PackageDetailsPage';
+import BookHealthCheckupPage from './pages/BookHealthCheckupPage';
 import DiagnosticsPage from './pages/DiagnosticsPage';
 import AdminPage from './pages/AdminPage';
 import ScrollToTop from './components/ScrollToTop';
@@ -38,6 +39,7 @@ function AppContent() {
           <Route path="/services" element={<AllServicesPage />} />
           <Route path="/services/health-check-packages" element={<HealthCarePackagesPage />} />
           <Route path="/services/health-check-packages/:packageSlug" element={<PackageDetailsPage />} />
+          <Route path="/services/health-check-packages/:packageSlug/book" element={<BookHealthCheckupPage />} />
           <Route path="/services/diagnostics" element={<DiagnosticsPage />} />
           <Route path="/services/:slug" element={<ServiceDetailsPage />} />
           <Route path="/about" element={<AboutUsPage />} />
