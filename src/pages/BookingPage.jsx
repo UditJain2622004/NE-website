@@ -160,7 +160,7 @@ export default function BookingPage() {
     setBooking(true);
     setBookingError(null);
     try {
-      const res = await fetch(`${API_BASE}/api/createAppointment`, {
+      const res = await fetch(`${API_BASE}/api/appointments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

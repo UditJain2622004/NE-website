@@ -194,7 +194,7 @@ async function main() {
 
   await runTest('POST /api/createAppointment — instant booking (valid)', async () => {
     assert(validSlotTime, 'No available slot found for test');
-    const { status, data } = await callAPI('POST', '/api/createAppointment', {
+    const { status, data } = await callAPI('POST', '/api/appointments', {
       doctorId: TEST_DOCTOR,
       date: INSTANT_DATE,
       time: validSlotTime,
@@ -209,9 +209,9 @@ async function main() {
     log('📋', `Created appointment: ${data.appointmentId} (type: ${data.appointmentType})`);
   });
 
-  await runTest('POST /api/createAppointment — double booking should fail (409)', async () => {
+  await runTest('POST /api/appointments — double booking should fail (409)', async () => {
     assert(validSlotTime, 'No slot time from previous test');
-    const { status, data } = await callAPI('POST', '/api/createAppointment', {
+    const { status, data } = await callAPI('POST', '/api/appointments', {
       doctorId: TEST_DOCTOR,
       date: INSTANT_DATE,
       time: validSlotTime,
@@ -223,13 +223,13 @@ async function main() {
     log('📋', `Double booking blocked: ${data.error}`);
   });
 
-  await runTest('POST /api/createAppointment — request booking (21-90 days)', async () => {
+  await runTest('POST /api/appointments — request booking (21-90 days)', async () => {
     // Get a valid time from the request-range schedule
     const { data: slotsData } = await callAPI('GET', `/api/slots?doctorId=${TEST_DOCTOR}&date=${REQUEST_DATE}`);
     const requestSlotTime = slotsData.slots[0]?.time;
     assert(requestSlotTime, 'No request-range slot found');
 
-    const { status, data } = await callAPI('POST', '/api/createAppointment', {
+    const { status, data } = await callAPI('POST', '/api/appointments', {
       doctorId: TEST_DOCTOR,
       date: REQUEST_DATE,
       time: requestSlotTime,
@@ -241,16 +241,16 @@ async function main() {
     log('📋', `Request booking created: ${data.appointmentId}`);
   });
 
-  await runTest('POST /api/createAppointment — missing fields should fail', async () => {
-    const { status, data } = await callAPI('POST', '/api/createAppointment', {
+  await runTest('POST /api/appointments — missing fields should fail', async () => {
+    const { status, data } = await callAPI('POST', '/api/appointments', {
       doctorId: TEST_DOCTOR,
     });
     assert(status === 400, `Expected 400, got ${status}`);
     log('📋', `Error: ${data.error}`);
   });
 
-  await runTest('POST /api/createAppointment — invalid phone should fail', async () => {
-    const { status, data } = await callAPI('POST', '/api/createAppointment', {
+  await runTest('POST /api/appointments — invalid phone should fail', async () => {
+    const { status, data } = await callAPI('POST', '/api/appointments', {
       doctorId: TEST_DOCTOR,
       date: INSTANT_DATE,
       time: '09:00',
@@ -261,8 +261,8 @@ async function main() {
     log('📋', `Error: ${data.error}`);
   });
 
-  await runTest('POST /api/createAppointment — invalid time slot should fail', async () => {
-    const { status, data } = await callAPI('POST', '/api/createAppointment', {
+  await runTest('POST /api/appointments — invalid time slot should fail', async () => {
+    const { status, data } = await callAPI('POST', '/api/appointments', {
       doctorId: TEST_DOCTOR,
       date: INSTANT_DATE,
       time: '03:33', // Not a valid slot time
@@ -272,8 +272,8 @@ async function main() {
     log('📋', `Error: ${data.error}`);
   });
 
-  await runTest('POST /api/createAppointment — past date should fail', async () => {
-    const { status, data } = await callAPI('POST', '/api/createAppointment', {
+  await runTest('POST /api/appointments — past date should fail', async () => {
+    const { status, data } = await callAPI('POST', '/api/appointments', {
       doctorId: TEST_DOCTOR,
       date: PAST_DATE,
       time: '09:00',
@@ -283,13 +283,13 @@ async function main() {
     log('📋', `Error: ${data.error}`);
   });
 
-  await runTest('POST /api/createAppointment — phone normalization (various formats)', async () => {
+  await runTest('POST /api/appointments — phone normalization (various formats)', async () => {
     // Get another available slot
     const { data: slotsData } = await callAPI('GET', `/api/slots?doctorId=${TEST_DOCTOR}&date=${INSTANT_DATE}`);
     const anotherSlot = slotsData.slots.find(s => !s.booked);
     assert(anotherSlot, 'No available slot for phone normalization test');
 
-    const { status, data } = await callAPI('POST', '/api/createAppointment', {
+    const { status, data } = await callAPI('POST', '/api/appointments', {
       doctorId: TEST_DOCTOR,
       date: INSTANT_DATE,
       time: anotherSlot.time,
@@ -393,7 +393,7 @@ async function main() {
     assert(slot, 'No available slot for cancel test');
     cancelTestSlotTime = slot.time;
 
-    const { status, data } = await callAPI('POST', '/api/createAppointment', {
+    const { status, data } = await callAPI('POST', '/api/appointments', {
       doctorId: TEST_DOCTOR,
       date: INSTANT_DATE,
       time: cancelTestSlotTime,
