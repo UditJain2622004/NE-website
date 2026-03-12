@@ -10,6 +10,7 @@ import { normalizePhone } from './_utils/phoneUtils.js';
 import { generateSlotTimes, buildSlotId, classifyBookingDate } from './_utils/slotGenerator.js';
 import { checkDoctorLeave } from './_utils/leaveChecker.js';
 import { sendError, sendSuccess, validateRequired, isValidDate, isValidTime } from './_utils/apiHelpers.js';
+import { sendBookingNotification } from './_utils/brevoNotifications.js';
 import { FieldValue } from 'firebase-admin/firestore';
 
 export default async function handler(req, res) {
@@ -176,6 +177,18 @@ export default async function handler(req, res) {
       });
     }
 
+    // Fire-and-forget: send notifications without blocking the response
+    sendBookingNotification('booking_created', {
+      patientName,
+      patientPhone,
+      patientEmail: patientEmail || null,
+      doctorId,
+      doctorName: doctor.name,
+      appointmentDate: date,
+      timeSlot: time,
+      bookingType,
+    }).catch(err => console.error('[Brevo] Notification error:', err.message));
+//end here bravo
     return sendSuccess(res, {
       appointmentId,
       bookingType,

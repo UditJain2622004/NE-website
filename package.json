@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@getbrevo/brevo": "^4.0.1",
     "autoprefixer": "^10.4.24",
     "date-fns": "^4.1.0",
     "dotenv": "^17.3.1",

@@ -6,6 +6,7 @@
 
 import { db } from './_utils/firebaseAdmin.js';
 import { sendError, sendSuccess, validateRequired } from './_utils/apiHelpers.js';
+import { sendBookingNotification, actionToEvent } from './_utils/brevoNotifications.js';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 
 export default async function handler(req, res) {
@@ -141,7 +142,6 @@ async function handlePatch(req, res) {
       const slotDoc = await slotRef.get();
 
       if (slotDoc.exists && slotDoc.data().booked) {
-        // Use a batch to update both atomically
         const batch = db.batch();
         batch.update(appointmentRef, updateData);
         batch.update(slotRef, {
@@ -149,6 +149,12 @@ async function handlePatch(req, res) {
           appointmentId: null,
         });
         await batch.commit();
+
+        const event = actionToEvent(action);
+        if (event) {
+          sendBookingNotification(event, appointment)
+            .catch(err => console.error('[Brevo] Notification error:', err.message));
+        }
 
         return sendSuccess(res, {
           appointmentId,
@@ -161,6 +167,12 @@ async function handlePatch(req, res) {
 
     // --- Standard update (no slot to free) ---
     await appointmentRef.update(updateData);
+
+    const event = actionToEvent(action);
+    if (event) {
+      sendBookingNotification(event, appointment)
+        .catch(err => console.error('[Brevo] Notification error:', err.message));
+    }
 
     return sendSuccess(res, {
       appointmentId,
