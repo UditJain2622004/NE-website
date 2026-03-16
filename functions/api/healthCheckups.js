@@ -48,6 +48,11 @@ async function handleGet(req, res) {
       query = query.where('patientId', '==', patientPhone);
     }
 
+    if (status) {
+      const statuses = status.split(',').map(s => s.trim());
+      query = query.where('status', 'in', statuses);
+    }
+
     const snapshot = await query.get();
 
     let checkups = snapshot.docs.map(doc => {
@@ -61,11 +66,6 @@ async function handleGet(req, res) {
 
     if (date) {
       checkups = checkups.filter(c => c.preferredDate === date);
-    }
-
-    if (status) {
-      const statuses = status.split(',').map(s => s.trim());
-      checkups = checkups.filter(c => statuses.includes(c.status));
     }
 
     checkups.sort((a, b) => (a.preferredDate || '').localeCompare(b.preferredDate || ''));
@@ -153,6 +153,8 @@ async function handlePost(req, res) {
       });
     }
 
+    // Notifications are handled by trigger in index.js
+    /*
     trySendNotification('checkup_booked', {
       patientName,
       patientPhone,
@@ -161,6 +163,7 @@ async function handlePost(req, res) {
       packagePrice,
       preferredDate,
     });
+    */
 
     return sendSuccess(res, {
       checkupId: checkupRef.id,
@@ -228,7 +231,8 @@ async function handlePatch(req, res) {
       complete: 'checkup_completed',
     };
 
-    trySendNotification(eventMap[action], checkup);
+    // Notifications are handled by trigger in index.js
+    // trySendNotification(eventMap[action], checkup);
 
     return sendSuccess(res, {
       checkupId,

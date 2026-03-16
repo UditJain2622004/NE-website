@@ -4,6 +4,7 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import { auth } from '../firebase/config';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { API_BASE } from '../apiConfig';
 
 const AdminAuthContext = createContext(null);
 
@@ -18,7 +19,7 @@ export function AdminAuthProvider({ children }) {
       if (fbUser) {
         try {
           const token = await fbUser.getIdToken(true);
-          const res = await fetch('/api/admin/me', {
+          const res = await fetch(`${API_BASE}/admin/me`, {
             headers: { Authorization: `Bearer ${token}` }
           });
 
@@ -78,7 +79,11 @@ export function AdminAuthProvider({ children }) {
       ...(options.headers || {})
     };
 
-    const res = await fetch(url, { ...options, headers });
+    const normalizedUrl = url.startsWith('/api') 
+      ? url.replace('/api', API_BASE) 
+      : url;
+
+    const res = await fetch(normalizedUrl, { ...options, headers });
     const data = await res.json();
     if (!data.success && res.status === 401) {
       logout(); // Token expired or invalid

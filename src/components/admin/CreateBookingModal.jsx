@@ -10,6 +10,7 @@ import {
   UserPlus
 } from 'lucide-react';
 import { format, addDays } from 'date-fns';
+import { API_BASE } from '../../apiConfig';
 
 export default function CreateBookingModal({ onClose, onSuccess, initialDoctorId }) {
   const { apiCall } = useAdminAuth();
@@ -50,7 +51,7 @@ export default function CreateBookingModal({ onClose, onSuccess, initialDoctorId
     if (!selectedDoctor || !selectedDate) return;
     setSlotsLoading(true);
     try {
-      const res = await fetch(`/api/slots?doctorId=${selectedDoctor}&date=${selectedDate}`);
+      const res = await fetch(`${API_BASE}/slots?doctorId=${selectedDoctor}&date=${selectedDate}`);
       const data = await res.json();
       setSlots(data.slots || []);
       setSelectedSlot('');

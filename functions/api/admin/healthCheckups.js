@@ -26,6 +26,11 @@ async function handleGet(req, res) {
       query = query.where('patientId', '==', patientPhone);
     }
 
+    if (status) {
+      const statuses = status.split(',').map(s => s.trim());
+      query = query.where('status', 'in', statuses);
+    }
+
     const snapshot = await query.get();
 
     let checkups = snapshot.docs.map(doc => {
@@ -42,10 +47,6 @@ async function handleGet(req, res) {
     }
     if (dateTo) {
       checkups = checkups.filter(c => c.preferredDate <= dateTo);
-    }
-    if (status) {
-      const statuses = status.split(',').map(s => s.trim());
-      checkups = checkups.filter(c => statuses.includes(c.status));
     }
 
     checkups.sort((a, b) => (a.preferredDate || '').localeCompare(b.preferredDate || ''));

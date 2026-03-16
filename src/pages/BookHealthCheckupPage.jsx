@@ -8,6 +8,7 @@ import {
   X, ChevronLeft, ChevronRight,
 } from 'lucide-react';
 import { format, addDays, startOfMonth, endOfMonth, eachDayOfInterval, getDay, isBefore, isAfter, isSameDay, startOfDay } from 'date-fns';
+import { API_BASE } from '../apiConfig';
 
 const BookHealthCheckupPage = () => {
   const { packageSlug } = useParams();
@@ -68,7 +69,7 @@ const BookHealthCheckupPage = () => {
 
     setSubmitting(true);
     try {
-      const res = await fetch('/api/healthCheckups', {
+      const res = await fetch(`${API_BASE}/healthCheckups`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -153,7 +154,7 @@ const BookHealthCheckupPage = () => {
             </div>
 
             <div className="flex gap-3">
-              <button
+              {/* <button
                 onClick={() => {
                   setSuccess(false);
                   setPatientName('');
@@ -165,7 +166,13 @@ const BookHealthCheckupPage = () => {
                 className="flex-1 px-4 py-3 bg-white border border-gray-200 text-gray-600 rounded-xl font-bold text-sm hover:bg-gray-50 transition-colors"
               >
                 Book Another
-              </button>
+              </button> */}
+              <Link
+                to={`/services/health-check-packages/`}
+                className="flex-1 btn border border-gray-200 py-3 rounded-xl font-bold text-sm flex items-center justify-center"
+              >
+                Book Another
+              </Link>
               <Link
                 to={`/services/health-check-packages/${pkg.slug}`}
                 className="flex-1 btn-primary py-3 rounded-xl font-bold text-sm flex items-center justify-center"
@@ -392,7 +399,7 @@ const BookHealthCheckupPage = () => {
                 </button>
 
                 <p className="text-[11px] text-gray-400 text-center leading-relaxed">
-                  By booking, you agree to follow the preparation guidelines. Your booking will be instantly confirmed — no doctor approval needed.
+                  By booking, you agree to follow the preparation guidelines.
                 </p>
               </form>
             </div>

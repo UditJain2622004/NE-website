@@ -69,6 +69,11 @@ async function handleGet(req, res) {
       query = query.where('doctorId', '==', filterDoctorId);
     }
 
+    if (status) {
+      const statuses = status.split(',').map(s => s.trim());
+      query = query.where('status', 'in', statuses);
+    }
+
     const snapshot = await query.get();
 
     let bookings = snapshot.docs.map(doc => {
@@ -89,8 +94,10 @@ async function handleGet(req, res) {
       bookings = bookings.filter(b => b.appointmentDate <= dateTo);
     }
 
-    // Apply status filter
-    if (status) {
+    // Apply status filter (now handled in query above, but keeping for safety if multi-status isn't fully supported)
+    if (status && !status.includes(',')) {
+       // if it was a single status it's already filtered, if multiple we keep it for fallback
+    } else if (status) {
       const statuses = status.split(',').map(s => s.trim());
       bookings = bookings.filter(b => statuses.includes(b.status));
     }
@@ -213,6 +220,7 @@ async function handlePost(req, res) {
       lastAppointmentAt: FieldValue.serverTimestamp(),
     }, { merge: true });
 
+    /*
     const notifyEvent = appointmentStatus === 'confirmed' ? 'booking_confirmed' : 'booking_created';
     sendBookingNotification(notifyEvent, {
       patientName,
@@ -224,6 +232,7 @@ async function handlePost(req, res) {
       timeSlot: time,
       bookingType,
     }).catch(err => console.error('[Brevo] Notification error:', err.message));
+    */
 
     return sendSuccess(res, {
       appointmentId: appointmentRef.id,
@@ -306,11 +315,13 @@ async function handlePatch(req, res) {
           batch.update(slotRef, { booked: false, appointmentId: null });
           await batch.commit();
 
+          /*
           const event = actionToEvent(action);
           if (event) {
             sendBookingNotification(event, appointment)
               .catch(err => console.error('[Brevo] Notification error:', err.message));
           }
+          */
 
           return sendSuccess(res, {
             appointmentId,
@@ -338,13 +349,19 @@ async function handlePatch(req, res) {
 
     await appointmentRef.update(updateData);
 
+    /*
     if (action) {
+      // This block is already commented out.
+      // The instruction asks to comment out manual notification calls.
+      // If the intent was to add another comment inside, it would be syntactically incorrect.
+      // Assuming the instruction means to ensure this block remains commented out.
       const event = actionToEvent(action);
       if (event) {
         sendBookingNotification(event, appointment)
           .catch(err => console.error('[Brevo] Notification error:', err.message));
       }
     }
+    */
 
     return sendSuccess(res, {
       appointmentId,
