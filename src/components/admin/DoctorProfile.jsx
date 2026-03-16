@@ -29,7 +29,7 @@ export default function DoctorProfile({ doctorId }) {
     setLoading(true);
     try {
       const targetId = doctorId || user?.doctorId;
-      const res = await apiCall(`/api/admin/account?doctorId=${targetId}`);
+      const res = await apiCall(`/api/admin/profile?doctorId=${targetId}`);
       if (res.success) {
         setProfile(res.profile);
       }
@@ -50,7 +50,7 @@ export default function DoctorProfile({ doctorId }) {
     setMessage(null);
     try {
       const targetId = doctorId || user?.doctorId;
-      const res = await apiCall(`/api/admin/account?doctorId=${targetId}`, {
+      const res = await apiCall(`/api/admin/profile?doctorId=${targetId}`, {
         method: 'PATCH',
         body: JSON.stringify(profile)
       });

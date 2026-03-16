@@ -19,7 +19,7 @@ export function AdminAuthProvider({ children }) {
       if (fbUser) {
         try {
           const token = await fbUser.getIdToken(true);
-          const res = await fetch(`${API_BASE}/admin/account`, {
+          const res = await fetch(`${API_BASE}/admin/me`, {
             headers: { Authorization: `Bearer ${token}` }
           });
 
