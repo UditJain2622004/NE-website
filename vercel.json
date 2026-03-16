@@ -1,8 +1,12 @@
 {
-    "rewrites": [
-        {
-            "source": "/((?!api/|@vite|@react-refresh|node_modules|.*\\.).*)",
-            "destination": "/index.html"
-        }
-    ]
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://asia-south1-nexusenliven-6681b.cloudfunctions.net/api/:path*"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
 }

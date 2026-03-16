@@ -44,6 +44,11 @@ async function handleGet(req, res) {
       query = query.where('patientId', '==', patientPhone);
     }
 
+    if (status) {
+      const statuses = status.split(',').map(s => s.trim());
+      query = query.where('status', 'in', statuses);
+    }
+
     const snapshot = await query.get();
 
     let appointments = snapshot.docs.map(doc => {
@@ -62,11 +67,6 @@ async function handleGet(req, res) {
 
     if (date) {
       appointments = appointments.filter(a => a.appointmentDate === date);
-    }
-
-    if (status) {
-      const statuses = status.split(',').map(s => s.trim());
-      appointments = appointments.filter(a => statuses.includes(a.status));
     }
 
     appointments.sort((a, b) => (a.appointmentDate || '').localeCompare(b.appointmentDate || ''));
@@ -217,6 +217,8 @@ async function handlePost(req, res) {
       });
     }
 
+    // Notifications are now handled by Firestore triggers in index.js
+    /*
     sendBookingNotification('booking_created', {
       patientName,
       patientPhone,
@@ -227,6 +229,7 @@ async function handlePost(req, res) {
       timeSlot: time,
       bookingType,
     }).catch(err => console.error('[Brevo] Notification error:', err.message));
+    */
 
     return sendSuccess(res, {
       appointmentId,
@@ -239,7 +242,7 @@ async function handlePost(req, res) {
 
   } catch (error) {
     if (error.message === 'SLOT_NOT_FOUND') return sendError(res, 400, 'Slot no longer available.');
-    if (error.message === 'SLOT_ALREADY_BOOKED') return sendError(res, 409, 'Slot already booked.');
+    if (error.message === 'SLOT_ALREADY_BOOKED') return sendError(res, 409, 'Slot already booked. Please select another slot.');
     console.error('Error in POST /api/appointments:', error);
     return sendError(res, 500, `Internal server error: ${error.message}`);
   }
@@ -287,16 +290,22 @@ async function handlePatch(req, res) {
         batch.update(slotRef, { booked: false, appointmentId: null });
         await batch.commit();
 
+        // Notifications are now handled by Firestore triggers in index.js
+        /*
         const event = actionToEvent(action);
         if (event) sendBookingNotification(event, appointment).catch(() => {});
+        */
 
         return sendSuccess(res, { appointmentId, newStatus: statusMap[action], slotFreed: true });
       }
     }
 
     await appointmentRef.update(updateData);
+    // Notifications are handled by trigger in index.js
+    /*
     const event = actionToEvent(action);
     if (event) sendBookingNotification(event, appointment).catch(() => {});
+    */
 
     return sendSuccess(res, { appointmentId, newStatus: statusMap[action] });
 

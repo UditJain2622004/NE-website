@@ -10,7 +10,7 @@ import {
   getDay, isSameDay, isBefore, startOfToday, addMonths, subMonths, isToday
 } from 'date-fns';
 
-const API_BASE = '';
+import { API_BASE } from '../apiConfig';
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 function formatTime12(t) {
@@ -65,7 +65,7 @@ export default function BookingPage() {
     (async () => {
       setLoadingDoctors(true);
       try {
-        const res = await fetch(`${API_BASE}/api/doctors`);
+        const res = await fetch(`${API_BASE}/doctors`);
         const data = await res.json();
         if (data.success) {
           setDoctors(data.doctors || []);
@@ -134,7 +134,7 @@ export default function BookingPage() {
       setOnLeave(false);
       setSelectedSlot(null);
       try {
-        const res = await fetch(`${API_BASE}/api/slots?doctorId=${selectedDoctorId}&date=${selectedDate}`);
+        const res = await fetch(`${API_BASE}/slots?doctorId=${selectedDoctorId}&date=${selectedDate}`);
         const data = await res.json();
         if (data.success) {
           setSlots(data.slots || []);
@@ -160,7 +160,7 @@ export default function BookingPage() {
     setBooking(true);
     setBookingError(null);
     try {
-      const res = await fetch(`${API_BASE}/api/appointments`, {
+      const res = await fetch(`${API_BASE}/appointments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
