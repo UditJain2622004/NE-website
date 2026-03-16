@@ -1,9 +1,12 @@
 {
-  "routes": [
-    { "handle": "filesystem" },
+  "rewrites": [
     {
-      "src": "/((?!api/).*)",
-      "dest": "/index.html"
+      "source": "/api/:path*",
+      "destination": "https://asia-south1-nexusenliven-6681b.cloudfunctions.net/api/:path*"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
     }
   ]
 }
