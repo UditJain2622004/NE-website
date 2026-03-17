@@ -37,6 +37,7 @@ const BookHealthCheckupPage = () => {
   }
 
   const today = startOfDay(new Date());
+  const tomorrow = addDays(today, 1);
   const maxDate = addDays(today, 90);
 
   const monthStart = startOfMonth(currentMonth);
@@ -44,11 +45,11 @@ const BookHealthCheckupPage = () => {
   const daysInMonth = eachDayOfInterval({ start: monthStart, end: monthEnd });
   const startPad = getDay(monthStart);
 
-  const canGoPrev = isAfter(monthStart, today);
+  const canGoPrev = isAfter(monthStart, tomorrow);
   const canGoNext = isBefore(endOfMonth(currentMonth), addDays(today, 120));
 
   function isDateSelectable(date) {
-    return !isBefore(date, today) && !isAfter(date, maxDate);
+    return !isBefore(date, tomorrow) && !isAfter(date, maxDate);
   }
 
   const scrollToError = () => {

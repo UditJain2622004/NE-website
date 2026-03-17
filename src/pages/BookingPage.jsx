@@ -47,6 +47,7 @@ export default function BookingPage() {
   const [slotsError, setSlotsError] = useState(null);
   const [onLeave, setOnLeave] = useState(false);
   const [bookingType, setBookingType] = useState(null);
+  const [hasFetchedSlots, setHasFetchedSlots] = useState(false);
 
   // Booking form
   const [selectedSlot, setSelectedSlot] = useState(null);
@@ -130,6 +131,7 @@ export default function BookingPage() {
 
     (async () => {
       setLoadingSlots(true);
+      setHasFetchedSlots(false);
       setSlotsError(null);
       setOnLeave(false);
       setSelectedSlot(null);
@@ -149,6 +151,7 @@ export default function BookingPage() {
         setSlots([]);
       } finally {
         setLoadingSlots(false);
+        setHasFetchedSlots(true);
       }
     })();
   }, [selectedDoctorId, selectedDate]);
@@ -532,14 +535,14 @@ export default function BookingPage() {
           </section>
 
           {/* ─── Step 3: Available Slots ─────────────────────────────────────── */}
-          {selectedDate && (
+          {selectedDate && selectedDoctorId && (
             <section className="bg-white rounded-[2rem] border border-divider shadow-sm p-5 lg:p-6 space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 h-full">
               <div className="flex items-center gap-3 text-primary">
                 <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center text-sm font-black">3</div>
                 <h2 className="font-bold text-lg">Pick a Time Slot</h2>
               </div>
 
-              {loadingSlots ? (
+              {(loadingSlots || !hasFetchedSlots) ? (
                 <div className="py-16 flex flex-col items-center gap-3">
                   <Loader2 className="w-8 h-8 text-primary animate-spin" />
                   <p className="text-xs font-bold text-text-main/30 uppercase tracking-widest">Loading available slots...</p>
@@ -555,11 +558,11 @@ export default function BookingPage() {
                   <p className="text-sm font-bold text-amber-700">Doctor is on leave for this date</p>
                   <p className="text-xs text-text-main/40">Please choose a different date</p>
                 </div>
-              ) : slots.length === 0 ? (
+              ) : (slots.length === 0 && hasFetchedSlots) ? (
                 <div className="py-12 text-center space-y-3">
                   <Info className="w-10 h-10 text-text-main/15 mx-auto" />
                   <p className="text-sm font-bold text-text-main/50">No slots available</p>
-                  <p className="text-xs text-text-main/30">The doctor does not have working hours on this day</p>
+                  <p className="text-xs text-text-main/30">The doctor does not have working hours on this day or all slots are booked.</p>
                 </div>
               ) : (
                 <>

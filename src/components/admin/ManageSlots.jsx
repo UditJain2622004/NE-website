@@ -9,7 +9,7 @@ import {
   ChevronLeft, ChevronRight,
   RefreshCw, Info
 } from 'lucide-react';
-import { format, addDays, subDays, parseISO } from 'date-fns';
+import { format, addDays, subDays, parseISO, isBefore, startOfToday } from 'date-fns';
 
 export default function ManageSlots({ doctorId }) {
   const { user, apiCall } = useAdminAuth();
@@ -18,6 +18,10 @@ export default function ManageSlots({ doctorId }) {
   const [loading, setLoading] = useState(true);
   const [toggling, setToggling] = useState(null); // time of the slot being toggled
   const [error, setError] = useState(null);
+  
+  const todayStr = format(new Date(), 'yyyy-MM-dd');
+  const isPast = isBefore(parseISO(selectedDate), startOfToday());
+  const isTodayOrPast = isPast || selectedDate === todayStr;
 
   const fetchSlots = async () => {
     const targetId = doctorId || user?.doctorId;
@@ -130,8 +134,9 @@ export default function ManageSlots({ doctorId }) {
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-2 bg-hospital-bg p-1 rounded-xl border border-divider">
             <button 
-              onClick={() => changeDate(-1)}
-              className="p-2 hover:bg-white hover:shadow-sm rounded-lg transition-all text-text-main/60"
+              onClick={() => !isTodayOrPast && changeDate(-1)}
+              disabled={isTodayOrPast}
+              className={`p-2 rounded-lg transition-all text-text-main/60 ${isTodayOrPast ? 'opacity-20 cursor-not-allowed' : 'hover:bg-white hover:shadow-sm'}`}
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -140,6 +145,7 @@ export default function ManageSlots({ doctorId }) {
               <Calendar className="w-4 h-4 text-primary" />
               <input 
                 type="date"
+                min={format(new Date(), 'yyyy-MM-dd')}
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
                 className="bg-transparent font-bold text-sm outline-none"
@@ -157,7 +163,8 @@ export default function ManageSlots({ doctorId }) {
           {slots.length > 0 && slots.some(s => !s.isBlocked && !s.booked) && (
             <button
               onClick={handleBlockFullDay}
-              className="px-4 py-3 bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2"
+              disabled={isPast}
+              className="px-4 py-3 bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Lock className="w-4 h-4" />
               Block Entire Day
@@ -201,6 +208,16 @@ export default function ManageSlots({ doctorId }) {
             </div>
             <p className="text-xs font-bold text-text-main/40 tracking-widest mb-5">Click on a slot to block/unblock it.</p>
 
+            {isPast && (
+              <div className="mb-6 bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3 text-amber-800 animate-in fade-in slide-in-from-top-2">
+                <Info className="w-5 h-5 shrink-0 mt-0.5" />
+                <div className="text-sm">
+                  <p className="font-bold">Past Date Locked</p>
+                  <p className="opacity-80">Slots for past dates cannot be modified. Displaying historical status only.</p>
+                </div>
+              </div>
+            )}
+
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {slots.map((slot) => {
                 const isBookedByPatient = slot.booked && !slot.isBlocked;
@@ -209,10 +226,11 @@ export default function ManageSlots({ doctorId }) {
                 return (
                   <button
                     key={slot.time}
-                    disabled={isBookedByPatient || isProcessing}
+                    disabled={isBookedByPatient || isProcessing || isPast}
                     onClick={() => handleToggleBlock(slot)}
                     className={`
                       relative group p-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-2
+                      ${isPast ? 'opacity-70 cursor-not-allowed' : ''}
                       ${slot.isBlocked 
                         ? 'bg-red-50 border-red-200 text-red-700' 
                         : isBookedByPatient 

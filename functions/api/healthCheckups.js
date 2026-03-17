@@ -99,8 +99,8 @@ async function handlePost(req, res) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const selectedDate = new Date(preferredDate + 'T00:00:00');
-  if (selectedDate < today) {
-    return sendError(res, 400, 'Cannot book health checkups in the past');
+  if (selectedDate <= today) {
+    return sendError(res, 400, 'Health checkups can only be booked from the next day onwards');
   }
 
   const maxDate = new Date(today);

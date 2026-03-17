@@ -3,8 +3,10 @@ import { useAdminAuth } from '../../hooks/useAdminAuth';
 import {
   Loader2, ChevronLeft, ChevronRight, Calendar,
   CheckCircle2, Clock, Phone, Mail, User,
-  Check, X, Package, IndianRupee,
+  Check, X, Package, IndianRupee, RefreshCw, Search
 } from 'lucide-react';
+import { db } from '../../firebase/config';
+import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { format, addDays } from 'date-fns';
 
 export default function HealthCheckupsList() {
@@ -12,6 +14,7 @@ export default function HealthCheckupsList() {
   const [checkups, setCheckups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [search, setSearch] = useState('');
 
   const tabs = [
     { id: 'confirmed', label: 'Upcoming' },
@@ -46,8 +49,43 @@ export default function HealthCheckupsList() {
   };
 
   useEffect(() => {
-    fetchCheckups();
+    setLoading(true);
+
+    let q = query(
+      collection(db, 'healthCheckups'),
+      where('status', '==', statusFilter)
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      let docs = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      // Filter by date in memory
+      if (dateFilter) {
+        docs = docs.filter(doc => doc.preferredDate === dateFilter);
+      }
+
+      setCheckups(docs);
+      setLoading(false);
+      setIsRefreshing(false);
+    }, (err) => {
+      console.error('Snapshot error:', err);
+      setLoading(false);
+      setIsRefreshing(false);
+    });
+
+    return () => unsubscribe();
   }, [statusFilter, dateFilter]);
+
+  const filteredCheckups = checkups
+    .filter(b => {
+      if (!search.trim()) return true;
+      const s = search.toLowerCase();
+      return b.patientName?.toLowerCase().includes(s) || b.patientPhone?.includes(s);
+    })
+    .sort((a, b) => (a.preferredDate || '').localeCompare(b.preferredDate || ''));
 
   const handleAction = async (id, action) => {
     if (!confirm(`Are you sure you want to ${action} this health checkup?`)) return;
@@ -96,6 +134,23 @@ export default function HealthCheckupsList() {
 
   return (
     <div className="space-y-6">
+      {/* Search Bar */}
+      <div className="bg-hospital-bg p-2 rounded-2xl flex items-center gap-3 px-4 border border-divider/50">
+        <Search className="w-5 h-5 text-text-main/20" />
+        <input 
+          type="text"
+          placeholder="Search bookings by patient name or phone..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="bg-transparent border-none outline-none py-2 flex-1 text-sm font-bold placeholder:text-text-main/20"
+        />
+        {search && (
+          <button onClick={() => setSearch('')} className="p-1 hover:bg-white rounded-lg transition-colors">
+            <X className="w-4 h-4 text-text-main/40" />
+          </button>
+        )}
+      </div>
+
       {/* Filters Bar */}
       <div className="bg-white p-4 lg:p-6 rounded-2xl shadow-sm border border-divider flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div className="flex items-center gap-2">
@@ -136,6 +191,14 @@ export default function HealthCheckupsList() {
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
+          <button 
+             onClick={fetchCheckups}
+             className="p-2 border border-divider rounded-xl hover:bg-hospital-bg transition-colors"
+             title="Refresh List"
+          >
+            <RefreshCw className={`w-4 h-4 text-primary ${isRefreshing ? 'animate-spin' : ''}`} />
+          </button>
+
           <div className="flex flex-wrap gap-2">
             {tabs.map((tab) => (
               <button
@@ -156,7 +219,7 @@ export default function HealthCheckupsList() {
 
       {/* Checkups List */}
       <div className="space-y-3">
-        {checkups.length === 0 ? (
+        {filteredCheckups.length === 0 ? (
           <div className="bg-white rounded-3xl p-12 text-center border-2 border-dashed border-divider">
             <div className="w-16 h-16 bg-hospital-bg rounded-2xl flex items-center justify-center mx-auto mb-4 border border-divider">
               <Package className="w-8 h-8 text-text-main/20" />
@@ -169,7 +232,7 @@ export default function HealthCheckupsList() {
             </p>
           </div>
         ) : (
-          checkups.map((checkup) => (
+          filteredCheckups.map((checkup) => (
             <div
               key={checkup.id}
               className="bg-white p-4 lg:p-5 rounded-2xl border border-divider hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all group lg:flex lg:items-center gap-6"

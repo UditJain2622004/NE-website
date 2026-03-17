@@ -8,14 +8,17 @@ import {
   ChevronRight, Calendar, Search,
   CheckCircle2, XCircle, Clock,
   MoreVertical, Phone, Mail,
-  Check, X, FileEdit, User
+  Check, X, FileEdit, User, RefreshCw
 } from 'lucide-react';
 import { format, addDays, subDays } from 'date-fns';
+import { db } from '../../firebase/config';
+import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestore';
 
 export default function BookingsList({ doctorId }) {
   const { user, apiCall } = useAdminAuth();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
   
   // Tabs configuration based on role
   const tabs = [
@@ -55,13 +58,50 @@ export default function BookingsList({ doctorId }) {
   };
 
   useEffect(() => {
-    fetchBookings();
-    
-    // Listen for refresh events from other components
+    const targetId = doctorId || user?.doctorId;
+    setLoading(true);
+
+    // Build the query - we filter by doctor and status
+    // Note: We avoid filtering by date in Firestore to prevent index errors 
+    // and match the successful backend API strategy (filter in memory)
+    let q = query(
+      collection(db, 'appointments'),
+      where('status', '==', statusFilter)
+    );
+
+    if (targetId) {
+      q = query(q, where('doctorId', '==', targetId));
+    }
+
+    // Subscribe to changes
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      let docs = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setBookings(docs);
+      setLoading(false);
+      setIsRefreshing(false);
+    }, (err) => {
+      console.error('Snapshot error:', err);
+      setLoading(false);
+      setIsRefreshing(false);
+    });
+
     const handleRefresh = () => fetchBookings();
     window.addEventListener('refreshBookings', handleRefresh);
-    return () => window.removeEventListener('refreshBookings', handleRefresh);
-  }, [statusFilter, dateFilter, doctorId]);
+    
+    return () => {
+      unsubscribe();
+      window.removeEventListener('refreshBookings', handleRefresh);
+    };
+  }, [statusFilter, dateFilter, doctorId, user?.doctorId]);
+
+  const filteredBookings = bookings.filter(b => {
+    if (!search.trim()) return true;
+    const s = search.toLowerCase();
+    return b.patientName?.toLowerCase().includes(s) || b.patientPhone?.includes(s);
+  });
 
 
 
@@ -111,6 +151,23 @@ export default function BookingsList({ doctorId }) {
 
   return (
     <div className="space-y-6">
+      {/* Search Bar */}
+      <div className="bg-hospital-bg p-2 rounded-2xl flex items-center gap-3 px-4 border border-divider/50">
+        <Search className="w-5 h-5 text-text-main/20" />
+        <input 
+          type="text"
+          placeholder="Search appointments by patient name or phone..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="bg-transparent border-none outline-none py-2 flex-1 text-sm font-bold placeholder:text-text-main/20"
+        />
+        {search && (
+          <button onClick={() => setSearch('')} className="p-1 hover:bg-white rounded-lg transition-colors">
+            <X className="w-4 h-4 text-text-main/40" />
+          </button>
+        )}
+      </div>
+
       {/* Filters Bar */}
       <div className="bg-white p-4 lg:p-6 rounded-2xl shadow-sm border border-divider flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div className="flex items-center gap-2">
@@ -148,6 +205,13 @@ export default function BookingsList({ doctorId }) {
 
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex flex-wrap gap-2">
+            <button 
+               onClick={fetchBookings}
+               className="p-2 border border-divider rounded-xl hover:bg-hospital-bg transition-colors"
+               title="Refresh List"
+            >
+              <RefreshCw className={`w-4 h-4 text-primary ${isRefreshing ? 'animate-spin' : ''}`} />
+            </button>
 
             {tabs.map((tab) => (
               <button
@@ -169,18 +233,18 @@ export default function BookingsList({ doctorId }) {
 
       {/* Bookings List */}
       <div className="space-y-3">
-        {bookings.length === 0 ? (
+        {filteredBookings.length === 0 ? (
           <div className="bg-white rounded-3xl p-12 text-center border-2 border-dashed border-divider">
             <div className="w-16 h-16 bg-hospital-bg rounded-2xl flex items-center justify-center mx-auto mb-4 border border-divider">
               <Clock className="w-8 h-8 text-text-main/20" />
             </div>
             <h3 className="text-lg font-bold text-text-main/40">No Bookings Found</h3>
             <p className="text-sm text-text-main/30 mt-1 max-w-xs mx-auto">
-              There are no appointments matching your criteria for this date.
+              There are no appointments matching your criteria.
             </p>
           </div>
         ) : (
-          bookings.map((booking) => (
+          filteredBookings.map((booking) => (
             <div 
               key={booking.id}
               className="bg-white p-4 lg:p-5 rounded-2xl border border-divider hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all group lg:flex lg:items-center gap-6"
@@ -190,7 +254,7 @@ export default function BookingsList({ doctorId }) {
                   <Clock className="w-6 h-6" />
                 </div>
                 <div>
-                  <div className="text-lg font-bold font-display text-primary leading-tight">{booking.timeSlot}</div>
+                  <div className="text-lg font-bold font-display text-primary leading-tight">{booking.timeSlot || booking.time}</div>
                   <div className="text-[10px] font-bold uppercase tracking-widest text-text-main/30 mt-0.5">Time Slot</div>
                 </div>
               </div>

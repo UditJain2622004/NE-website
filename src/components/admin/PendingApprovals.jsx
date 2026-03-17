@@ -4,18 +4,22 @@ import { useAdminAuth } from '../../hooks/useAdminAuth';
 import { 
   Loader2, Check, X, Clock, 
   User, Phone, Calendar,
-  AlertCircle, ChevronRight
+  AlertCircle, ChevronRight, RefreshCw, Search
 } from 'lucide-react';
 import { format } from 'date-fns';
+import { db } from '../../firebase/config';
+import { collection, query, where, onSnapshot } from 'firebase/firestore';
 
 export default function PendingApprovals({ doctorId }) {
   const { user, apiCall } = useAdminAuth();
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [processingId, setProcessingId] = useState(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [search, setSearch] = useState('');
 
   const fetchPending = async () => {
-    setLoading(true);
+    setIsRefreshing(true);
     try {
       const targetId = doctorId || user?.doctorId;
       // Fetch all pending appointments (no date filter)
@@ -26,15 +30,51 @@ export default function PendingApprovals({ doctorId }) {
       console.error('Fetch pending failed:', err);
     } finally {
       setLoading(false);
+      setIsRefreshing(false);
     }
   };
 
   useEffect(() => {
-    fetchPending();
+    const targetId = doctorId || user?.doctorId;
+    setLoading(true);
+
+    let q = query(
+      collection(db, 'appointments'),
+      where('status', '==', 'pending')
+    );
+
+    if (targetId) {
+      q = query(q, where('doctorId', '==', targetId));
+    }
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const docs = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      setAppointments(docs);
+      setLoading(false);
+    }, (err) => {
+      console.error('Pending snapshot error:', err);
+      setLoading(false);
+    });
+
     const handleRefresh = () => fetchPending();
     window.addEventListener('refreshBookings', handleRefresh);
-    return () => window.removeEventListener('refreshBookings', handleRefresh);
-  }, [doctorId]);
+    return () => {
+      unsubscribe();
+      window.removeEventListener('refreshBookings', handleRefresh);
+    };
+  }, [doctorId, user?.doctorId]);
+
+  const filteredAppointments = appointments
+    .filter(b => {
+      if (!search.trim()) return true;
+      const s = search.toLowerCase();
+      return b.patientName?.toLowerCase().includes(s) || b.patientPhone?.includes(s);
+    })
+    .sort((a, b) => (b.appointmentDate || '').localeCompare(a.appointmentDate || ''));
 
   const handleAction = async (id, action) => {
     if (!confirm(`Are you sure you want to ${action} this appointment?`)) return;
@@ -66,12 +106,39 @@ export default function PendingApprovals({ doctorId }) {
 
   return (
     <div className="space-y-6">
+      {/* Search Bar */}
+      <div className="bg-white p-2 rounded-2xl flex items-center gap-3 px-4 border border-divider shadow-sm">
+        <Search className="w-5 h-5 text-text-main/20" />
+        <input 
+          type="text"
+          placeholder="Search pending requests..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="bg-transparent border-none outline-none py-2 flex-1 text-sm font-bold placeholder:text-text-main/20"
+        />
+        {search && (
+          <button onClick={() => setSearch('')} className="p-1 hover:bg-hospital-bg rounded-lg transition-colors">
+            <X className="w-4 h-4 text-text-main/40" />
+          </button>
+        )}
+      </div>
+
       <div className="bg-yellow-50 border border-yellow-100 p-6 rounded-2xl flex items-start gap-4">
         <div className="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center shrink-0">
           <AlertCircle className="w-6 h-6 text-yellow-600" />
         </div>
-        <div>
-          <h3 className="text-lg font-bold text-yellow-900">Pending Requests</h3>
+        <div className="flex-1">
+          <div className="flex items-center justify-between mb-1">
+            <h3 className="text-lg font-bold text-yellow-900">Pending Requests</h3>
+            <button 
+              onClick={fetchPending}
+              disabled={isRefreshing}
+              className="p-2 hover:bg-yellow-100 rounded-xl transition-all"
+              title="Refresh List"
+            >
+              <RefreshCw className={`w-4 h-4 text-yellow-600 ${isRefreshing ? 'animate-spin' : ''}`} />
+            </button>
+          </div>
           <p className="text-sm text-yellow-800/70 leading-relaxed">
             These appointments are awaiting your confirmation. Once confirmed, they will appear in your main Schedule.
           </p>
@@ -79,16 +146,16 @@ export default function PendingApprovals({ doctorId }) {
       </div>
 
       <div className="grid grid-cols-1 gap-4">
-        {appointments.length === 0 ? (
+        {filteredAppointments.length === 0 ? (
           <div className="bg-white rounded-3xl p-16 text-center border-2 border-dashed border-divider">
             <div className="w-16 h-16 bg-hospital-bg rounded-2xl flex items-center justify-center mx-auto mb-4 border border-divider">
               <Check className="w-8 h-8 text-green-500/30" />
             </div>
             <h3 className="text-lg font-bold text-text-main/40">All Caught Up!</h3>
-            <p className="text-sm text-text-main/30 mt-1">There are no pending appointments to review.</p>
+            <p className="text-sm text-text-main/30 mt-1">There are no pending appointments matching your search.</p>
           </div>
         ) : (
-          appointments.map((app) => (
+          filteredAppointments.map((app) => (
             <div 
               key={app.id}
               className="bg-white p-6 rounded-2xl border border-divider hover:border-primary/20 hover:shadow-xl transition-all flex flex-col md:flex-row md:items-center gap-6"

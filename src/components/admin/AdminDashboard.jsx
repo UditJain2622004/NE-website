@@ -7,14 +7,17 @@ import ManageSlots from './ManageSlots';
 import PendingApprovals from './PendingApprovals';
 import DoctorProfile from './DoctorProfile';
 import HealthCheckupsList from './HealthCheckupsList';
+import BookingHistory from './BookingHistory';
 import { 
   LogOut, Plus, 
   User, Users, Activity,
   ClipboardList,
   Menu, X, Globe, Clock,
   LayoutDashboard, Bell,
-  UserCircle, HeartPulse
+  UserCircle, HeartPulse, History
 } from 'lucide-react';
+import { db } from '../../firebase/config';
+import { collection, query, where, onSnapshot } from 'firebase/firestore';
 
 export default function AdminDashboard() {
   const { user, logout, apiCall } = useAdminAuth();
@@ -38,10 +41,29 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    fetchPendingCount();
+    const targetId = user?.role === 'admin' ? selectedDoctorId : user?.doctorId;
+    
+    let q = query(
+      collection(db, 'appointments'),
+      where('status', '==', 'pending')
+    );
+
+    if (targetId) {
+      q = query(q, where('doctorId', '==', targetId));
+    }
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      setPendingCount(snapshot.size);
+    }, (err) => {
+      console.error('Pending count listener error:', err);
+    });
+
     window.addEventListener('refreshBookings', fetchPendingCount);
-    return () => window.removeEventListener('refreshBookings', fetchPendingCount);
-  }, [user, selectedDoctorId]);
+    return () => {
+      unsubscribe();
+      window.removeEventListener('refreshBookings', fetchPendingCount);
+    };
+  }, [user?.role, selectedDoctorId, user?.doctorId]);
 
   useEffect(() => {
     if (user?.role === 'admin') {
@@ -149,8 +171,9 @@ export default function AdminDashboard() {
           </div>
           
           <NavItem id="bookings" label="Appointments" icon={ClipboardList} />
-          <NavItem id="approvals" label="Pending Approvals" icon={Bell} badge={pendingCount} />
-          <NavItem id="healthCheckups" label="Health Checkups" icon={HeartPulse} />
+          <NavItem id="approvals" label="Pending" icon={Bell} badge={pendingCount} />
+          <NavItem id="healthCheckups" label="Health Checks" icon={HeartPulse} />
+          <NavItem id="history" label="History" icon={History} />
           <NavItem id="slots" label="Manage Slots" icon={Clock} />
           <NavItem id="profile" label="Doctor Profile" icon={UserCircle} />
           {/* <NavItem id="doctors" label="Doctors List" icon={Users} adminOnly /> */}
@@ -244,6 +267,7 @@ export default function AdminDashboard() {
           {activeTab === 'bookings' && <BookingsList doctorId={effectiveDoctorId} />}
           {activeTab === 'approvals' && <PendingApprovals doctorId={effectiveDoctorId} />}
           {activeTab === 'healthCheckups' && <HealthCheckupsList />}
+          {activeTab === 'history' && <BookingHistory doctorId={effectiveDoctorId} />}
           {activeTab === 'slots' && <ManageSlots doctorId={effectiveDoctorId} />}
           {activeTab === 'profile' && <DoctorProfile doctorId={effectiveDoctorId} />}
           {activeTab === 'doctors' && (
