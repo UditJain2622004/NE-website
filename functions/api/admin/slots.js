@@ -44,10 +44,13 @@ async function handleGet(req, res) {
       .where('startDate', '<=', date)
       .get();
 
-    const isOnLeave = leaveSnapshot.docs.some(doc => {
+    const activeLeave = leaveSnapshot.docs.find(doc => {
       const data = doc.data();
       return date <= data.endDate;
     });
+
+    const isOnLeave = !!activeLeave;
+    const leaveId = activeLeave?.id || null;
 
     // 3. Get existing appointments for this day
     const appointmentsSnapshot = await db.collection('appointments')
@@ -55,7 +58,7 @@ async function handleGet(req, res) {
       .where('appointmentDate', '==', date)
       .where('status', 'in', ['pending', 'confirmed', 'completed'])
       .get();
-
+    
     const appointmentsByTime = {};
     appointmentsSnapshot.docs.forEach(doc => {
       const data = doc.data();
@@ -96,6 +99,7 @@ async function handleGet(req, res) {
       slots,
       doctorName: doctor.name,
       isOnLeave,
+      leaveId,
       dateClass: dateClass.isInstant ? 'instant' : 'request'
     });
 

@@ -62,11 +62,6 @@ export default function HealthCheckupsList() {
         ...doc.data()
       }));
 
-      // Filter by date in memory
-      if (dateFilter) {
-        docs = docs.filter(doc => doc.preferredDate === dateFilter);
-      }
-
       setCheckups(docs);
       setLoading(false);
       setIsRefreshing(false);
@@ -77,10 +72,15 @@ export default function HealthCheckupsList() {
     });
 
     return () => unsubscribe();
-  }, [statusFilter, dateFilter]);
+  }, [statusFilter]);
 
   const filteredCheckups = checkups
     .filter(b => {
+      // Date filter
+      const matchesDate = !dateFilter || b.preferredDate === dateFilter;
+      if (!matchesDate) return false;
+
+      // Search filter
       if (!search.trim()) return true;
       const s = search.toLowerCase();
       return b.patientName?.toLowerCase().includes(s) || b.patientPhone?.includes(s);
@@ -126,11 +126,6 @@ export default function HealthCheckupsList() {
     setDateFilter(format(nextDate, 'yyyy-MM-dd'));
   };
 
-  if (loading) return (
-    <div className="h-64 flex items-center justify-center">
-      <Loader2 className="w-8 h-8 text-primary animate-spin" />
-    </div>
-  );
 
   return (
     <div className="space-y-6">
@@ -219,7 +214,11 @@ export default function HealthCheckupsList() {
 
       {/* Checkups List */}
       <div className="space-y-3">
-        {filteredCheckups.length === 0 ? (
+        {loading ? (
+          <div className="h-64 flex items-center justify-center bg-white rounded-3xl border border-divider">
+            <Loader2 className="w-8 h-8 text-primary animate-spin" />
+          </div>
+        ) : filteredCheckups.length === 0 ? (
           <div className="bg-white rounded-3xl p-12 text-center border-2 border-dashed border-divider">
             <div className="w-16 h-16 bg-hospital-bg rounded-2xl flex items-center justify-center mx-auto mb-4 border border-divider">
               <Package className="w-8 h-8 text-text-main/20" />

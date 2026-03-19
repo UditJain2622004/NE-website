@@ -18,6 +18,8 @@ export default function ManageSlots({ doctorId }) {
   const [loading, setLoading] = useState(true);
   const [toggling, setToggling] = useState(null); // time of the slot being toggled
   const [error, setError] = useState(null);
+  const [isOnLeave, setIsOnLeave] = useState(false);
+  const [leaveId, setLeaveId] = useState(null);
   
   const todayStr = format(new Date(), 'yyyy-MM-dd');
   const isPast = isBefore(parseISO(selectedDate), startOfToday());
@@ -33,6 +35,8 @@ export default function ManageSlots({ doctorId }) {
       const res = await apiCall(`/api/admin/slots?date=${selectedDate}&doctorId=${targetId}`);
       if (res.success) {
         setSlots(res.slots || []);
+        setIsOnLeave(res.isOnLeave || false);
+        setLeaveId(res.leaveId || null);
       } else {
         setError(res.error || 'Failed to fetch slots');
       }
@@ -52,7 +56,7 @@ export default function ManageSlots({ doctorId }) {
     const targetId = doctorId || user?.doctorId;
     if (!targetId) return;
 
-    if (!confirm(`Are you sure you want to block all slots on ${selectedDate}?`)) return;
+    if (!confirm(`Are you sure you want to block all slots on ${selectedDate}? This will prevent all bookings for this day.`)) return;
     setLoading(true);
     try {
       const res = await apiCall('/api/admin/leaves', {
@@ -65,13 +69,33 @@ export default function ManageSlots({ doctorId }) {
         })
       });
       if (res.success) {
-        alert('Day blocked successfully');
-        fetchSlots();
+        await fetchSlots();
       } else {
         alert(res.error);
       }
     } catch (err) {
       console.error('Block failed:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUnblockFullDay = async () => {
+    if (!leaveId) return;
+    if (!confirm(`Are you sure you want to unblock ${selectedDate}? Ordinary availability will be restored.`)) return;
+
+    setLoading(true);
+    try {
+      const res = await apiCall(`/api/admin/leaves?id=${leaveId}`, {
+        method: 'DELETE'
+      });
+      if (res.success) {
+        await fetchSlots();
+      } else {
+        alert(res.error);
+      }
+    } catch (err) {
+      console.error('Unblock failed:', err);
     } finally {
       setLoading(false);
     }
@@ -97,7 +121,7 @@ export default function ManageSlots({ doctorId }) {
         })
       });
       if (res.success) {
-        fetchSlots();
+        await fetchSlots();
       } else {
         alert(res.error);
       }
@@ -160,15 +184,26 @@ export default function ManageSlots({ doctorId }) {
             </button>
           </div>
 
-          {slots.length > 0 && slots.some(s => !s.isBlocked && !s.booked) && (
+          {isOnLeave ? (
             <button
-              onClick={handleBlockFullDay}
-              disabled={isPast}
-              className="px-4 py-3 bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={handleUnblockFullDay}
+              disabled={isPast || loading}
+              className="px-4 py-3 bg-green-50 text-green-600 hover:bg-green-100 border border-green-200 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Lock className="w-4 h-4" />
-              Block Entire Day
+              <Unlock className="w-4 h-4" />
+              Unblock Entire Day
             </button>
+          ) : (
+            slots.length > 0 && slots.some(s => !s.isBlocked && !s.booked) && (
+              <button
+                onClick={handleBlockFullDay}
+                disabled={isPast || loading}
+                className="px-4 py-3 bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Lock className="w-4 h-4" />
+                Block Entire Day
+              </button>
+            )
           )}
         </div>
       </div>
@@ -206,7 +241,7 @@ export default function ManageSlots({ doctorId }) {
               <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-red-500"></div> Blocked</span>
               <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-primary"></div> Booked</span>
             </div>
-            <p className="text-xs font-bold text-text-main/40 tracking-widest mb-5">Click on a slot to block/unblock it.</p>
+            <p className="text-xs font-bold text-text-main/40 tracking-widest mb-5">{ isOnLeave ? "The entire day is blocked. Unblock the day to manage individual slots." : "Click on a slot to block/unblock it."}</p>
 
             {isPast && (
               <div className="mb-6 bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3 text-amber-800 animate-in fade-in slide-in-from-top-2">
@@ -226,8 +261,8 @@ export default function ManageSlots({ doctorId }) {
                 return (
                   <button
                     key={slot.time}
-                    disabled={isBookedByPatient || isProcessing || isPast}
-                    onClick={() => handleToggleBlock(slot)}
+                    disabled={isBookedByPatient || isProcessing || isPast || isOnLeave}
+                    onClick={() => !isOnLeave && handleToggleBlock(slot)}
                     className={`
                       relative group p-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-2
                       ${isPast ? 'opacity-70 cursor-not-allowed' : ''}
@@ -269,12 +304,20 @@ export default function ManageSlots({ doctorId }) {
                     </div>
 
 
-                    {!isBookedByPatient && !isProcessing && (
+                    {!isBookedByPatient && !isProcessing && !isOnLeave && (
                       <div className="absolute inset-0 bg-primary/90 text-white rounded-[14px] flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                          <span className="text-xs font-bold uppercase tracking-widest">{slot.isBlocked ? 'Unblock' : 'Block'}</span>
                          <span className="text-[10px] opacity-70">Single Slot</span>
                       </div>
                     )}
+
+                    {/* {isOnLeave && (
+                       <div className="absolute inset-0 bg-red-500/10 rounded-[14px] flex items-center justify-center">
+                          <div className="bg-red-500 text-white px-2 py-1 rounded text-[8px] font-black uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">
+                            This entire day is blocked. Unblock the day to manage individual slots.
+                          </div>
+                       </div>
+                    )} */}
                   </button>
                 );
               })}

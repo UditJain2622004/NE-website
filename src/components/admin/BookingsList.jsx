@@ -61,12 +61,10 @@ export default function BookingsList({ doctorId }) {
     const targetId = doctorId || user?.doctorId;
     setLoading(true);
 
-    // Build the query - we filter by doctor and status
-    // Note: We avoid filtering by date in Firestore to prevent index errors 
-    // and match the successful backend API strategy (filter in memory)
     let q = query(
       collection(db, 'appointments'),
-      where('status', '==', statusFilter)
+      where('status', '==', statusFilter),
+      where('appointmentDate', '==', dateFilter)
     );
 
     if (targetId) {
@@ -101,7 +99,7 @@ export default function BookingsList({ doctorId }) {
     if (!search.trim()) return true;
     const s = search.toLowerCase();
     return b.patientName?.toLowerCase().includes(s) || b.patientPhone?.includes(s);
-  });
+  }).sort((a, b) => (a.timeSlot || a.time || '').localeCompare(b.timeSlot || b.time || ''));
 
 
 
@@ -143,11 +141,6 @@ export default function BookingsList({ doctorId }) {
     setDateFilter(format(nextDate, 'yyyy-MM-dd'));
   };
 
-  if (loading) return (
-    <div className="h-64 flex items-center justify-center">
-      <Loader2 className="w-8 h-8 text-primary animate-spin" />
-    </div>
-  );
 
   return (
     <div className="space-y-6">
@@ -233,7 +226,11 @@ export default function BookingsList({ doctorId }) {
 
       {/* Bookings List */}
       <div className="space-y-3">
-        {filteredBookings.length === 0 ? (
+        {loading ? (
+          <div className="h-64 flex items-center justify-center bg-white rounded-3xl border border-divider">
+            <Loader2 className="w-8 h-8 text-primary animate-spin" />
+          </div>
+        ) : filteredBookings.length === 0 ? (
           <div className="bg-white rounded-3xl p-12 text-center border-2 border-dashed border-divider">
             <div className="w-16 h-16 bg-hospital-bg rounded-2xl flex items-center justify-center mx-auto mb-4 border border-divider">
               <Clock className="w-8 h-8 text-text-main/20" />
