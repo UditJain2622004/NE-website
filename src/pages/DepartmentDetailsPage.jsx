@@ -63,9 +63,12 @@ const DepartmentDetailsPage = () => {
                   </span>
                 ) : (
                   <>
-                    <button className="btn-primary px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2">
+                    <Link 
+                      to={`/book?department=${department.slug}`} 
+                      className="btn-primary px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2"
+                    >
                       <Calendar size={18} className="shrink-0" /> Request Consultation
-                    </button>
+                    </Link>
                     <a href="tel:+919187634758" className="btn-outline px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2">
                       <Phone size={18} className="shrink-0" /> Department Helpline
                     </a>
@@ -162,6 +165,7 @@ const DepartmentDetailsPage = () => {
       <CTABanner 
         title={`Need Expert Advice on ${department.name}?`}
         subtitle="Our team is ready to assist you with the best medical care. Book your appointment today or give us a call."
+        bookingLink={`/book?department=${department.slug}`}
       />
     </div>
   );

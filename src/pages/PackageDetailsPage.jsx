@@ -179,6 +179,7 @@ const PackageDetailsPage = () => {
       <CTABanner 
         title={`Ready to Book the ${pkg.name}?`}
         subtitle="Take charge of your health today. Book your package or call us for more information."
+        bookingLink={`/services/health-check-packages/${pkg.slug}/book`}
       />
     </div>
   );

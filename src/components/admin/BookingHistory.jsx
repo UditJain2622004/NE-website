@@ -180,17 +180,17 @@ export default function BookingHistory({ doctorId }) {
         <div>
           <h2 className="text-xl font-bold text-text-main flex items-center gap-2">
             <Clock className="w-5 h-5 text-primary" />
-            Audit Trail
+            Appointment History
           </h2>
-          <p className="text-xs text-text-main/40 font-bold uppercase tracking-widest mt-1">Search through completed appointments</p>
+          <p className="text-xs text-text-main/40 font-bold tracking-widest mt-1">Search through completed appointments</p>
         </div>
 
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
            <div className="bg-hospital-bg px-4 py-2 rounded-xl border border-divider">
               <span className="text-[10px] font-black uppercase tracking-widest text-text-main/30 block">Page</span>
               <span className="text-lg font-display font-bold text-primary leading-none">{currentPage}</span>
            </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Control Bar */}
@@ -206,7 +206,7 @@ export default function BookingHistory({ doctorId }) {
           />
         </div>
         
-        <div className="relative w-full lg:w-48 group">
+        <div className="relative w-full lg:w-64 group">
           <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-main/20 group-focus-within:text-primary transition-colors" />
           <input 
             type="date"
@@ -219,11 +219,11 @@ export default function BookingHistory({ doctorId }) {
               onClick={() => setDateFilter('')}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-text-main/30 hover:text-primary"
             >
-              <XCircle className="w-4 h-4" />
+              <XCircle className="w-8 h-4 absolute right-8 top-1/2 -translate-y-1/2" />
             </button>
           )}
         </div>
-      </div>
+        </div>
 
       {/* Table-like List */}
       <div className="space-y-3">

@@ -1,4 +1,5 @@
 import { Calendar, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Breadcrumb from '../Breadcrumb';
 
 const DiagnosticsHero = ({ overviewRef }) => {
@@ -22,9 +23,9 @@ const DiagnosticsHero = ({ overviewRef }) => {
               Our Diagnostics department provides accurate and comprehensive diagnostic services. From routine laboratory tests and pathology to advanced imaging and specialized screening, we deliver reliable results with quick turnaround times. Our skilled technicians and diagnostic specialists ensure precision in every test.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <a href="/#book" className="btn-primary px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2">
+              <Link to="/book?department=radiology" className="btn-primary px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2">
                 <Calendar size={18} className="shrink-0" /> Request Consultation
-              </a>
+              </Link>
               <a href="tel:+919187634758" className="btn-outline px-8 py-4 sm:py-3 lg:px-6 lg:py-2.5 text-base lg:text-sm font-bold flex items-center justify-center gap-2">
                 <Phone size={18} className="shrink-0" /> Contact Helpline
               </a>

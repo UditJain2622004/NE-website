@@ -48,7 +48,7 @@ const HeroSection = () => {
             <Link to="/#doctors" className="btn-primary px-0 flex-1 flex items-center justify-center gap-2 py-3.5 text-sm whitespace-nowrap">
               Find Doctor <ArrowRight size={16} />
             </Link>
-            <Link to="/#book" className="bg-white border-2 border-divider text-primary flex-1 flex items-center justify-center gap-2 py-3.5 text-sm rounded-md font-bold shadow-sm whitespace-nowrap">
+            <Link to="/book" className="bg-white border-2 border-divider text-primary flex-1 flex items-center justify-center gap-2 py-3.5 text-sm rounded-md font-bold shadow-sm whitespace-nowrap">
               <Calendar size={16} /> Book Appointment
             </Link>
           </div> */}
@@ -72,7 +72,7 @@ const HeroSection = () => {
               <Link to="/#doctors" className="btn-primary flex items-center gap-3 py-4 px-10 text-lg">
                 Find a Doctor <ArrowRight size={20} />
               </Link>
-              <Link to="/#services" className="bg-white border-2 border-divider text-primary hover:border-primary hover:bg-gray-50 flex items-center justify-center gap-3 py-4 px-10 text-lg rounded-md font-bold transition-all shadow-sm">
+              <Link to="/book" className="bg-white border-2 border-divider text-primary hover:border-primary hover:bg-gray-50 flex items-center justify-center gap-3 py-4 px-10 text-lg rounded-md font-bold transition-all shadow-sm">
                 <Calendar size={20}/> Book Appointment
               </Link>
             </div> */}

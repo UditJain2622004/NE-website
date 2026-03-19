@@ -60,9 +60,12 @@ const DoctorDetailsPage = () => {
 
             {/* CTA buttons on mobile - below image+profile row */}
             <div className="flex flex-col sm:flex-row gap-3 lg:hidden">
-              <button className="btn-primary px-4 py-3 text-base font-bold flex items-center justify-center gap-2 flex-1">
+              <Link 
+                to={`/book?doctorId=${doctor.firebaseId}`} 
+                className="btn-primary px-4 py-3 text-base font-bold flex items-center justify-center gap-2 flex-1"
+              >
                 <Calendar size={18} /> Book Appointment
-              </button>
+              </Link>
               {/* <button className="btn-outline px-6 py-3 text-base font-bold flex items-center justify-center gap-2 flex-1">
                 <MessageSquare size={18} /> Online Enquiry
               </button> */}
@@ -122,9 +125,12 @@ const DoctorDetailsPage = () => {
               </div>
 
               <div className="flex flex-row gap-4">
-                <button className="btn-primary px-10 py-4 text-lg font-bold flex items-center justify-center gap-3">
+                <Link 
+                  to={`/book?doctorId=${doctor.firebaseId}`} 
+                  className="btn-primary px-10 py-4 text-lg font-bold flex items-center justify-center gap-3"
+                >
                   <Calendar size={22} /> Book Appointment
-                </button>
+                </Link>
                 {/* <button className="btn-outline px-10 py-4 text-lg font-bold flex items-center justify-center gap-3">
                   <MessageSquare size={22} /> Online Enquiry
                 </button> */}
@@ -163,6 +169,7 @@ const DoctorDetailsPage = () => {
       <CTABanner 
         title={`Looking for Consultation with ${doctor.name}?`}
         subtitle={`Book your slot now.`}
+        bookingLink={`/book?doctorId=${doctor.firebaseId}`}
       />
     </div>
   );

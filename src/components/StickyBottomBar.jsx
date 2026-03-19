@@ -43,7 +43,7 @@ const StickyBottomBar = () => {
             <span className="text-[10px] font-bold uppercase tracking-wider leading-none">Find Doctors</span>
           </button>
           <button 
-            onClick={() => handleNav('/#book')}
+            onClick={() => handleNav('/book')}
             className="flex flex-col items-center justify-center gap-1 bg-secondary/80 text-white rounded-xl shadow-lg shadow-secondary/20 active:scale-95 transition-all px-2 py-3 flex-1 cursor-pointer"
           >
             <Calendar size={22} strokeWidth={2.5} />
@@ -63,7 +63,7 @@ const StickyBottomBar = () => {
       <div className="hidden lg:flex fixed top-1/2 right-6 z-40 -translate-y-1/2 flex-col items-end gap-4">
         <div className="relative h-14 w-14">
           <button 
-            onClick={() => handleNav('/#book')}
+            onClick={() => handleNav('/book')}
             className="group/btn absolute right-0 top-0 flex items-center gap-3 h-14 w-14 rounded-full p-1.5 bg-primary/20 hover:bg-primary/30 transition-all duration-300 hover:w-[200px] overflow-hidden cursor-pointer"
           >
             <div className="shrink-0 w-11 h-11 rounded-full bg-primary flex items-center justify-center text-white">

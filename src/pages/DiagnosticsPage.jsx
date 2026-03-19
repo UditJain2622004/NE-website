@@ -79,6 +79,7 @@ const DiagnosticsPage = () => {
       <CTABanner
         title="Need Diagnostic Testing?"
         subtitle="Our team is ready to assist you. Book your appointment today or give us a call."
+        bookingLink="/book?department=radiology"
       />
     </div>
   );

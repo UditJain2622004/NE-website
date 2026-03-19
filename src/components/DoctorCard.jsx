@@ -50,7 +50,7 @@ const DoctorCard = ({ doctor }) => {
               Profile
             </Link> */}
             <Link 
-              to="#book" 
+              to={doctor.firebaseId ? `/book?doctorId=${doctor.firebaseId}` : `/book`} 
               className="btn-primary py-2.5 px-0 text-xs flex items-center justify-center gap-2 rounded-md shadow-sm font-bold tracking-widest"
             >
               Book an Appointment

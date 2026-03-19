@@ -60,16 +60,23 @@ const DepartmentCard = ({ department }) => {
               <Clock size={14} /> Coming Soon
             </span>
           ) : (
-            <button 
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                window.location.href = '#booking';
-              }}
-              className="w-full bg-gray-100 text-primary px-4 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-secondary hover:text-white transition-all transform active:scale-95"
+            // <button 
+            //   onClick={(e) => {
+            //     e.preventDefault();
+            //     e.stopPropagation();
+            //     window.location.href = `/book?department=${department.slug}`;
+            //   }}
+            //   className="w-full bg-gray-100 text-primary px-4 py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-secondary hover:text-white transition-all transform active:scale-95"
+            // >
+            //   Book Visit
+            // </button>
+
+            <Link 
+              to={department.slug ? `/book?department=${department.slug}` : `/book`} 
+              className="w-full bg-gray-100 text-primary px-4 py-3 rounded-xl font-bold text-xs text-center uppercase tracking-widest hover:bg-secondary hover:text-white transition-all transform active:scale-95"
             >
-              Book Visit
-            </button>
+              Book an Appointment
+            </Link>
           )}
         </div>
       </div>

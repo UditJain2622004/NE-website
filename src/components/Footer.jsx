@@ -46,7 +46,7 @@ const Footer = () => {
               { name: 'Departments', path: '/departments' },
               { name: 'Contact Us', path: '/contact' },
               { name: 'Services', path: '/services' },
-              { name: 'Book Appointment', path: '/#book' },
+              { name: 'Book Appointment', path: '/book' },
               { name: 'Health Check Packages', path: '/services/health-check-packages' },
               // { name: 'Radiology', path: '/departments/radiology' },
               // { name: 'Pediatrics', path: '/departments/pediatrics' },
@@ -109,7 +109,7 @@ const Footer = () => {
                   { name: 'About Us', path: '/about' },
                   { name: 'Our Doctors', path: '/doctors' },
                   { name: 'Departments', path: '/departments' },
-                  { name: 'Book Appointment', path: '/#book' },
+                  { name: 'Book Appointment', path: '/book' },
                   { name: 'Contact Us', path: '/contact' }
                 ].map((link) => (
                   <li key={link.name}>

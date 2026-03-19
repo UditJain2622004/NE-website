@@ -18,7 +18,7 @@ const QuickAccessSection = () => {
     { 
       title: "Book Appointment", 
       icon: Calendar, 
-      link: "/#book", 
+      link: "/book", 
       color: "bg-primary text-white hover:bg-primary/90"
     },
     { 

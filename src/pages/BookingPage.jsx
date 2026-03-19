@@ -30,7 +30,7 @@ export default function BookingPage() {
   const [loadingDoctors, setLoadingDoctors] = useState(true);
 
   // Filters
-  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [selectedDepartment, setSelectedDepartment] = useState(searchParams.get('department') || '');
   const [selectedDoctorId, setSelectedDoctorId] = useState(searchParams.get('doctorId') || '');
   const [isDeptOpen, setIsDeptOpen] = useState(false);
   const [isDocOpen, setIsDocOpen] = useState(false);

@@ -4,7 +4,8 @@ import { Calendar, Phone } from 'lucide-react';
 const CTABanner = ({ 
   title = "Need Medical Assistance?", 
   subtitle = "Our dedicated medical professionals are here to provide you with the best care 24/7.",
-  showButtons = true 
+  showButtons = true,
+  bookingLink = "/book"
 }) => {
   return (
     <section className="bg-primary text-white py-16 px-6 relative overflow-hidden">
@@ -22,7 +23,7 @@ const CTABanner = ({
         
         {showButtons && (
           <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-            <Link to="/#book" className="btn-secondary px-10 py-4 text-lg font-bold flex items-center gap-3 w-full sm:w-auto justify-center">
+            <Link to={bookingLink} className="btn-secondary px-10 py-4 text-lg font-bold flex items-center gap-3 w-full sm:w-auto justify-center">
               <Calendar size={22} /> Book Appointment
             </Link>
             <a href="tel:+919187634758" className="bg-white text-primary hover:bg-blue-50 px-10 py-4 text-lg font-bold flex items-center gap-3 w-full sm:w-auto justify-center transition-colors rounded-sm">
