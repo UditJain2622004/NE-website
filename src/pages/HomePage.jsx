@@ -3,7 +3,7 @@ import FounderIntroSection from '../components/home/FounderIntroSection';
 import DepartmentsSection from '../components/home/DepartmentsSection';
 import FeaturedDoctorsSection from '../components/home/FeaturedDoctorsSection';
 import ServicesSection from '../components/home/ServicesSection';
-import AppointmentSection from '../components/home/AppointmentSection';
+import BookingCTA from '../components/home/BookingCTA';
 import WhyChooseUsSection from '../components/home/WhyChooseUsSection';
 import TestimonialsSection from '../components/home/TestimonialsSection';
 import FAQSection from '../components/home/FAQSection';
@@ -18,7 +18,7 @@ const HomePage = () => {
       <DepartmentsSection />
       <FeaturedDoctorsSection />
       <ServicesSection />
-      <AppointmentSection />
+      <BookingCTA />
       <WhyChooseUsSection />
       {/* <TestimonialsSection /> */}
       <FAQSection />
