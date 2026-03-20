@@ -132,7 +132,7 @@ export default function HealthCheckupsList() {
       {/* Search Bar */}
       <div className="bg-hospital-bg p-2 rounded-2xl flex items-center gap-3 px-4 border border-divider/50">
         <Search className="w-5 h-5 text-text-main/20" />
-        <input 
+        <input
           type="text"
           placeholder="Search bookings by patient name or phone..."
           value={search}
@@ -172,43 +172,51 @@ export default function HealthCheckupsList() {
           >
             <ChevronRight className="w-5 h-5 text-text-main/60" />
           </button>
-
-          <button
-            onClick={() => setDateFilter('')}
-            className={`px-3 py-2 rounded-xl text-xs font-bold transition-all border whitespace-nowrap ${
-              !dateFilter
-                ? 'bg-secondary text-white border-secondary shadow-lg shadow-secondary/20'
-                : 'bg-white text-text-main/40 border-divider hover:border-text-main/20'
-            }`}
-          >
-            All Dates
-          </button>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
-          <button 
-             onClick={fetchCheckups}
-             className="p-2 border border-divider rounded-xl hover:bg-hospital-bg transition-colors"
-             title="Refresh List"
-          >
-            <RefreshCw className={`w-4 h-4 text-primary ${isRefreshing ? 'animate-spin' : ''}`} />
-          </button>
 
-          <div className="flex flex-wrap gap-2">
+
+        <div className="flex flex-wrap items-center gap-3">
+
+
+          <div className="flex flex-wrap gap-1">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setStatusFilter(tab.id)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold capitalize transition-all border ${
-                  statusFilter === tab.id
-                    ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20'
-                    : 'bg-white text-text-main/40 border-divider hover:border-text-main/20'
-                }`}
+                className={`px-4 py-2 rounded-xl text-xs font-bold capitalize transition-all border ${statusFilter === tab.id
+                  ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20'
+                  : 'bg-white text-text-main/40 border-divider hover:border-text-main/20'
+                  }`}
               >
                 {tab.label}
               </button>
             ))}
           </div>
+
+
+        </div>
+
+        <div className="flex w-full lg:w-[260px] gap-2 lg:ml-auto">
+          {/* Left section - takes 85% */}
+          <button
+            onClick={() => setDateFilter('')}
+            className={`flex-1 px-3 py-2 rounded-xl text-xs font-bold transition-all border whitespace-nowrap ${!dateFilter
+              ? 'bg-secondary text-white border-secondary shadow-lg shadow-secondary/20'
+              : 'bg-white text-text-main/40 border-divider hover:border-text-main/20'
+              }`}
+          >
+            {dateFilter ? 'See All Dates' : 'Showing All Dates'}
+          </button>
+
+          {/* Right section - takes 15% */}
+          <button
+            onClick={fetchCheckups}
+            className="w-10 flex items-center justify-center p-2 border border-divider rounded-xl hover:bg-hospital-bg transition-colors"
+            title="Refresh List"
+          >
+            <RefreshCw className={`w-4 h-4 text-primary ${isRefreshing ? 'animate-spin' : ''}`} />
+          </button>
         </div>
       </div>
 

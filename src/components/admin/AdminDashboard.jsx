@@ -8,8 +8,8 @@ import PendingApprovals from './PendingApprovals';
 import DoctorProfile from './DoctorProfile';
 import HealthCheckupsList from './HealthCheckupsList';
 import BookingHistory from './BookingHistory';
-import { 
-  LogOut, Plus, 
+import {
+  LogOut, Plus,
   User, Users, Activity,
   ClipboardList,
   Menu, X, Globe, Clock,
@@ -21,7 +21,7 @@ import { collection, query, where, onSnapshot } from 'firebase/firestore';
 
 export default function AdminDashboard() {
   const { user, logout, apiCall } = useAdminAuth();
-  const [activeTab, setActiveTab] = useState('bookings'); // bookings, approvals, slots, doctors, profile
+  const [activeTab, setActiveTab] = useState('approvals'); // bookings, approvals, slots, doctors, profile
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [doctors, setDoctors] = useState([]);
@@ -42,7 +42,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     const targetId = user?.role === 'admin' ? selectedDoctorId : user?.doctorId;
-    
+
     let q = query(
       collection(db, 'appointments'),
       where('status', '==', 'pending')
@@ -87,24 +87,22 @@ export default function AdminDashboard() {
 
   const NavItem = ({ id, label, icon: Icon, adminOnly = false, badge = 0 }) => {
     if (adminOnly && user?.role !== 'admin') return null;
-    
+
     return (
       <button
         onClick={() => setActiveTab(id)}
-        className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 ${
-          activeTab === id 
-            ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]' 
-            : 'text-text-main/60 hover:text-primary hover:bg-primary/5'
-        }`}
+        className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 ${activeTab === id
+          ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]'
+          : 'text-text-main/60 hover:text-primary hover:bg-primary/5'
+          }`}
       >
         <div className="flex items-center gap-3">
           <Icon className={`w-5 h-5 ${activeTab === id ? 'text-white' : 'text-current'}`} />
           <span>{label}</span>
         </div>
         {badge > 0 && (
-          <span className={`px-1 py-0.5 rounded-full text-[10px] font-black ${
-            activeTab === id ? 'bg-white text-primary' : 'bg-primary text-white'
-          }`}>
+          <span className={`px-1 py-0.5 rounded-full text-[10px] font-black ${activeTab === id ? 'bg-white text-primary' : 'bg-primary text-white'
+            }`}>
             {badge}
             {/* <Bell className="w-4 h-4" /> */}
           </span>
@@ -123,7 +121,7 @@ export default function AdminDashboard() {
         </div>
         <div className="flex items-center gap-2">
           {pendingCount > 0 && (
-            <button 
+            <button
               onClick={() => setActiveTab('approvals')}
               className="p-2 bg-primary/10 text-primary rounded-xl relative"
             >
@@ -133,6 +131,16 @@ export default function AdminDashboard() {
               </span>
             </button>
           )}
+
+          {user?.role === 'admin' && (
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="p-2 bg-primary text-white rounded-xl shadow-lg shadow-primary/20 active:scale-90 transition-transform"
+            >
+              <Plus className="w-5 h-5" />
+            </button>
+          )}
+
           <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-2 text-text-main/60 rounded-lg hover:bg-divider">
             {isSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -169,9 +177,9 @@ export default function AdminDashboard() {
           <div className="text-[10px] font-bold uppercase tracking-widest text-text-main/30 mb-2 mt-8 ml-4">
             Navigation
           </div>
-          
-          <NavItem id="bookings" label="Appointments" icon={ClipboardList} />
+
           <NavItem id="approvals" label="Pending" icon={Bell} badge={pendingCount} />
+          <NavItem id="bookings" label="Appointments" icon={ClipboardList} />
           <NavItem id="healthCheckups" label="Health Checks" icon={HeartPulse} />
           <NavItem id="history" label="History" icon={History} />
           <NavItem id="slots" label="Manage Slots" icon={Clock} />
@@ -208,14 +216,14 @@ export default function AdminDashboard() {
             <h1 className="text-xl font-display font-bold capitalize">
               {activeTab === 'healthCheckups' ? 'Health Checkups' : activeTab.replace('_', ' ')}
             </h1>
-            
+
             {user?.role === 'admin' && (
               <div className="flex items-center gap-3 bg-white p-1.5 rounded-xl border border-divider shadow-sm">
                 <div className="pl-3 flex items-center gap-2 text-text-main/40">
                   <User className="w-4 h-4" />
                   <span className="text-[10px] font-black uppercase tracking-widest">Managing:</span>
                 </div>
-                <select 
+                <select
                   value={selectedDoctorId}
                   onChange={(e) => setSelectedDoctorId(e.target.value)}
                   className="bg-hospital-bg border-none outline-none text-sm font-bold pr-8 py-1.5 rounded-lg appearance-none cursor-pointer hover:bg-divider/30 transition-colors pl-2"
@@ -227,10 +235,10 @@ export default function AdminDashboard() {
               </div>
             )}
           </div>
-          
+
           <div className="flex items-center gap-4">
             {user?.role === 'admin' && (
-              <button 
+              <button
                 onClick={() => setShowCreateModal(true)}
                 className="btn-primary py-2.5 rounded-xl text-sm px-6 bg-gradient-to-r from-primary to-primary/90 shadow-xl shadow-primary/10 border border-white/10"
               >
@@ -251,7 +259,7 @@ export default function AdminDashboard() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-[10px] font-black uppercase tracking-widest text-text-main/30 mb-0.5 ml-1">Managing Doctor</p>
-                <select 
+                <select
                   value={selectedDoctorId}
                   onChange={(e) => setSelectedDoctorId(e.target.value)}
                   className="w-full bg-hospital-bg border-divider rounded-lg text-sm font-bold py-1.5 focus:ring-primary/20 transition-all outline-none"
@@ -278,26 +286,17 @@ export default function AdminDashboard() {
         </div>
 
 
-        {/* Floating Create Button for Mobile */}
-        {user?.role === 'admin' && (
-          <button
-            onClick={() => setShowCreateModal(true)}
-            className="lg:hidden fixed bottom-6 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center z-50 animate-bounce active:scale-90 transition-transform"
-          >
-            <Plus className="w-8 h-8" />
-          </button>
-        )}
       </main>
 
       {/* Modal Overlay */}
       {showCreateModal && (
-        <CreateBookingModal 
-          onClose={() => setShowCreateModal(false)} 
+        <CreateBookingModal
+          onClose={() => setShowCreateModal(false)}
           initialDoctorId={effectiveDoctorId}
           onSuccess={() => {
             setShowCreateModal(false);
             window.dispatchEvent(new Event('refreshBookings'));
-          }} 
+          }}
         />
       )}
     </div>

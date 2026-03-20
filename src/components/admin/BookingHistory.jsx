@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAdminAuth } from '../../hooks/useAdminAuth';
-import { 
-  Loader2, Calendar, Search, Clock, 
+import {
+  Loader2, Calendar, Search, Clock,
   Phone, Mail, User, Info, RefreshCw,
   CheckCircle2, XCircle, Trash2, Filter,
   ArrowUpDown, ChevronLeft, ChevronRight
@@ -35,7 +35,7 @@ export default function BookingHistory({ doctorId }) {
   // Switch to async fetch instead of onSnapshot for strict pagination control
   useEffect(() => {
     const targetId = doctorId || user?.doctorId;
-    
+
     const loadFirstPage = async () => {
       setLoading(true);
       try {
@@ -112,7 +112,7 @@ export default function BookingHistory({ doctorId }) {
     try {
       const targetId = doctorId || user?.doctorId;
       let finalQuery;
-      
+
       let baseQ = query(
         collection(db, 'appointments'),
         where('status', '==', statusFilter)
@@ -167,7 +167,7 @@ export default function BookingHistory({ doctorId }) {
     if (!search.trim()) return true;
     const s = search.toLowerCase();
     return (
-      b.patientName?.toLowerCase().includes(s) || 
+      b.patientName?.toLowerCase().includes(s) ||
       b.patientPhone?.includes(s) ||
       b.patientEmail?.toLowerCase().includes(s)
     );
@@ -197,7 +197,7 @@ export default function BookingHistory({ doctorId }) {
       <div className="bg-white p-4 lg:p-5 rounded-2xl shadow-sm border border-divider flex flex-col lg:flex-row gap-4">
         <div className="relative flex-1 group">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-main/20 group-focus-within:text-primary transition-colors" />
-          <input 
+          <input
             type="text"
             placeholder="Search by name, phone or email..."
             value={search}
@@ -205,25 +205,28 @@ export default function BookingHistory({ doctorId }) {
             className="w-full pl-11 pr-4 py-2.5 bg-hospital-bg border border-divider rounded-xl text-sm font-medium outline-none focus:ring-2 focus:ring-primary/10 transition-all font-bold"
           />
         </div>
-        
-        <div className="relative w-full lg:w-64 group">
-          <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-main/20 group-focus-within:text-primary transition-colors" />
-          <input 
-            type="date"
-            value={dateFilter}
-            onChange={(e) => setDateFilter(e.target.value)}
-            className="w-full pl-11 pr-4 py-2.5 bg-hospital-bg border border-divider rounded-xl text-sm font-medium outline-none focus:ring-2 focus:ring-primary/10 transition-all font-bold"
-          />
+
+        <div className="flex items-center gap-2 w-full lg:w-64">
+          <div className="relative flex-1 group">
+            <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-main/20 group-focus-within:text-primary transition-colors" />
+            <input
+              type="date"
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+              className="w-full pl-11 pr-4 py-2.5 bg-hospital-bg border border-divider rounded-xl text-sm font-medium outline-none focus:ring-2 focus:ring-primary/10 transition-all font-bold"
+            />
+          </div>
+
           {dateFilter && (
-            <button 
+            <button
               onClick={() => setDateFilter('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-text-main/30 hover:text-primary"
+              className="p-2 border border-divider rounded-xl hover:bg-hospital-bg transition-colors"
             >
-              <XCircle className="w-8 h-4 absolute right-8 top-1/2 -translate-y-1/2" />
+              <XCircle className="w-4 h-4 text-text-main/40 hover:text-primary" />
             </button>
           )}
         </div>
-        </div>
+      </div>
 
       {/* Table-like List */}
       <div className="space-y-3">
@@ -243,17 +246,17 @@ export default function BookingHistory({ doctorId }) {
             {filteredBookings.map(item => (
               <div key={item.id} className="bg-white p-4 rounded-2xl border border-divider hover:border-primary/20 transition-all group lg:flex lg:items-center gap-6">
                 <div className="flex items-center gap-4 lg:w-40 shrink-0">
-                   <div className="w-10 h-10 bg-hospital-bg rounded-xl flex items-center justify-center text-text-main/30 border border-divider">
-                      <Calendar className="w-5 h-5" />
-                   </div>
-                   <div>
-                      <div className="text-sm font-bold text-text-main leading-tight">
-                        {(item.appointmentDate || item.date) && /^\d/.test(item.appointmentDate || item.date) 
-                          ? format(parseISO(item.appointmentDate || item.date), 'dd MMM yyyy') 
-                          : 'No Date'}
-                      </div>
-                      <div className="text-[10px] font-bold text-text-main/30 uppercase tracking-widest font-display">{item.timeSlot || item.time || 'N/A'}</div>
-                   </div>
+                  <div className="w-10 h-10 bg-hospital-bg rounded-xl flex items-center justify-center text-text-main/30 border border-divider">
+                    <Calendar className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-text-main leading-tight">
+                      {(item.appointmentDate || item.date) && /^\d/.test(item.appointmentDate || item.date)
+                        ? format(parseISO(item.appointmentDate || item.date), 'dd MMM yyyy')
+                        : 'No Date'}
+                    </div>
+                    <div className="text-[10px] font-bold text-text-main/30 uppercase tracking-widest font-display">{item.timeSlot || item.time || 'N/A'}</div>
+                  </div>
                 </div>
 
                 <div className="h-px lg:h-8 w-full lg:w-px bg-divider my-2 lg:my-0"></div>
@@ -273,19 +276,19 @@ export default function BookingHistory({ doctorId }) {
 
                 {user?.role === 'admin' && (
                   <div className="lg:w-40 text-left lg:text-right hidden sm:block">
-                     <span className="text-[10px] font-black uppercase tracking-widest text-text-main/20 block mb-0.5">Assigned Doctor</span>
-                     <span className="text-xs font-bold text-primary truncate block">{item.doctorName || 'N/A'}</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-text-main/20 block mb-0.5">Assigned Doctor</span>
+                    <span className="text-xs font-bold text-primary truncate block">{item.doctorName || 'N/A'}</span>
                   </div>
                 )}
 
                 <div className="mt-3 lg:mt-0 lg:w-12 flex justify-end">
-                   <button 
-                     onClick={() => handleDelete(item.id)}
-                     className="p-2 text-text-main/20 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
-                     title="Delete permanently"
-                   >
-                     <Trash2 className="w-4 h-4" />
-                   </button>
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    className="p-2 text-text-main/20 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                    title="Delete permanently"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
             ))}
@@ -298,7 +301,7 @@ export default function BookingHistory({ doctorId }) {
             <div className="text-xs font-bold text-text-main/40 uppercase tracking-widest">
               Viewing results {((currentPage - 1) * itemsPerPage) + 1} - {((currentPage - 1) * itemsPerPage) + bookings.length}
             </div>
-            
+
             <div className="flex items-center gap-4">
               <button
                 disabled={currentPage === 1 || loading}
@@ -308,7 +311,7 @@ export default function BookingHistory({ doctorId }) {
                 <ChevronLeft className="w-4 h-4" />
                 Previous
               </button>
-              
+
               <button
                 disabled={!hasMore || loading}
                 onClick={handleNext}
