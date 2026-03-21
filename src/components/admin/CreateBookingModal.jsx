@@ -7,7 +7,7 @@ import {
   Loader2, X, User, Phone, 
   Mail, Calendar, Clock, 
   Check, ChevronRight,
-  UserPlus, HeartPulse, ClipboardList
+  UserPlus, HeartPulse, ClipboardList, Info
 } from 'lucide-react';
 import { format, addDays } from 'date-fns';
 import { API_BASE } from '../../apiConfig';
@@ -23,6 +23,7 @@ export default function CreateBookingModal({ onClose, onSuccess, initialDoctorId
   const [slots, setSlots] = useState([]);
   const [loading, setLoading] = useState(true);
   const [slotsLoading, setSlotsLoading] = useState(false);
+  const [hasFetchedSlots, setHasFetchedSlots] = useState(false);
  
   // Shared Form State
   const [selectedDate, setSelectedDate] = useState(format(addDays(new Date(), 1), 'yyyy-MM-dd'));
@@ -37,6 +38,7 @@ export default function CreateBookingModal({ onClose, onSuccess, initialDoctorId
 
   // Health Checkup State
   const [selectedPackage, setSelectedPackage] = useState(null);
+  const [followUpType, setFollowUpType] = useState(null); // 'followup' | 'new'
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -70,6 +72,7 @@ export default function CreateBookingModal({ onClose, onSuccess, initialDoctorId
       const data = await res.json();
       setSlots(data.slots || []);
       setSelectedSlot('');
+      setHasFetchedSlots(true);
     } catch (err) {
       console.error('Fetch slots failed:', err);
     } finally {
@@ -82,6 +85,25 @@ export default function CreateBookingModal({ onClose, onSuccess, initialDoctorId
       fetchSlots();
     }
   }, [step, selectedDoctor, selectedDate, bookingType]);
+
+  // Check for follow-up
+  useEffect(() => {
+    const checkFollowUp = async () => {
+      if (bookingType === 'appointment' && patientPhone.length >= 10 && selectedDoctor) {
+        try {
+          const res = await apiCall(`/api/admin/bookings?checkFollowup=true&patientPhone=${patientPhone}&doctorId=${selectedDoctor}`);
+          if (res.success) {
+            setFollowUpType(res.type);
+          }
+        } catch (err) {
+          console.error('Follow-up check failed:', err);
+        }
+      } else {
+        setFollowUpType(null);
+      }
+    };
+    checkFollowUp();
+  }, [bookingType, patientPhone, selectedDoctor]);
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -321,7 +343,7 @@ export default function CreateBookingModal({ onClose, onSuccess, initialDoctorId
                   <div className="flex items-center justify-center h-20 bg-hospital-bg rounded-2xl border border-divider">
                     <Loader2 className="w-6 h-6 animate-spin text-primary" />
                   </div>
-                ) : slots.length === 0 ? (
+                ) : (slots.length === 0 && hasFetchedSlots) ? (
                   <div className="p-4 bg-red-50 text-red-600 rounded-2xl text-xs font-bold text-center border border-red-100">
                     No slots available for this doctor on selected date.
                   </div>
@@ -379,6 +401,20 @@ export default function CreateBookingModal({ onClose, onSuccess, initialDoctorId
                 </div>
               </div>
             </div>
+
+            {followUpType === 'followup' && (
+              <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 flex items-start gap-3 animate-pulse">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                  <Info className="w-4 h-4 text-primary" />
+                </div>
+                <div className="space-y-0.5">
+                  <p className="text-xs font-bold text-primary">Follow-up Detected</p>
+                  <p className="text-[10px] text-blue-800 leading-relaxed font-medium">
+                    This patient has visited the doctor in the last 7 days. This booking will be marked as a <strong>Follow-up</strong>.
+                  </p>
+                </div>
+              </div>
+            )}
 
             <div className="space-y-1.5">
               <label className="text-xs font-bold uppercase tracking-wider text-text-main/60 ml-1 text-center block">Email (Optional)</label>

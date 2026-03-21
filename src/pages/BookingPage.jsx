@@ -10,6 +10,8 @@ import {
   getDay, isSameDay, isBefore, startOfToday, addMonths, subMonths, isToday
 } from 'date-fns';
 
+import { db } from '../firebase/config';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import { API_BASE } from '../apiConfig';
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -66,22 +68,28 @@ export default function BookingPage() {
     (async () => {
       setLoadingDoctors(true);
       try {
-        const res = await fetch(`${API_BASE}/doctors`);
-        const data = await res.json();
-        if (data.success) {
-          setDoctors(data.doctors || []);
+        const q = query(
+          collection(db, 'doctors'),
+          where('isActive', '==', true)
+        );
+        const snapshot = await getDocs(q);
+        const doctorList = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
 
-          // If doctorId came from URL, auto-set department
-          const preselected = searchParams.get('doctorId');
-          if (preselected) {
-            const doc = (data.doctors || []).find(d => d.id === preselected);
-            if (doc) {
-              setSelectedDepartment(doc.department || '');
-            }
+        setDoctors(doctorList);
+
+        // If doctorId came from URL, auto-set department
+        const preselected = searchParams.get('doctorId');
+        if (preselected) {
+          const doc = doctorList.find(d => d.id === preselected);
+          if (doc) {
+            setSelectedDepartment(doc.department || '');
           }
         }
-      } catch {
-        // silent
+      } catch (error) {
+        console.error('Error fetching doctors:', error);
       } finally {
         setLoadingDoctors(false);
       }
@@ -156,6 +164,13 @@ export default function BookingPage() {
     })();
   }, [selectedDoctorId, selectedDate]);
 
+  // Scroll to top on success
+  useEffect(() => {
+    if (bookingResult?.success) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [bookingResult]);
+
   // ─── Book Appointment ──────────────────────────────────────────────────
   const handleBook = async () => {
     if (!selectedSlot || !patientName.trim() || !patientPhone.trim()) return;
@@ -229,8 +244,11 @@ export default function BookingPage() {
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-10 h-10 text-green-600" />
           </div>
-          <h2 className="text-2xl font-display font-bold text-primary">Appointment {bookingResult.bookingType === 'instant' ? 'Booked' : 'Requested'}!</h2>
-          <p className="text-text-main/60 leading-relaxed">{bookingResult.message}</p>
+          <h2 className="text-2xl font-display font-bold text-primary">Appointment Request Received!</h2>
+          <p className="text-text-main/60 leading-relaxed font-medium">
+            Your request has been sent to the doctor. 
+            <span className="block text-primary font-bold mt-1 italic">Please wait for confirmation before visiting the clinic.</span>
+          </p>
 
           <div className="bg-hospital-bg rounded-2xl p-6 text-left space-y-3 text-sm">
             <div className="flex justify-between">
@@ -251,7 +269,20 @@ export default function BookingPage() {
             </div>
           </div>
 
-          {bookingResult.bookingType === 'request' && (
+          {bookingResult.appointmentType === 'followup' && (
+            <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5 text-left space-y-2 animate-pulse">
+              <div className="flex items-center gap-2 text-primary">
+                <Info className="w-4 h-4" />
+                <span className="font-bold text-sm">Follow-up Detected</span>
+              </div>
+              <p className="text-xs text-blue-800 leading-relaxed">
+                Since you've visited <strong>{selectedDoctor?.name}</strong> within the last 7 days, 
+                this appointment will be considered a <strong>Follow-up</strong> once confirmed by the doctor.
+              </p>
+            </div>
+          )}
+
+          {bookingResult.bookingType === 'request' && bookingResult.appointmentType !== 'followup' && (
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800 font-medium leading-relaxed">
               <Info className="w-4 h-4 inline mr-1 -mt-0.5" />
               This is a request booking. The doctor will review and confirm your appointment.
@@ -655,6 +686,19 @@ export default function BookingPage() {
                   className="w-full pl-11 pr-4 py-4 bg-hospital-bg border border-divider rounded-2xl text-sm font-bold outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary transition-all placeholder:text-text-main/20"
                 />
               </div>
+            </div>
+          </div>
+
+          {/* Follow-up Note */}
+          <div className="bg-hospital-bg rounded-2xl p-4 border border-divider/50 flex items-start gap-3">
+            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+              <Info className="w-4 h-4 text-primary" />
+            </div>
+            <div className="space-y-1">
+              <p className="text-[10px] font-black uppercase tracking-widest text-text-main/30">Follow-up Policy</p>
+              <p className="text-xs text-text-main/60 leading-relaxed">
+                If you have visited this doctor in the last 7 days, this appointment will be treated as a <strong className="text-primary">Follow-up</strong> after doctor confirmation.
+              </p>
             </div>
           </div>
 

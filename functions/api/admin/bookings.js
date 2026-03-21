@@ -10,10 +10,16 @@ import { sendBookingNotification, actionToEvent } from '../_utils/brevoNotificat
 import { FieldValue } from 'firebase-admin/firestore';
 
 export default async function handler(req, res) {
+  // Special check for follow-up before booking (needs to be above generic GET)
+  if (req.method === 'GET' && req.query.checkFollowup === 'true') {
+     return handleFollowupCheck(req, res);
+  }
+
   if (req.method === 'GET') return handleGet(req, res);
   if (req.method === 'POST') return handlePost(req, res);
   if (req.method === 'PATCH') return handlePatch(req, res);
   if (req.method === 'DELETE') return handleDelete(req, res);
+
   return sendError(res, 405, 'Method not allowed');
 }
 
@@ -57,10 +63,14 @@ async function handleGet(req, res) {
   if (result.error) return sendError(res, result.status, result.error);
 
   const { user } = result;
-  const { doctorId, dateFrom, dateTo, status } = req.query;
+  const { doctorId, dateFrom, dateTo, status, patientPhone } = req.query;
 
   try {
     let query = db.collection('appointments');
+
+    if (patientPhone) {
+      query = query.where('patientId', '==', patientPhone);
+    }
 
     // Doctor can only see their own bookings
     const filterDoctorId = user.role === 'doctor' ? user.doctorId : (doctorId || null);
@@ -181,7 +191,7 @@ async function handlePost(req, res) {
       appointmentDate: date,
       timeSlot: time,
       bookingType,
-      type: 'new',
+      type: await detectFollowUp(patientPhone, doctorId),
       status: appointmentStatus,
       createdAt: FieldValue.serverTimestamp(),
       confirmedAt: appointmentStatus === 'confirmed' ? FieldValue.serverTimestamp() : null,
@@ -372,5 +382,49 @@ async function handlePatch(req, res) {
   } catch (error) {
     console.error('Error in PATCH /api/admin/bookings:', error);
     return sendError(res, 500, `Internal server error: ${error.message}`);
+  }
+}
+
+async function handleFollowupCheck(req, res) {
+  const admin = await requireAdmin(req, res);
+  if (!admin) return;
+
+  const { patientPhone, doctorId } = req.query;
+  console.log('[FollowupCheck] params:', { patientPhone, doctorId });
+  if (!patientPhone || !doctorId) return sendError(res, 400, 'Missing params');
+
+  const type = await detectFollowUp(patientPhone, doctorId);
+  console.log('[FollowupCheck] result type:', type);
+  return sendSuccess(res, { type });
+}
+
+async function detectFollowUp(patientId, doctorId) {
+  console.log('[detectFollowUp] checking patientId:', patientId, 'for doctor:', doctorId);
+  try {
+    const recentAppointments = await db.collection('appointments')
+      .where('patientId', '==', patientId)
+      .where('doctorId', '==', doctorId)
+      .get();
+      
+    console.log('[detectFollowUp] found docs:', recentAppointments.size);
+    if (recentAppointments.empty) return 'new';
+    
+    const matching = recentAppointments.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+      .filter(a => ['confirmed', 'completed'].includes(a.status))
+      .sort((a, b) => (b.appointmentDate || '').localeCompare(a.appointmentDate || ''));
+      
+    console.log('[detectFollowUp] matching confirmed/completed:', matching.length);
+    if (matching.length === 0) return 'new';
+    
+    console.log('[detectFollowUp] last appointment date:', matching[0].appointmentDate);
+    const lastDate = new Date(matching[0].appointmentDate + 'T00:00:00');
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const diffDays = Math.floor((today.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
+    
+    console.log('[detectFollowUp] diff days:', diffDays);
+    return diffDays <= 7 ? 'followup' : 'new';
+  } catch (error) {
+    console.error('detectFollowUp error:', error);
+    return 'new';
   }
 }
