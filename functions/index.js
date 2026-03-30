@@ -30,20 +30,43 @@ const app = express();
 app.use(cors({ origin: true }));
 app.use(express.json());
 
-// Public routes
-app.all("/appointments", appointmentsHandler);
-app.all("/doctors", doctorsHandler);
-app.all("/healthCheckups", healthCheckupsHandler);
-app.all("/slots", slotsHandler);
+// 1. Prefix-stripping middleware
+// Handles the difference between Firebase Hosting rewrites (which include /api) 
+// and direct function calls (which typically do not).
+app.use((req, res, next) => {
+    if (req.url.startsWith('/api/') || req.url === '/api') {
+        req.url = req.url.replace(/^\/api/, '') || '/';
+    }
+    next();
+});
 
-// Admin routes (prefixed to avoid collision)
-app.all("/admin/bookings", adminBookingsHandler);
-app.all("/admin/doctors", adminDoctorsHandler);
-app.all("/admin/healthCheckups", adminHealthCheckupsHandler);
-app.all("/admin/leaves", adminLeavesHandler);
-app.all("/admin/me", adminMeHandler);
-app.all("/admin/profile", adminProfileHandler);
-app.all("/admin/slots", adminSlotsHandler);
+// 2. Health check route for diagnostics
+app.get("/health", (req, res) => res.json({ 
+    success: true, 
+    message: "API is alive", 
+    timestamp: new Date().toISOString() 
+}));
+
+// 3. Define the routes in a router
+const router = express.Router();
+
+// Public routes
+router.all("/appointments", appointmentsHandler);
+router.all("/doctors", doctorsHandler);
+router.all("/healthCheckups", healthCheckupsHandler);
+router.all("/slots", slotsHandler);
+
+// Admin routes
+router.all("/admin/bookings", adminBookingsHandler);
+router.all("/admin/doctors", adminDoctorsHandler);
+router.all("/admin/healthCheckups", adminHealthCheckupsHandler);
+router.all("/admin/leaves", adminLeavesHandler);
+router.all("/admin/me", adminMeHandler);
+router.all("/admin/profile", adminProfileHandler);
+router.all("/admin/slots", adminSlotsHandler);
+
+// 4. Mount the router
+app.use(router);
 
 export const api = onRequest(app);
 
