@@ -11,7 +11,7 @@ import { normalizePhone } from './_utils/phoneUtils.js';
 import { generateSlotTimes, buildSlotId, classifyBookingDate } from './_utils/slotGenerator.js';
 import { checkDoctorLeave } from './_utils/leaveChecker.js';
 import { sendError, sendSuccess, validateRequired, isValidDate, isValidTime } from './_utils/apiHelpers.js';
-import { sendBookingNotification, actionToEvent } from './_utils/brevoNotifications.js';
+import { sendBookingNotification } from './_utils/brevoNotifications.js';
 import { FieldValue } from 'firebase-admin/firestore';
 
 export default async function handler(req, res) {
