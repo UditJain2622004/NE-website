@@ -301,7 +301,7 @@ export default function HealthCheckupsList() {
                     </button>
                     <button
                       onClick={() => handleAction(checkup.id, 'cancel')}
-                      className="p-2.5 bg-red-50 text-red-500 rounded-xl hover:bg-red-100 transition-colors border border-red-100"
+                      className="p-2.5 bg-red-50 text-red-500 rounded-xl hover:bg-red-100 transition-colors border border-red-300"
                       title="Cancel Checkup"
                     >
                       <X className="w-5 h-5" />
@@ -311,7 +311,7 @@ export default function HealthCheckupsList() {
                 {['cancelled', 'completed'].includes(checkup.status) && (
                   <button
                     onClick={() => handleDelete(checkup.id)}
-                    className="p-2.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all border border-transparent hover:border-red-100"
+                    className="p-2.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all border border-red-300"
                     title="Delete Record"
                   >
                     <X className="w-5 h-5" />

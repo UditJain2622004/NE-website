@@ -16,13 +16,13 @@ const Footer = () => {
               </div>
               <span className="text-white font-bold text-lg tracking-tighter">Nexus Enliven</span>
             </Link>
-            <div className="flex gap-2.5">
+            {/* <div className="flex gap-2.5">
               {[Facebook, Instagram, Twitter].map((Icon, i) => (
                 <a key={i} href="#" className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
                   <Icon size={14} className="text-gray-400" />
                 </a>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Quick contact row */}
@@ -71,7 +71,7 @@ const Footer = () => {
         {/* === DESKTOP FOOTER === */}
         <div className="hidden lg:block pt-24 pb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-16">
-            
+
             {/* Brand Column */}
             <div className="space-y-8">
               <Link to="/" className="flex items-center gap-1">
@@ -89,13 +89,13 @@ const Footer = () => {
               <p className="text-gray-400 leading-relaxed font-medium text-sm">
                 Providing quality healthcare with compassion and excellence. Your health is our priority.
               </p>
-              <div className="flex gap-4">
+              {/* <div className="flex gap-4">
                 {[Facebook, Twitter, Instagram, Linkedin].map((Icon, i) => (
                   <a key={i} href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-secondary hover:border-secondary transition-all group">
                     <Icon size={18} className="text-gray-400 group-hover:text-white transition-colors" />
                   </a>
                 ))}
-              </div>
+              </div> */}
             </div>
 
             {/* Quick Links */}
@@ -128,7 +128,7 @@ const Footer = () => {
                 <span className="w-1 h-6 bg-secondary rounded-full"></span>
                 Departments
               </h3>
-               <ul className="space-y-4">
+              <ul className="space-y-4">
                 {[
                   { name: 'Medicine', path: '/departments/medicine' },
                   { name: 'Radiology', path: '/departments/radiology' },
@@ -151,7 +151,7 @@ const Footer = () => {
                 <span className="w-1 h-6 bg-secondary rounded-full"></span>
                 Services
               </h3>
-               <ul className="space-y-4">
+              <ul className="space-y-4">
                 {[
                   { name: 'Clinic', path: '/services/clinic' },
                   { name: 'Consultation', path: '/services/consultation' },
@@ -204,7 +204,7 @@ Dakshina Kannada Dist, Karnataka - 575014`} />
           </div>
         </div>
       </div>
-      
+
       {/* Background element */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/20 -skew-x-12 transform translate-x-1/2 pointer-events-none"></div>
     </footer>

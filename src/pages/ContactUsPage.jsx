@@ -47,7 +47,7 @@ const ContactUsPage = () => {
       <div className="container-custom py-16 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
           {/* Contact Details */}
-          <div className="lg:col-span-1 space-y-10">
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-12">
             {contactInfo.map((info, index) => {
               const Icon = info.icon;
               return (
@@ -70,7 +70,7 @@ const ContactUsPage = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="lg:col-span-1">
+          {/* <div className="lg:col-span-1">
             <div className="card-modern p-8 lg:p-12 bg-white">
               <div className="flex items-center gap-4 mb-10">
                 <div className="w-12 h-12 bg-primary/5 text-primary rounded-xl flex items-center justify-center">
@@ -136,7 +136,7 @@ const ContactUsPage = () => {
                 </button>
               </form>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -144,15 +144,15 @@ const ContactUsPage = () => {
       <section className="container-custom pb-24 lg:pb-32">
         <div className="aspect-[21/9] bg-gray-200 rounded-3xl overflow-hidden relative group">
           <div className="absolute inset-0 bg-primary/10 pointer-events-none group-hover:bg-transparent transition-all duration-500"></div>
-          <iframe 
+          <iframe
             src="https://maps.google.com/maps?q=12.9883611,74.8006111&z=19&output=embed"
 
-                // src="https://www.google.com/maps?q=Door No.4 57 A VIJAYA+MAHAL+Surathkal+Mangaluru+575014&output=embed"
-            width="100%" 
-            height="100%" 
-            style={{ border: 0 }} 
-            allowFullScreen="" 
-            loading="lazy" 
+            // src="https://www.google.com/maps?q=Door No.4 57 A VIJAYA+MAHAL+Surathkal+Mangaluru+575014&output=embed"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           ></iframe>
         </div>

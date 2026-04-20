@@ -1,10 +1,10 @@
 // Pending Appointments Review Page
 import { useState, useEffect } from 'react';
 import { useAdminAuth } from '../../hooks/useAdminAuth';
-import { 
-  Loader2, Check, X, Clock, 
+import {
+  Loader2, Check, X, Clock,
   User, Phone, Calendar,
-  AlertCircle, ChevronRight, RefreshCw, Search
+  AlertCircle, ChevronRight, RefreshCw, Search, Mail
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { db } from '../../firebase/config';
@@ -109,7 +109,7 @@ export default function PendingApprovals({ doctorId }) {
       {/* Search Bar */}
       <div className="bg-white p-2 rounded-2xl flex items-center gap-3 px-4 border border-divider shadow-sm">
         <Search className="w-5 h-5 text-text-main/20" />
-        <input 
+        <input
           type="text"
           placeholder="Search pending requests..."
           value={search}
@@ -130,7 +130,7 @@ export default function PendingApprovals({ doctorId }) {
         <div className="flex-1">
           <div className="flex items-center justify-between mb-1">
             <h3 className="text-lg font-bold text-yellow-900">Pending Requests</h3>
-            <button 
+            <button
               onClick={fetchPending}
               disabled={isRefreshing}
               className="p-2 hover:bg-yellow-100 rounded-xl transition-all"
@@ -156,7 +156,7 @@ export default function PendingApprovals({ doctorId }) {
           </div>
         ) : (
           filteredAppointments.map((app) => (
-            <div 
+            <div
               key={app.id}
               className="bg-white p-6 rounded-2xl border border-divider hover:border-primary/20 hover:shadow-xl transition-all flex flex-col md:flex-row md:items-center gap-6"
             >
@@ -192,6 +192,14 @@ export default function PendingApprovals({ doctorId }) {
                     </div>
                   )}
                 </div>
+                {app.patientEmail && (
+                  <div className="flex flex-wrap items-center gap-4 text-sm text-text-main/60 font-medium">
+                    <div className="flex items-center gap-1.5">
+                      <Mail className="w-4 h-4" />
+                      {app.patientEmail}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center gap-3 shrink-0">
@@ -205,7 +213,7 @@ export default function PendingApprovals({ doctorId }) {
                 <button
                   disabled={processingId === app.id}
                   onClick={() => handleAction(app.id, 'reject')}
-                  className="h-12 px-4 bg-red-50 text-red-500 rounded-xl font-bold hover:bg-red-100 transition-all border border-red-100 active:scale-95 disabled:opacity-50"
+                  className="h-12 px-4 bg-red-50 text-red-500 rounded-xl font-bold hover:bg-red-100 transition-all border border-red-300 active:scale-95 disabled:opacity-50"
                 >
                   <X className="w-5 h-5" />
                 </button>

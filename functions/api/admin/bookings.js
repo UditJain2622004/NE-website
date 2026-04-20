@@ -6,13 +6,13 @@ import { db } from '../_utils/firebaseAdmin.js';
 import { verifyAuth, requireAdmin } from '../_utils/authMiddleware.js';
 import { sendError, sendSuccess, validateRequired, isValidDate, isValidTime } from '../_utils/apiHelpers.js';
 import { generateSlotTimes, buildSlotId, classifyBookingDate } from '../_utils/slotGenerator.js';
-import { sendBookingNotification, actionToEvent } from '../_utils/brevoNotifications.js';
+// import { sendBookingNotification, actionToEvent } from '../_utils/brevoNotifications.js';
 import { FieldValue } from 'firebase-admin/firestore';
 
 export default async function handler(req, res) {
   // Special check for follow-up before booking (needs to be above generic GET)
   if (req.method === 'GET' && req.query.checkFollowup === 'true') {
-     return handleFollowupCheck(req, res);
+    return handleFollowupCheck(req, res);
   }
 
   if (req.method === 'GET') return handleGet(req, res);
@@ -106,7 +106,7 @@ async function handleGet(req, res) {
 
     // Apply status filter (now handled in query above, but keeping for safety if multi-status isn't fully supported)
     if (status && !status.includes(',')) {
-       // if it was a single status it's already filtered, if multiple we keep it for fallback
+      // if it was a single status it's already filtered, if multiple we keep it for fallback
     } else if (status) {
       const statuses = status.split(',').map(s => s.trim());
       bookings = bookings.filter(b => statuses.includes(b.status));
@@ -405,22 +405,22 @@ async function detectFollowUp(patientId, doctorId) {
       .where('patientId', '==', patientId)
       .where('doctorId', '==', doctorId)
       .get();
-      
+
     console.log('[detectFollowUp] found docs:', recentAppointments.size);
     if (recentAppointments.empty) return 'new';
-    
+
     const matching = recentAppointments.docs.map(doc => ({ id: doc.id, ...doc.data() }))
       .filter(a => ['confirmed', 'completed'].includes(a.status))
       .sort((a, b) => (b.appointmentDate || '').localeCompare(a.appointmentDate || ''));
-      
+
     console.log('[detectFollowUp] matching confirmed/completed:', matching.length);
     if (matching.length === 0) return 'new';
-    
+
     console.log('[detectFollowUp] last appointment date:', matching[0].appointmentDate);
     const lastDate = new Date(matching[0].appointmentDate + 'T00:00:00');
     const today = new Date(); today.setHours(0, 0, 0, 0);
     const diffDays = Math.floor((today.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
-    
+
     console.log('[detectFollowUp] diff days:', diffDays);
     return diffDays <= 7 ? 'followup' : 'new';
   } catch (error) {

@@ -3,8 +3,8 @@
 
 import { useState, useEffect } from 'react';
 import { useAdminAuth } from '../../hooks/useAdminAuth';
-import { 
-  Loader2, Filter, ChevronLeft, 
+import {
+  Loader2, Filter, ChevronLeft,
   ChevronRight, Calendar, Search,
   CheckCircle2, XCircle, Clock,
   MoreVertical, Phone, Mail,
@@ -19,7 +19,7 @@ export default function BookingsList({ doctorId }) {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
-  
+
   // Tabs configuration based on role
   const tabs = [
     { id: 'confirmed', label: 'Scheduled' },
@@ -88,7 +88,7 @@ export default function BookingsList({ doctorId }) {
 
     const handleRefresh = () => fetchBookings();
     window.addEventListener('refreshBookings', handleRefresh);
-    
+
     return () => {
       unsubscribe();
       window.removeEventListener('refreshBookings', handleRefresh);
@@ -147,7 +147,7 @@ export default function BookingsList({ doctorId }) {
       {/* Search Bar */}
       <div className="bg-hospital-bg p-2 rounded-2xl flex items-center gap-3 px-4 border border-divider/50">
         <Search className="w-5 h-5 text-text-main/20" />
-        <input 
+        <input
           type="text"
           placeholder="Search appointments by patient name or phone..."
           value={search}
@@ -164,16 +164,16 @@ export default function BookingsList({ doctorId }) {
       {/* Filters Bar */}
       <div className="bg-white p-4 lg:p-6 rounded-2xl shadow-sm border border-divider flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div className="flex items-center gap-2">
-          <button 
-            onClick={() => changeDate(-1)} 
+          <button
+            onClick={() => changeDate(-1)}
             className="p-2 border border-divider rounded-xl hover:bg-hospital-bg transition-colors"
           >
             <ChevronLeft className="w-5 h-5 text-text-main/60" />
           </button>
-          
+
           <div className="relative group flex-1 lg:w-48">
             <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
-            <input 
+            <input
               type="date"
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
@@ -181,13 +181,13 @@ export default function BookingsList({ doctorId }) {
             />
           </div>
 
-          <button 
-            onClick={() => changeDate(1)} 
+          <button
+            onClick={() => changeDate(1)}
             className="p-2 border border-divider rounded-xl hover:bg-hospital-bg transition-colors"
           >
             <ChevronRight className="w-5 h-5 text-text-main/60" />
           </button>
-          
+
           {/* <button 
             onClick={() => setDateFilter(format(new Date(), 'yyyy-MM-dd'))}
             className="text-xs font-bold text-primary px-3 py-2 bg-primary/5 rounded-lg hover:bg-primary/10"
@@ -198,10 +198,10 @@ export default function BookingsList({ doctorId }) {
 
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex flex-wrap gap-2">
-            <button 
-               onClick={fetchBookings}
-               className="p-2 border border-divider rounded-xl hover:bg-hospital-bg transition-colors"
-               title="Refresh List"
+            <button
+              onClick={fetchBookings}
+              className="p-2 border border-divider rounded-xl hover:bg-hospital-bg transition-colors"
+              title="Refresh List"
             >
               <RefreshCw className={`w-4 h-4 text-primary ${isRefreshing ? 'animate-spin' : ''}`} />
             </button>
@@ -210,11 +210,10 @@ export default function BookingsList({ doctorId }) {
               <button
                 key={tab.id}
                 onClick={() => setStatusFilter(tab.id)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold capitalize transition-all border ${
-                  statusFilter === tab.id 
-                    ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' 
-                    : 'bg-white text-text-main/40 border-divider hover:border-text-main/20'
-                }`}
+                className={`px-4 py-2 rounded-xl text-xs font-bold capitalize transition-all border ${statusFilter === tab.id
+                  ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20'
+                  : 'bg-white text-text-main/40 border-divider hover:border-text-main/20'
+                  }`}
               >
                 {tab.label}
               </button>
@@ -242,7 +241,7 @@ export default function BookingsList({ doctorId }) {
           </div>
         ) : (
           filteredBookings.map((booking) => (
-            <div 
+            <div
               key={booking.id}
               className="bg-white p-4 lg:p-5 rounded-2xl border border-divider hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all group lg:flex lg:items-center gap-6"
             >
@@ -288,16 +287,16 @@ export default function BookingsList({ doctorId }) {
               <div className="flex flex-wrap items-center gap-2 mt-4 lg:mt-0 lg:shrink-0 lg:w-64 lg:justify-end">
                 {booking.status === 'pending' && (
                   <>
-                    <button 
+                    <button
                       onClick={() => handleAction(booking.id, 'confirm')}
                       className="flex-1 lg:flex-none p-2.5 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-colors flex items-center justify-center gap-2 px-4 shadow-lg shadow-green-500/20"
                     >
                       <Check className="w-5 h-5" />
                       <span className="lg:hidden font-bold">Confirm</span>
                     </button>
-                    <button 
+                    <button
                       onClick={() => handleAction(booking.id, 'reject')}
-                      className="flex-1 lg:flex-none p-2.5 bg-red-50 text-red-500 rounded-xl hover:bg-red-100 transition-colors flex items-center justify-center gap-2 px-4 border border-red-100"
+                      className="flex-1 lg:flex-none p-2.5 bg-red-50 text-red-500 rounded-xl hover:bg-red-100 transition-colors flex items-center justify-center gap-2 px-4 border border-red-300"
                     >
                       <X className="w-5 h-5" />
                       <span className="lg:hidden font-bold">Reject</span>
@@ -306,17 +305,17 @@ export default function BookingsList({ doctorId }) {
                 )}
                 {booking.status === 'confirmed' && (
                   <>
-                    <button 
+                    <button
                       onClick={() => handleAction(booking.id, 'complete')}
                       className="flex-1 lg:flex-none p-2.5 bg-primary text-white rounded-xl hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 px-4 shadow-lg shadow-primary/20"
                     >
                       <CheckCircle2 className="w-5 h-5" />
                       <span className="font-bold">Mark Complete</span>
                     </button>
-                    <button 
-                       onClick={() => handleAction(booking.id, 'cancel')}
-                       className="p-2.5 bg-red-50 text-red-500 rounded-xl hover:bg-red-100 transition-colors"
-                       title="Cancel Appointment"
+                    <button
+                      onClick={() => handleAction(booking.id, 'cancel')}
+                      className="p-2.5 bg-red-50 text-red-500 rounded-xl hover:bg-red-100 border border-red-300 transition-colors"
+                      title="Cancel Appointment"
                     >
                       <X className="w-5 h-5" />
                     </button>
@@ -324,10 +323,10 @@ export default function BookingsList({ doctorId }) {
                 )}
                 {['rejected', 'cancelled', 'completed'].includes(booking.status) && (
                   <div className="flex items-center gap-2 w-full lg:w-auto">
-                  
-                    <button 
+
+                    <button
                       onClick={() => handleDelete(booking.id)}
-                      className="p-2.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all border border-transparent hover:border-red-100"
+                      className="p-2.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all border border-red-300"
                       title="Delete Entry"
                     >
                       <X className="w-5 h-5" />

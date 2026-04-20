@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:all": "npm run dev & npm --prefix functions run serve",
     "staff": "vercel dev",
     "build": "vite build",
     "lint": "eslint .",

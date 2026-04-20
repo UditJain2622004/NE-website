@@ -18,9 +18,9 @@ import adminProfileHandler from "./api/admin/profile.js";
 import adminSlotsHandler from "./api/admin/slots.js";
 
 // Notification logic
-import { sendBookingNotification } from "./api/_utils/brevoNotifications.js";
+// import { sendBookingNotification } from "./api/_utils/brevoNotifications.js";
 
-setGlobalOptions({ 
+setGlobalOptions({
     maxInstances: 10,
     region: 'asia-south1'
 });
@@ -41,10 +41,10 @@ app.use((req, res, next) => {
 });
 
 // 2. Health check route for diagnostics
-app.get("/health", (req, res) => res.json({ 
-    success: true, 
-    message: "API is alive", 
-    timestamp: new Date().toISOString() 
+app.get("/health", (req, res) => res.json({
+    success: true,
+    message: "API is alive",
+    timestamp: new Date().toISOString()
 }));
 
 // 3. Define the routes in a router
@@ -88,7 +88,7 @@ export const notifications = onDocumentWritten("appointments/{id}", async (event
     // Case 2: Status change
     if (beforeData.status !== afterData.status) {
         console.log(`[Notification] Status change for ${event.params.id}: ${beforeData.status} -> ${afterData.status}`);
-        
+
         const statusToEventMap = {
             'confirmed': 'booking_confirmed',
             'rejected': 'booking_rejected',

@@ -3,16 +3,17 @@ export const generalFaqs = [
     question: "How do I book an appointment?",
     answer: "You can book an appointment by clicking the 'Book Appointment' button on the navbar or any doctor card. You can also call our 24/7 helpline."
   },
-  {
-    question: "What insurance providers do you accept?",
-    answer: "We accept most major insurance providers including BlueCross, Aetna, Cigna, and UnitedHealthcare. Please contact our billing department for a full list."
-  },
+
   {
     question: "What are your visiting hours?",
-    answer: "Visiting hours are daily from 9:00 AM to 10:00 PM. Special restrictions may apply in some departments."
+    answer: "Visiting hours are daily from 9:00 AM to 10:00 PM. Although different doctors may have different timings, you can check the exact timings on the doctor's profile."
   },
   {
-    question: "Do you offer emergency services?",
-    answer: "Yes, we have a 24/7 dedicated emergency department equipped with advanced trauma care and life-support systems."
-  }
+    question: "Do I need to carry any documents for my appointment?",
+    answer: "Yes, please carry a valid ID, any previous medical records, prescriptions, and test reports for better consultation."
+  },
+  {
+    question: "How early should I arrive for my appointment?",
+    answer: "We recommend arriving at least 10–15 minutes before your scheduled time to complete any necessary formalities."
+  },
 ];
