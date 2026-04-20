@@ -5,6 +5,10 @@ import { format } from 'date-fns';
 import { FieldValue } from 'firebase-admin/firestore';
 
 const ACTION_TO_BREVO_TYPE = {
+  // From Firestore trigger (via dispatchNotification)
+  booking_confirmed: TYPES.CONFIRM,
+  booking_rejected: TYPES.REJECT,
+  // Legacy: direct calls from admin API
   confirm: TYPES.CONFIRM,
   reject: TYPES.REJECT,
 };
@@ -45,50 +49,36 @@ export async function sendBookingNotification(action, appointmentData) {
   };
 
   if (patientEmail) {
-    try {
-      const result = await sendAppointmentEmail(
-        patientName,
-        patientEmail,
-        doctorName,
-        formattedDate,
-        timeSlot,
-        brevoType,
-        appointmentId
-      );
-      notificationLog.email = { status: 'sent', messageId: result?.messageId || null };
-      console.log(`[Brevo] Email (${action}) sent to ${patientEmail}`);
-    } catch (err) {
-      notificationLog.email = { status: 'failed', error: err.message };
-      console.error(`[Brevo] Email failed for ${patientEmail}:`, err.message);
-    }
+    const result = await sendAppointmentEmail(
+      patientName,
+      patientEmail,
+      doctorName,
+      formattedDate,
+      timeSlot,
+      brevoType,
+      appointmentId
+    );
+    notificationLog.email = { status: 'sent', messageId: result?.messageId || null };
+    console.log(`[Brevo] Email (${action}) sent to ${patientEmail}`);
   }
 
   if (patientPhone) {
-    try {
-      const normalizedPhone = normalizePhone(patientPhone);
-      const result = await sendSMS(
-        patientName,
-        normalizedPhone,
-        doctorName,
-        formattedDate,
-        timeSlot,
-        brevoType
-      );
-      notificationLog.sms = { status: 'sent', messageId: result?.messageId || null };
-      console.log(`[Brevo] SMS (${action}) sent to ${normalizedPhone}`);
-    } catch (err) {
-      notificationLog.sms = { status: 'failed', error: err.message };
-      console.error(`[Brevo] SMS failed for ${patientPhone}:`, err.message);
-    }
+    const normalizedPhone = normalizePhone(patientPhone);
+    const result = await sendSMS(
+      patientName,
+      normalizedPhone,
+      doctorName,
+      formattedDate,
+      timeSlot,
+      brevoType
+    );
+    notificationLog.sms = { status: 'sent', messageId: result?.messageId || null };
+    console.log(`[Brevo] SMS (${action}) sent to ${normalizedPhone}`);
   }
 
   if (appointmentId) {
-    try {
-      await db.collection('appointments').doc(appointmentId).update({
-        lastNotification: notificationLog,
-      });
-    } catch (err) {
-      console.error(`[Brevo] Failed to log notification for ${appointmentId}:`, err.message);
-    }
+    await db.collection('appointments').doc(appointmentId).update({
+      lastNotification: notificationLog,
+    });
   }
 }

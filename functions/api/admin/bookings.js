@@ -6,7 +6,6 @@ import { db } from '../_utils/firebaseAdmin.js';
 import { verifyAuth, requireAdmin } from '../_utils/authMiddleware.js';
 import { sendError, sendSuccess, validateRequired, isValidDate, isValidTime } from '../_utils/apiHelpers.js';
 import { generateSlotTimes, buildSlotId, classifyBookingDate } from '../_utils/slotGenerator.js';
-import { sendBookingNotification } from '../_utils/brevoNotifications.js';
 import { FieldValue } from 'firebase-admin/firestore';
 
 export default async function handler(req, res) {
@@ -326,9 +325,7 @@ async function handlePatch(req, res) {
           await batch.commit();
 
           const doctorDoc = await db.collection('doctors').doc(appointment.doctorId).get();
-          const doctorName = doctorDoc.exists ? doctorDoc.data().name : appointment.doctorId;
-          sendBookingNotification(action, { ...appointment, appointmentId, doctorName })
-            .catch(err => console.error('[Brevo] Notification error:', err.message));
+          // notification is handled by trigger in index.js
 
           return sendSuccess(res, {
             appointmentId,
@@ -357,10 +354,7 @@ async function handlePatch(req, res) {
     await appointmentRef.update(updateData);
 
     if (action === 'confirm' || action === 'reject') {
-      const doctorDoc = await db.collection('doctors').doc(appointment.doctorId).get();
-      const doctorName = doctorDoc.exists ? doctorDoc.data().name : appointment.doctorId;
-      sendBookingNotification(action, { ...appointment, appointmentId, doctorName })
-        .catch(err => console.error('[Brevo] Notification error:', err.message));
+      // notification is handled by trigger in index.js
     }
 
     return sendSuccess(res, {

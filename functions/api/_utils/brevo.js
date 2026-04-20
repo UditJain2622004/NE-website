@@ -5,35 +5,18 @@ export const TYPES = {
   REJECT: "reject"
 };
 
-const RETRY_DELAYS = [0, 10 * 60_000, 60 * 60_000, 2 * 60 * 60_000, 8 * 60 * 60_000];
-const MAX_ATTEMPTS = 5;
+async function handleResponse(res, label) {
+  if (res.ok || (res.status >= 200 && res.status < 300)) return res;
 
-async function withRetry(fn, label) {
-  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-    if (attempt > 0) {
-      const delay = RETRY_DELAYS[attempt] || RETRY_DELAYS[RETRY_DELAYS.length - 1];
-      console.log(`[Brevo] ${label} — retry #${attempt} in ${delay / 1000}s`);
-      await new Promise(r => setTimeout(r, delay));
-    }
-    try {
-      const res = await fn();
-      if (res.ok || (res.status >= 200 && res.status < 300)) return res;
+  const body = await res.text();
+  const errorMsg = `[Brevo] ${label} — ${res.status}: ${body}`;
+  console.error(errorMsg);
 
-      if (res.status === 429 || res.status >= 500) {
-        console.warn(`[Brevo] ${label} — attempt ${attempt + 1} got ${res.status}, will retry`);
-        continue;
-      }
-
-      // 4xx (except 429) — don't retry, it won't help
-      const body = await res.text();
-      console.error(`[Brevo] ${label} — ${res.status}: ${body}`);
-      return res;
-    } catch (err) {
-      console.warn(`[Brevo] ${label} — attempt ${attempt + 1} network error: ${err.message}`);
-      if (attempt === MAX_ATTEMPTS - 1) throw err;
-    }
-  }
-  throw new Error(`${label} failed after ${MAX_ATTEMPTS} attempts`);
+  // Throw original error so Cloud Tasks can decide to retry based on status
+  // We typically retry on 429 and 500+
+  const error = new Error(errorMsg);
+  error.status = res.status;
+  throw error;
 }
 
 const getSMSContent=(patientName,doctorName,appointmentDate,timeSlot,type)=>{
@@ -165,71 +148,61 @@ const getEmailSubject=(type)=>{
 }
 }
 
-
-
 export async function sendSMS(patientName, patientPhone, doctorName, appointmentDate, timeSlot, type) {
-  const response = await withRetry(
-    () => fetch("https://api.brevo.com/v3/transactionalSMS/send", {
-      method: "POST",
-      headers: {
-        "accept": "application/json",
-        "api-key": process.env.BREVO_API_KEY,
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        sender: "NE Hospital",
-        recipient: String(patientPhone),
-        content: getSMSContent(patientName, doctorName, appointmentDate, timeSlot, type),
-        type: "transactional",
-        tag: type,
-        organisationPrefix: "Nexus Enliven Hospital"
-      })
-    }),
-    `SMS to ${patientPhone}`
-  );
+  const response = await fetch("https://api.brevo.com/v3/transactionalSMS/send", {
+    method: "POST",
+    headers: {
+      "accept": "application/json",
+      "api-key": process.env.BREVO_API_KEY,
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({
+      sender: "NE Hospital",
+      recipient: String(patientPhone),
+      content: getSMSContent(patientName, doctorName, appointmentDate, timeSlot, type),
+      type: "transactional",
+      tag: type,
+      organisationPrefix: "Nexus Enliven Hospital"
+    })
+  });
 
+  await handleResponse(response, `SMS to ${patientPhone}`);
   const data = await response.json();
   return data;
 }
 
-
-
-
-
 export async function sendAppointmentEmail(patientName, patientEmail, doctorName, appointmentDate, timeSlot, type, appointmentId) {
-  const response = await withRetry(
-    () => fetch("https://api.brevo.com/v3/smtp/email", {
-      method: "POST",
-      headers: {
-        "accept": "application/json",
-        "api-key": process.env.BREVO_API_KEY,
-        "content-type": "application/json"
+  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+    method: "POST",
+    headers: {
+      "accept": "application/json",
+      "api-key": process.env.BREVO_API_KEY,
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({
+      sender: {
+        name: "Nexus Enliven Hospital",
+        email: "uditjain2622004@gmail.com"
       },
-      body: JSON.stringify({
-        sender: {
-          name: "Nexus Enliven Hospital",
-          email: "uditjain2622004@gmail.com"
-        },
-        to: [
-          {
-            email: patientEmail,
-            name: patientName
-          }
-        ],
-        subject: getEmailSubject(type),
-        params: {
-          patientName,
-          doctorName,
-          appointmentDate,
-          timeSlot
-        },
-        htmlContent: getEmailContent(type),
-        tags: [type, ...(appointmentId ? [appointmentId] : [])]
-      })
-    }),
-    `Email to ${patientEmail}`
-  );
+      to: [
+        {
+          email: patientEmail,
+          name: patientName
+        }
+      ],
+      subject: getEmailSubject(type),
+      params: {
+        patientName,
+        doctorName,
+        appointmentDate,
+        timeSlot
+      },
+      htmlContent: getEmailContent(type),
+      tags: [type, ...(appointmentId ? [appointmentId] : [])]
+    })
+  });
 
+  await handleResponse(response, `Email to ${patientEmail}`);
   const data = await response.json();
   return data;
 }

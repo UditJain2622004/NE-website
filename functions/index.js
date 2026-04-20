@@ -1,8 +1,13 @@
 import { setGlobalOptions } from "firebase-functions";
 import { onRequest } from "firebase-functions/v2/https";
 import { onDocumentWritten } from "firebase-functions/v2/firestore";
+import { onTaskDispatched } from "firebase-functions/v2/tasks";
+import { initializeApp, getApp } from "firebase-admin/app";
+import { getFunctions } from "firebase-admin/functions";
 import express from "express";
 import cors from "cors";
+
+initializeApp();
 
 // API Handlers
 import appointmentsHandler from "./api/appointments.js";
@@ -18,7 +23,7 @@ import adminProfileHandler from "./api/admin/profile.js";
 import adminSlotsHandler from "./api/admin/slots.js";
 
 // Notification logic
-// import { sendBookingNotification } from "./api/_utils/brevoNotifications.js";
+import { sendBookingNotification } from "./api/_utils/brevoNotifications.js";
 
 setGlobalOptions({
     maxInstances: 10,
@@ -71,37 +76,51 @@ app.use(router);
 export const api = onRequest(app);
 
 
+// ─── Task Queue Handlers ───────────────────────────────────────────────────
+
+export const processNotificationTask = onTaskDispatched({
+    retryConfig: {
+        maxAttempts: 5,
+        minBackoffSeconds: 60,
+    },
+    rateLimits: {
+        maxConcurrentDispatches: 5,
+    },
+    region: 'asia-south1'
+}, async (event) => {
+    const { action, appointmentData, type } = event.data;
+    return runNotification(action, appointmentData, type);
+});
+
 // ─── Background Notifications Function ──────────────────────────────────────
-// This function listens to Firestore changes and handles all notifications
+// This function listens to Firestore changes and enqueues tasks
 export const notifications = onDocumentWritten("appointments/{id}", async (event) => {
     const beforeData = event.data.before ? event.data.before.data() : null;
     const afterData = event.data.after ? event.data.after.data() : null;
 
     if (!afterData) return; // Ignore deletions
 
+    let notificationEvent = null;
+
     // Case 1: New booking created
     if (!beforeData) {
-        console.log(`[Notification] New booking detected for ID: ${event.params.id}`);
-        return sendBookingNotification('booking_created', afterData);
+        console.log(`[Queue] Enqueuing new booking notification: ${event.params.id}`);
+        notificationEvent = 'booking_created';
     }
-
     // Case 2: Status change
-    if (beforeData.status !== afterData.status) {
-        console.log(`[Notification] Status change for ${event.params.id}: ${beforeData.status} -> ${afterData.status}`);
-
+    else if (beforeData.status !== afterData.status) {
+        console.log(`[Queue] Enqueuing status change notification for ${event.params.id}: ${afterData.status}`);
         const statusToEventMap = {
             'confirmed': 'booking_confirmed',
             'rejected': 'booking_rejected',
             'cancelled': 'booking_cancelled',
             'completed': 'booking_completed',
         };
+        notificationEvent = statusToEventMap[afterData.status];
+    }
 
-        const notificationEvent = statusToEventMap[afterData.status];
-        if (notificationEvent) {
-            return sendBookingNotification(notificationEvent, afterData);
-        }
-    } else {
-        console.log(`[Notification] Ignoring non-status update for ID: ${event.params.id}`);
+    if (notificationEvent) {
+        await dispatchNotification({ action: notificationEvent, appointmentData: afterData });
     }
 });
 
@@ -112,25 +131,44 @@ export const healthCheckupNotifications = onDocumentWritten("healthCheckups/{id}
 
     if (!afterData) return;
 
-    // Use dynamic import to match existing logic if needed
-    const { sendHealthCheckupNotification } = await import('./api/_utils/brevoHealthCheckupNotifications.js');
+    let notificationEvent = null;
 
     if (!beforeData) {
-        console.log(`[Notification] New health checkup for ID: ${event.params.id}`);
-        return sendHealthCheckupNotification('checkup_booked', afterData);
-    }
-
-    if (beforeData.status !== afterData.status) {
-        console.log(`[Notification] Health checkup status change for ${event.params.id}: ${beforeData.status} -> ${afterData.status}`);
+        notificationEvent = 'checkup_booked';
+    } else if (beforeData.status !== afterData.status) {
         const eventMap = {
             'cancelled': 'checkup_cancelled',
             'completed': 'checkup_completed',
         };
-        const notifyEvent = eventMap[afterData.status];
-        if (notifyEvent) {
-            return sendHealthCheckupNotification(notifyEvent, afterData);
-        }
-    } else {
-        console.log(`[Notification] Ignoring minor health checkup update for ID: ${event.params.id}`);
+        notificationEvent = eventMap[afterData.status];
+    }
+
+    if (notificationEvent) {
+        await dispatchNotification({ action: notificationEvent, appointmentData: afterData, type: 'healthCheckup' });
     }
 });
+
+// ─── Dispatch Helper ─────────────────────────────────────────────────────────
+// In the local emulator, the Tasks queue SDK cannot reach the local task runner.
+// So we detect this and call the notification logic directly.
+// In production, tasks are properly enqueued for resilient retry handling.
+async function dispatchNotification(payload) {
+    const isEmulator = process.env.FUNCTIONS_EMULATOR === 'true';
+
+    if (isEmulator) {
+        // Emulator: call directly since the task queue SDK doesn't self-enqueue locally
+        const { action, appointmentData, type } = payload;
+        return runNotification(action, appointmentData, type);
+    }
+
+    // Production: use the Task Queue for reliable, retryable delivery
+    const queue = getFunctions().taskQueue('locations/asia-south1/functions/processNotificationTask'); await queue.enqueue(payload);
+}
+
+async function runNotification(action, appointmentData, type) {
+    if (type === 'healthCheckup') {
+        const { sendHealthCheckupNotification } = await import('./api/_utils/brevoHealthCheckupNotifications.js');
+        return sendHealthCheckupNotification(action, appointmentData);
+    }
+    return sendBookingNotification(action, appointmentData);
+}
