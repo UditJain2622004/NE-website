@@ -5,12 +5,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AdminAuthProvider, useAdminAuth } from '../hooks/useAdminAuth';
 import AdminDashboard from '../components/admin/AdminDashboard';
-import { Mail, Lock, Loader2, Hospital, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, Loader2, Hospital, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 
 function AdminContent() {
   const { user, loading, login, error } = useAdminAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [signingIn, setSigningIn] = useState(false);
 
   const handleLogin = async (e) => {
@@ -90,13 +91,20 @@ function AdminContent() {
                   <Lock className="w-5 h-5" />
                 </div>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-11 pr-4 py-3 bg-hospital-bg border border-divider rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-text-main/30"
+                  className="block w-full pl-11 pr-12 py-3 bg-hospital-bg border border-divider rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-text-main/30"
                   placeholder="••••••••"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-text-main/30 hover:text-primary transition-colors"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
               </div>
             </div>
           </div>

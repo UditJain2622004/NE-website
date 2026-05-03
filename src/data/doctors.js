@@ -34,10 +34,10 @@ Under his guidance, Nexus Enliven is committed to excellence, transparency, and 
     experience: "10+ Years",
     qualifications: "MBBS, MRCP(UK), FICCC, FICD, FECHO, FECMO, APGD(OHSM)",
     about: "Dr. Akshath Ramesh Acharya is a General Practitioner and Internal Medicine Specialist with extensive training in Infectious diseases, Cardiac Critical Care, Palliative care, Cardiodiabetes, Cardiac Nutrition, Echocardiography, ECMO, with International qualifications including MRCP(UK), APGD in Occupational Health, Fellowship in Aesthetic Medicine.",
-    languages: ["English", "Kannada", "Hindi"],
+    languages: ["Kannada", "Tulu", "Hindi", "English"],
     availability: "Mon - Sat, 9 AM to 1 PM ; 6 PM to 10 PM"
   },
-  
+
   {
     id: 3,
     name: "Dr. Vijaya Narayana Holla",

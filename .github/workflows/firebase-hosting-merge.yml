@@ -15,6 +15,6 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEXUSENLIVEN_6681B }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEXUSENLIVEN_F7B55 }}
           channelId: live
-          projectId: nexusenliven-6681b
+          projectId: nexusenliven-f7b55

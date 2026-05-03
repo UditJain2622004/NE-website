@@ -4,6 +4,7 @@ import { onDocumentWritten } from "firebase-functions/v2/firestore";
 import { onTaskDispatched } from "firebase-functions/v2/tasks";
 import { initializeApp, getApp } from "firebase-admin/app";
 import { getFunctions } from "firebase-admin/functions";
+import { getFirestore } from "firebase-admin/firestore";
 import express from "express";
 import cors from "cors";
 
@@ -120,7 +121,21 @@ export const notifications = onDocumentWritten("appointments/{id}", async (event
     }
 
     if (notificationEvent) {
-        await dispatchNotification({ action: notificationEvent, appointmentData: afterData });
+        // Enrich with doctor name before dispatching
+        const enrichedData = { ...afterData, appointmentId: event.params.id };
+        
+        if (afterData.doctorId && !afterData.doctorName) {
+            try {
+                const docSnap = await getFirestore().collection('doctors').doc(afterData.doctorId).get();
+                if (docSnap.exists) {
+                    enrichedData.doctorName = docSnap.data().name;
+                }
+            } catch (err) {
+                console.error('Error fetching doctor name for notification:', err);
+            }
+        }
+
+        await dispatchNotification({ action: notificationEvent, appointmentData: enrichedData });
     }
 });
 

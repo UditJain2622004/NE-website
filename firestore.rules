@@ -2,51 +2,70 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // ──────────────────────────────────────────────
-    // Patients — server-only (Admin SDK bypasses rules)
-    // ──────────────────────────────────────────────
-    match /patients/{phone} {
-      allow read, write: if false;
+    // Helper: Check if user is an admin
+    function isAdmin() {
+      return request.auth != null && 
+        get(/databases/$(database)/documents/adminUsers/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Helper: Check if user is the assigned doctor
+    function isAssignedDoctor(docId) {
+      return request.auth != null && 
+        get(/databases/$(database)/documents/adminUsers/$(request.auth.uid)).data.doctorId == docId;
     }
 
     // ──────────────────────────────────────────────
-    // Doctors — public read, server-only write
+    // Patients — admin only
+    // ──────────────────────────────────────────────
+    match /patients/{phone} {
+      allow read, write: if isAdmin();
+    }
+
+    // ──────────────────────────────────────────────
+    // Health Checkups — admin access
+    // ──────────────────────────────────────────────
+    match /healthCheckups/{checkupId} {
+      allow read, write: if isAdmin();
+    }
+
+    // ──────────────────────────────────────────────
+    // Doctors — public read, admin write
     // ──────────────────────────────────────────────
     match /doctors/{docId} {
       allow read: if true;
-      allow write: if false;
+      allow write: if isAdmin();
     }
 
     // ──────────────────────────────────────────────
-    // Doctor Leaves — public read (calendar display), server-only write
+    // Doctor Leaves — public read, admin write
     // ──────────────────────────────────────────────
     match /doctorLeaves/{leaveId} {
       allow read: if true;
-      allow write: if false;
+      allow write: if isAdmin();
     }
 
     // ──────────────────────────────────────────────
-    // Doctor Slots — public read (availability), server-only write
+    // Appointments — admin or assigned doctor read
+    // ──────────────────────────────────────────────
+    match /appointments/{apptId} {
+      allow read: if isAdmin() || isAssignedDoctor(resource.data.doctorId);
+      allow write: if isAdmin();
+    }
+
+    // ──────────────────────────────────────────────
+    // AdminUsers — self read, admin write
+    // ──────────────────────────────────────────────
+    match /adminUsers/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if isAdmin();
+    }
+    
+    // ──────────────────────────────────────────────
+    // Doctor Slots — public read, admin write
     // ──────────────────────────────────────────────
     match /doctorSlots/{slotId} {
       allow read: if true;
-      allow write: if false;
-    }
-
-    // ──────────────────────────────────────────────
-    // Appointments — authenticated users read, server-only write
-    // ──────────────────────────────────────────────
-    match /appointments/{apptId} {
-      allow read: if request.auth != null;
-      allow write: if false;
-    }
-
-    // ──────────────────────────────────────────────
-    // Users — authenticated user reads own doc only
-    // ──────────────────────────────────────────────
-    match /users/{userId} {
-      allow read: if request.auth != null && request.auth.uid == userId;
-      allow write: if false;
+      allow write: if isAdmin();
     }
   }
 }

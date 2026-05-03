@@ -23,14 +23,14 @@ if (!getApps().length) {
 const auth = getAuth();
 const db = getFirestore();
 
-const ADMIN_EMAIL = 'admin@nexusenliven.com';
-const ADMIN_PASSWORD = 'AdminPassword123!'; // User should change this
+const ADMIN_EMAIL = 'admin@gmail.com';
+const ADMIN_PASSWORD = 'NexusAdmin@123'; // User should change this
 
 const DOCTORS = [
-  { id: 'doctor_abhijith', name: 'Dr. Abhijith Reddy A', email: 'dr.abhijith@nexusenliven.com' },
-  { id: 'doctor_akshath', name: 'Dr. Akshath Ramesh Acharya', email: 'dr.akshath@nexusenliven.com' },
-  { id: 'doctor_vijaya', name: 'Dr. Vijaya Narayana Holla', email: 'dr.vijaya@nexusenliven.com' },
-  { id: 'doctor_tara', name: 'Dr. Tara H', email: 'dr.tara@nexusenliven.com' },
+  { id: 'doctor_abhijith', name: 'Dr. Abhijith Reddy A', email: 'dr.abhijith@gmail.com', password: 'NexusAbhijith@123' },
+  { id: 'doctor_akshath', name: 'Dr. Akshath Ramesh Acharya', email: 'dr.akshath@gmail.com', password: 'NexusAkshath@123' },
+  { id: 'doctor_vijaya', name: 'Dr. Vijaya Narayana Holla', email: 'dr.vijaya@gmail.com', password: 'NexusVijaya@123' },
+  { id: 'doctor_tara', name: 'Dr. Tara H', email: 'dr.tara@gmail.com', password: 'NexusTara@123' },
 ];
 
 async function findOrCreateUser(email, password, displayName) {
@@ -56,7 +56,7 @@ async function findOrCreateUser(email, password, displayName) {
 async function setClaims(uid, role, doctorId = null) {
   await auth.setCustomUserClaims(uid, { role, doctorId });
   console.log(`Set claims for ${uid}: role=${role}${doctorId ? `, doctorId=${doctorId}` : ''}`);
-  
+
   // Store role in Firestore as well for easy fetching
   await db.collection('adminUsers').doc(uid).set({
     role,
@@ -81,7 +81,7 @@ async function run() {
       continue;
     }
 
-    const doctorUser = await findOrCreateUser(doc.email, 'DoctorPassword123!', doc.name);
+    const doctorUser = await findOrCreateUser(doc.email, doc.password, doc.name);
     await setClaims(doctorUser.uid, 'doctor', doc.id);
   }
 
